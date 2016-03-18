@@ -99,11 +99,14 @@ public class CityController extends BaseController{
 	public MyResponse<List<City>> findCityPageByCondition(CityCondition condition) {
 		MyResponse<List<City>> response = new MyResponse<List<City>>();
 		try {
-			List<City> cityList = cityService.findPageByCondition(condition);
-			if(cityList.size()==0){
+			
+			int count = cityService.countByCondition(condition);
+			if(count==0){
 				response.setStatusResponse(CommStatusEnum.NOFIND);
 				return response;
 			}
+			response.setToken(count);
+			List<City> cityList = cityService.findPageByCondition(condition);
 			logger.info(cityList);
 			response.setData(cityList);
 			response.setStatusResponse(CommStatusEnum.FIND);

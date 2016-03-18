@@ -61,8 +61,7 @@
 			id = #id#
 	</select>
 
-	<!--分页查询-->
-	<select id="findPageByCondition" resultMap="cityResult" parameterClass="cityCondition">
+	<sql id="queryConditionSql">
 		SELECT 
 			<include refid="queryCondition"/> 
 		FROM  
@@ -75,8 +74,20 @@
 		           province_id=#provinceId#
 			</isNotNull>
 	    </dynamic>
+	</sql>
+
+	<!--分页查询-->
+	<select id="findPageByCondition" resultMap="cityResult" parameterClass="cityCondition">
+		<include refid="queryConditionSql"/> 
 		limit 
 			#startRow#,#endRow# 
+	</select>
+	
+	<select id="countByCondition" parameterClass="cityCondition" resultClass="java.lang.Integer">
+		select 
+			count(*) 
+		from 
+			(<include refid="queryConditionSql"/>) as da
 	</select>
 	
 </sqlMap>

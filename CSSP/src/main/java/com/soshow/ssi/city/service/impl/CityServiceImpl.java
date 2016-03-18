@@ -41,4 +41,8 @@ public class CityServiceImpl implements CityService{
 	public List<City> findPageByCondition(CityCondition pc) {
 		return cityDao.findPageByCondition(pc);
 	}
+
+	public Integer countByCondition(CityCondition pc) {
+		return cityDao.countByCondition(pc);
+	}
 }

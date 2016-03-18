@@ -75,4 +75,12 @@ public interface BaseDao<T,K> {
 	 * @return
 	 */
 	public List<T> findPageByCondition(K pc);
+	
+	/**
+	 * 统计查询数据的条数
+	 * @param params
+	 * @param startIndex
+	 * @return
+	 */
+	public abstract Integer countByCondition(K pc);
 }

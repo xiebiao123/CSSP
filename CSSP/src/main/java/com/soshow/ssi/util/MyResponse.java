@@ -7,7 +7,7 @@ import com.soshow.ssi.enums.CommStatusEnum;
 
 public class MyResponse<T> {
 	
-	private String token;
+	private Integer token;
 	private String code;
 	private String message;
 	private T data;
@@ -26,10 +26,10 @@ public class MyResponse<T> {
 		this.code=errorEnum.getCode();
 		this.message=errorEnum.getMessage();
 	}
-	public String getToken() {
+	public Integer getToken() {
 		return token;
 	}
-	public void setToken(String token) {
+	public void setToken(Integer token) {
 		this.token = token;
 	}
 	public String getCode() {

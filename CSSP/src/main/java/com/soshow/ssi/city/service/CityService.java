@@ -45,4 +45,12 @@ public interface CityService {
 	 */
 	public List<City> findPageByCondition(CityCondition pc);
 	
+	/**
+	 * 统计查询数据的条数
+	 * @param params
+	 * @param startIndex
+	 * @return
+	 */
+	public abstract Integer countByCondition(CityCondition pc);
+	
 }
