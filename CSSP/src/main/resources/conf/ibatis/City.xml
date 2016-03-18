@@ -19,18 +19,26 @@
 	</sql>
 	
 	<insert id="add" parameterClass="city"> 
-        INSERT INTO city(city_name, province_id) VALUES (#cityName#,#provinceId# )  
+        INSERT INTO
+        	city(city_name, province_id) 
+        VALUES 
+       		(#cityName#,#provinceId# )  
          <selectKey resultClass="java.lang.Integer" keyProperty="id">  
         	select last_insert_id() as ID from city limit 1  
     	</selectKey>
     </insert>  	
 	
 	<delete id="delete" parameterClass="java.lang.Integer">  
-        DELETE FROM city WHERE id = #id#  
+        DELETE FROM 
+        	city 
+        WHERE 
+        	id = #id#  
     </delete>  
 	 
 	<update id="update" parameterClass="city">  
-        UPDATE city SET <!-- updateTime = sysdate  -->
+        UPDATE 
+        	city 
+        SET <!-- updateTime = sysdate  -->
         <dynamic>
 			<isNotNull property="cityName" >
 		           city_name=#cityName#
@@ -39,26 +47,36 @@
 		           province_id=#provinceId#
 			</isNotNull>
 	    </dynamic>
-        WHERE id = #id# 
+        WHERE 
+        	id = #id# 
     </update> 
 	  
 	<!--通过id查找 -->
 	<select id="findById" resultMap="cityResult">
-		SELECT  <include refid="queryCondition"/> FROM city where id = #id#
+		SELECT  
+			<include refid="queryCondition"/> 
+		FROM 
+			city 
+		WHERE
+			id = #id#
 	</select>
 
 	<!--分页查询-->
 	<select id="findPageByCondition" resultMap="cityResult" parameterClass="cityCondition">
-		select <include refid="queryCondition"/> from  city 
-	    <dynamic prepend="where">
-			<isNotNull prepend="and" property="cityName" >
+		SELECT 
+			<include refid="queryCondition"/> 
+		FROM  
+			city 
+	    <dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="cityName" >
 		           city_name=#cityName#
 			</isNotNull>
-			<isNotNull prepend="and" property="provinceId" >
+			<isNotNull prepend="AND" property="provinceId" >
 		           province_id=#provinceId#
 			</isNotNull>
 	    </dynamic>
-		limit #startRow#,#endRow# 
+		limit 
+			#startRow#,#endRow# 
 	</select>
 	
 </sqlMap>
