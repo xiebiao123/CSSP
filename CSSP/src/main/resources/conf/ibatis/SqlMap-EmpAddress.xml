@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="EmpAddress">
+	<!--引入pojo-->
+	<typeAlias alias="empAddress" type="com.soshow.ssi.empAddress.dto.EmpAddress" />
+	<typeAlias alias="empAddressCondition" type="com.soshow.ssi.empAddress.dto.EmpAddressCondition" />
+
+	<!-- search resultMap -->
+	<resultMap id="empAddressResult" class="empAddress">
+		<result property="id" column="id" />
+		<result property="userId" column="user_id" />
+		<result property="addressType" column="address_type" />
+		<result property="address" column="address" />
+	</resultMap>
+
+	<sql id="queryCondition">
+		id,user_id,address_type,address
+	</sql>
+	
+	<!--插入语句-->
+	<insert id="add">
+		INSERT INTO
+			emp_address(user_id,address_type,address)
+		values
+			<dynamic>
+		(
+		<isEmpty property="userId">
+			null,
+		</isEmpty>
+		<isNotEmpty property="userId">
+			#userId#,
+		</isNotEmpty>
+		<isEmpty property="addressType">
+			'',
+		</isEmpty>
+		<isNotEmpty property="addressType">
+			#addressType#,
+		</isNotEmpty>
+		<isEmpty property="address">
+			''
+		</isEmpty>
+		<isNotEmpty property="address">
+			#address#
+		</isNotEmpty>
+		)
+		</dynamic>
+	</insert>
+
+	<!--删除语句 -->
+    <delete id="delete" parameterClass="java.lang.Integer">  
+        DELETE FROM 
+        	emp_address 
+        WHERE 
+        	id = #id#  
+    </delete>
+    
+    <!--修改语句 -->
+    <update id="update" parameterClass="empAddress">  
+        UPDATE 
+        	emp_address 
+        SET <!-- updateTime = sysdate  -->
+		<dynamic>
+			<isNotNull property="userId">
+				<isEmpty property="userId">
+					user_id = null
+				</isEmpty>
+				<isNotEmpty property="userId">
+					user_id = #userId#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="addressType">
+				<isEmpty property="addressType">
+					address_type = ''
+				</isEmpty>
+				<isNotEmpty property="addressType">
+					address_type = #addressType#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="address">
+				<isEmpty property="address">
+					address = ''
+				</isEmpty>
+				<isNotEmpty property="address">
+					address = #address#
+				</isNotEmpty>
+			</isNotNull>
+
+		</dynamic>
+        WHERE 
+        	id = #id# 
+    </update>
+    
+    <!--通过id查找 -->
+	<select id="findById" resultMap="empAddressResult">
+		SELECT  
+			<include refid="queryCondition"/> 
+		FROM 
+			emp_address 
+		WHERE
+			id = #id#
+	</select>
+	
+	
+	<sql id="queryConditionSql">
+		SELECT 
+			<include refid="queryCondition"/> 
+		FROM  
+			emp_address 
+	    <dynamic prepend="WHERE">
+			<isNotNull prepend="and" property="id">
+				id = #id#
+			</isNotNull>
+			<isNotNull prepend="and" property="userId">
+				user_id = #userId#
+			</isNotNull>
+			<isNotNull prepend="and" property="addressType">
+				address_type = #addressType#
+			</isNotNull>
+			<isNotNull prepend="and" property="address">
+				address = #address#
+			</isNotNull>
+
+	    </dynamic>
+	</sql>
+	
+	<!--分页查询-->
+	<select id="findPageByCondition" resultMap="empAddressResult" parameterClass="empAddressCondition">
+		<include refid="queryConditionSql"/>
+		limit 
+			#startRow#,#endRow# 
+	</select>
+	
+	<select id="countByCondition" parameterClass="empAddressCondition" resultClass="java.lang.Integer">
+		select 
+			count(*) 
+		from 
+			(<include refid="queryConditionSql"/>) as da
+	</select>
+	
+</sqlMap>

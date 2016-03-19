@@ -47,6 +47,7 @@ public class CityController extends BaseController{
 			logger.info(city);
 			response.setStatusResponse(CommStatusEnum.FIND);
 		} catch (Throwable t) {
+			logger.info("系统错误", t);
 			response.setErrorResponse(CommErrorEnum.Err03);
 		}
 		return response;
@@ -61,6 +62,7 @@ public class CityController extends BaseController{
 			logger.info(id);
 			response.setStatusResponse(CommStatusEnum.ADD);
 		} catch (Throwable t) {
+			logger.info("系统错误", t);
 			response.setErrorResponse(CommErrorEnum.Err03);
 		}
 		return response;
@@ -75,6 +77,7 @@ public class CityController extends BaseController{
 			logger.info(count);
 			response.setStatusResponse(CommStatusEnum.DELETE);
 		} catch (Throwable t) {
+			logger.info("系统错误", t);
 			response.setErrorResponse(CommErrorEnum.Err03);
 		}
 		return response;
@@ -89,6 +92,7 @@ public class CityController extends BaseController{
 			logger.info(count);
 			response.setStatusResponse(CommStatusEnum.UPDATE);
 		} catch (Throwable t) {
+			logger.info("系统错误", t);
 			response.setErrorResponse(CommErrorEnum.Err03);
 		}
 		return response;
@@ -111,6 +115,7 @@ public class CityController extends BaseController{
 			response.setData(cityList);
 			response.setStatusResponse(CommStatusEnum.FIND);
 		} catch (Throwable t) {
+			logger.info("系统错误", t);
 			response.setErrorResponse(CommErrorEnum.Err03);
 		}
 		return response;

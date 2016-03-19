@@ -15,5 +15,9 @@
 		
 	<typeHandler jdbcType="BLOB" javaType="[B" callback="org.springframework.orm.ibatis.support.BlobByteArrayTypeHandler" />
 	<typeHandler jdbcType="CLOB" javaType="java.lang.String" callback="org.springframework.orm.ibatis.support.ClobStringTypeHandler" />
+	
 	<sqlMap resource="conf/ibatis/SqlMap-City.xml" />
+	<sqlMap resource="conf/ibatis/SqlMap-Emp.xml" />
+	<sqlMap resource="conf/ibatis/SqlMap-EmpAddress.xml" />
+	
 </sqlMapConfig>

@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Emp">
+	<!--引入pojo-->
+	<typeAlias alias="emp" type="com.soshow.ssi.emp.dto.Emp" />
+	<typeAlias alias="empCondition" type="com.soshow.ssi.emp.dto.EmpCondition" />
+
+	<!-- search resultMap -->
+	<resultMap id="empResult" class="emp">
+		<result property="id" column="id" />
+		<result property="userName" column="user_name" />
+		<result property="password" column="password" />
+		<result property="trueName" column="true_name" />
+		<result property="sex" column="sex" />
+		<result property="age" column="age" />
+		<result property="birthday" column="birthday" />
+		<result property="resume" column="resume" />
+		<result property="remark" column="remark" />
+		<result property="pictureName" column="picture_name" />
+	</resultMap>
+
+	<sql id="queryCondition">
+		id,user_name,password,true_name,sex,age,birthday,resume,remark,picture_name
+	</sql>
+	
+	<!--插入语句-->
+	<insert id="add">
+		INSERT INTO
+			emp(user_name,password,true_name,sex,age,birthday,resume,remark,picture_name)
+		values
+			<dynamic>
+		(
+		<isEmpty property="userName">
+			'',
+		</isEmpty>
+		<isNotEmpty property="userName">
+			#userName#,
+		</isNotEmpty>
+		<isEmpty property="password">
+			'',
+		</isEmpty>
+		<isNotEmpty property="password">
+			#password#,
+		</isNotEmpty>
+		<isEmpty property="trueName">
+			'',
+		</isEmpty>
+		<isNotEmpty property="trueName">
+			#trueName#,
+		</isNotEmpty>
+		<isEmpty property="sex">
+			'',
+		</isEmpty>
+		<isNotEmpty property="sex">
+			#sex#,
+		</isNotEmpty>
+		<isEmpty property="age">
+			null,
+		</isEmpty>
+		<isNotEmpty property="age">
+			#age#,
+		</isNotEmpty>
+		<isEmpty property="birthday">
+			null,
+		</isEmpty>
+		<isNotEmpty property="birthday">
+			#birthday#,
+		</isNotEmpty>
+		<isEmpty property="resume">
+			'',
+		</isEmpty>
+		<isNotEmpty property="resume">
+			#resume#,
+		</isNotEmpty>
+		<isEmpty property="remark">
+			null,
+		</isEmpty>
+		<isNotEmpty property="remark">
+			#remark#,
+		</isNotEmpty>
+		<isEmpty property="pictureName">
+			null
+		</isEmpty>
+		<isNotEmpty property="pictureName">
+			#pictureName#
+		</isNotEmpty>
+		)
+		</dynamic>
+	</insert>
+
+	<!--删除语句 -->
+    <delete id="delete" parameterClass="java.lang.Integer">  
+        DELETE FROM 
+        	emp 
+        WHERE 
+        	id = #id#  
+    </delete>
+    
+    <!--修改语句 -->
+    <update id="update" parameterClass="emp">  
+        UPDATE 
+        	emp 
+        SET <!-- updateTime = sysdate  -->
+		<dynamic>
+			<isNotNull property="userName">
+				<isEmpty property="userName">
+					user_name = ''
+				</isEmpty>
+				<isNotEmpty property="userName">
+					user_name = #userName#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="password">
+				<isEmpty property="password">
+					password = ''
+				</isEmpty>
+				<isNotEmpty property="password">
+					password = #password#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="trueName">
+				<isEmpty property="trueName">
+					true_name = ''
+				</isEmpty>
+				<isNotEmpty property="trueName">
+					true_name = #trueName#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="sex">
+				<isEmpty property="sex">
+					sex = ''
+				</isEmpty>
+				<isNotEmpty property="sex">
+					sex = #sex#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="age">
+				<isEmpty property="age">
+					age = null
+				</isEmpty>
+				<isNotEmpty property="age">
+					age = #age#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="birthday">
+				<isEmpty property="birthday">
+					birthday = null
+				</isEmpty>
+				<isNotEmpty property="birthday">
+					birthday = #birthday#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="resume">
+				<isEmpty property="resume">
+					resume = ''
+				</isEmpty>
+				<isNotEmpty property="resume">
+					resume = #resume#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="remark">
+				<isEmpty property="remark">
+					remark = null
+				</isEmpty>
+				<isNotEmpty property="remark">
+					remark = #remark#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="pictureName">
+				<isEmpty property="pictureName">
+					picture_name = null
+				</isEmpty>
+				<isNotEmpty property="pictureName">
+					picture_name = #pictureName#
+				</isNotEmpty>
+			</isNotNull>
+
+		</dynamic>
+        WHERE 
+        	id = #id# 
+    </update>
+    
+    <!--通过id查找 -->
+	<select id="findById" resultMap="empResult">
+		SELECT  
+			<include refid="queryCondition"/> 
+		FROM 
+			emp 
+		WHERE
+			id = #id#
+	</select>
+	
+	
+	<sql id="queryConditionSql">
+		SELECT 
+			<include refid="queryCondition"/> 
+		FROM  
+			emp 
+	    <dynamic prepend="WHERE">
+			<isNotNull prepend="and" property="id">
+				id = #id#
+			</isNotNull>
+			<isNotNull prepend="and" property="userName">
+				user_name = #userName#
+			</isNotNull>
+			<isNotNull prepend="and" property="password">
+				password = #password#
+			</isNotNull>
+			<isNotNull prepend="and" property="trueName">
+				true_name = #trueName#
+			</isNotNull>
+			<isNotNull prepend="and" property="sex">
+				sex = #sex#
+			</isNotNull>
+			<isNotNull prepend="and" property="age">
+				age = #age#
+			</isNotNull>
+			<isNotNull prepend="and" property="birthday">
+				birthday = #birthday#
+			</isNotNull>
+			<isNotNull prepend="and" property="resume">
+				resume = #resume#
+			</isNotNull>
+			<isNotNull prepend="and" property="remark">
+				remark = #remark#
+			</isNotNull>
+			<isNotNull prepend="and" property="pictureName">
+				picture_name = #pictureName#
+			</isNotNull>
+
+	    </dynamic>
+	</sql>
+	
+	<!--分页查询-->
+	<select id="findPageByCondition" resultMap="empResult" parameterClass="empCondition">
+		<include refid="queryConditionSql"/>
+		limit 
+			#startRow#,#endRow# 
+	</select>
+	
+	<select id="countByCondition" parameterClass="empCondition" resultClass="java.lang.Integer">
+		select 
+			count(*) 
+		from 
+			(<include refid="queryConditionSql"/>) as da
+	</select>
+	
+</sqlMap>
