@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Skill">
+	<!--引入pojo-->
+	<typeAlias alias="skill" type="com.soshow.ssi.skill.dto.Skill" />
+	<typeAlias alias="skillCondition" type="com.soshow.ssi.skill.dto.SkillCondition" />
+
+	<!-- search resultMap -->
+	<resultMap id="skillResult" class="skill">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="startTime" column="start_time" />
+		<result property="status" column="status" />
+		<result property="remark" column="remark" />
+		<result property="resumeId" column="resume_id" />
+	</resultMap>
+
+	<sql id="queryCondition">
+		id,name,start_time,status,remark,resume_id
+	</sql>
+	
+	<!--插入语句-->
+	<insert id="add">
+		INSERT INTO
+			skill(name,start_time,status,remark,resume_id)
+		values
+			<dynamic>
+		(
+		<isEmpty property="name">
+			null,
+		</isEmpty>
+		<isNotEmpty property="name">
+			#name#,
+		</isNotEmpty>
+		<isEmpty property="startTime">
+			null,
+		</isEmpty>
+		<isNotEmpty property="startTime">
+			#startTime#,
+		</isNotEmpty>
+		<isEmpty property="status">
+			null,
+		</isEmpty>
+		<isNotEmpty property="status">
+			#status#,
+		</isNotEmpty>
+		<isEmpty property="remark">
+			null,
+		</isEmpty>
+		<isNotEmpty property="remark">
+			#remark#,
+		</isNotEmpty>
+		<isEmpty property="resumeId">
+			null
+		</isEmpty>
+		<isNotEmpty property="resumeId">
+			#resumeId#
+		</isNotEmpty>
+		)
+		</dynamic>
+	</insert>
+
+	<!--删除语句 -->
+    <delete id="delete" parameterClass="java.lang.Integer">  
+        DELETE FROM 
+        	skill 
+        WHERE 
+        	id = #id#  
+    </delete>
+    
+    <!--修改语句 -->
+    <update id="update" parameterClass="skill">  
+        UPDATE 
+        	skill 
+        SET <!-- updateTime = sysdate  -->
+		<dynamic>
+			<isNotNull property="name">
+				<isEmpty property="name">
+					name = null
+				</isEmpty>
+				<isNotEmpty property="name">
+					name = #name#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="startTime">
+				<isEmpty property="startTime">
+					start_time = null
+				</isEmpty>
+				<isNotEmpty property="startTime">
+					start_time = #startTime#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="status">
+				<isEmpty property="status">
+					status = null
+				</isEmpty>
+				<isNotEmpty property="status">
+					status = #status#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="remark">
+				<isEmpty property="remark">
+					remark = null
+				</isEmpty>
+				<isNotEmpty property="remark">
+					remark = #remark#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="resumeId">
+				<isEmpty property="resumeId">
+					resume_id = null
+				</isEmpty>
+				<isNotEmpty property="resumeId">
+					resume_id = #resumeId#
+				</isNotEmpty>
+			</isNotNull>
+
+		</dynamic>
+        WHERE 
+        	id = #id# 
+    </update>
+    
+    <!--通过id查找 -->
+	<select id="findById" resultMap="skillResult">
+		SELECT  
+			<include refid="queryCondition"/> 
+		FROM 
+			skill 
+		WHERE
+			id = #id#
+	</select>
+	
+	
+	<sql id="queryConditionSql">
+		SELECT 
+			<include refid="queryCondition"/> 
+		FROM  
+			skill 
+	    <dynamic prepend="WHERE">
+			<isNotNull prepend="and" property="id">
+				id = #id#
+			</isNotNull>
+			<isNotNull prepend="and" property="name">
+				name = #name#
+			</isNotNull>
+			<isNotNull prepend="and" property="startTime">
+				start_time = #startTime#
+			</isNotNull>
+			<isNotNull prepend="and" property="status">
+				status = #status#
+			</isNotNull>
+			<isNotNull prepend="and" property="remark">
+				remark = #remark#
+			</isNotNull>
+			<isNotNull prepend="and" property="resumeId">
+				resume_id = #resumeId#
+			</isNotNull>
+
+	    </dynamic>
+	</sql>
+	
+	<!--分页查询-->
+	<select id="findPageByCondition" resultMap="skillResult" parameterClass="skillCondition">
+		<include refid="queryConditionSql"/>
+		limit 
+			#startRow#,#endRow# 
+	</select>
+	
+	<select id="countByCondition" parameterClass="skillCondition" resultClass="java.lang.Integer">
+		select 
+			count(*) 
+		from 
+			(<include refid="queryConditionSql"/>) as da
+	</select>
+	
+</sqlMap>

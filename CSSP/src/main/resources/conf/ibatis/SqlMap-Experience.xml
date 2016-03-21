@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Experience">
+	<!--引入pojo-->
+	<typeAlias alias="experience" type="com.soshow.ssi.experience.dto.Experience" />
+	<typeAlias alias="experienceCondition" type="com.soshow.ssi.experience.dto.ExperienceCondition" />
+
+	<!-- search resultMap -->
+	<resultMap id="experienceResult" class="experience">
+		<result property="id" column="id" />
+		<result property="startTime" column="start_time" />
+		<result property="endTime" column="end_time" />
+		<result property="remark" column="remark" />
+		<result property="resumeId" column="resume_id" />
+	</resultMap>
+
+	<sql id="queryCondition">
+		id,start_time,end_time,remark,resume_id
+	</sql>
+	
+	<!--插入语句-->
+	<insert id="add">
+		INSERT INTO
+			experience(start_time,end_time,remark,resume_id)
+		values
+			<dynamic>
+		(
+		<isEmpty property="startTime">
+			null,
+		</isEmpty>
+		<isNotEmpty property="startTime">
+			#startTime#,
+		</isNotEmpty>
+		<isEmpty property="endTime">
+			null,
+		</isEmpty>
+		<isNotEmpty property="endTime">
+			#endTime#,
+		</isNotEmpty>
+		<isEmpty property="remark">
+			null,
+		</isEmpty>
+		<isNotEmpty property="remark">
+			#remark#,
+		</isNotEmpty>
+		<isEmpty property="resumeId">
+			null
+		</isEmpty>
+		<isNotEmpty property="resumeId">
+			#resumeId#
+		</isNotEmpty>
+		)
+		</dynamic>
+	</insert>
+
+	<!--删除语句 -->
+    <delete id="delete" parameterClass="java.lang.Integer">  
+        DELETE FROM 
+        	experience 
+        WHERE 
+        	id = #id#  
+    </delete>
+    
+    <!--修改语句 -->
+    <update id="update" parameterClass="experience">  
+        UPDATE 
+        	experience 
+        SET <!-- updateTime = sysdate  -->
+		<dynamic>
+			<isNotNull property="startTime">
+				<isEmpty property="startTime">
+					start_time = null
+				</isEmpty>
+				<isNotEmpty property="startTime">
+					start_time = #startTime#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="endTime">
+				<isEmpty property="endTime">
+					end_time = null
+				</isEmpty>
+				<isNotEmpty property="endTime">
+					end_time = #endTime#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="remark">
+				<isEmpty property="remark">
+					remark = null
+				</isEmpty>
+				<isNotEmpty property="remark">
+					remark = #remark#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="resumeId">
+				<isEmpty property="resumeId">
+					resume_id = null
+				</isEmpty>
+				<isNotEmpty property="resumeId">
+					resume_id = #resumeId#
+				</isNotEmpty>
+			</isNotNull>
+
+		</dynamic>
+        WHERE 
+        	id = #id# 
+    </update>
+    
+    <!--通过id查找 -->
+	<select id="findById" resultMap="experienceResult">
+		SELECT  
+			<include refid="queryCondition"/> 
+		FROM 
+			experience 
+		WHERE
+			id = #id#
+	</select>
+	
+	
+	<sql id="queryConditionSql">
+		SELECT 
+			<include refid="queryCondition"/> 
+		FROM  
+			experience 
+	    <dynamic prepend="WHERE">
+			<isNotNull prepend="and" property="id">
+				id = #id#
+			</isNotNull>
+			<isNotNull prepend="and" property="startTime">
+				start_time = #startTime#
+			</isNotNull>
+			<isNotNull prepend="and" property="endTime">
+				end_time = #endTime#
+			</isNotNull>
+			<isNotNull prepend="and" property="remark">
+				remark = #remark#
+			</isNotNull>
+			<isNotNull prepend="and" property="resumeId">
+				resume_id = #resumeId#
+			</isNotNull>
+
+	    </dynamic>
+	</sql>
+	
+	<!--分页查询-->
+	<select id="findPageByCondition" resultMap="experienceResult" parameterClass="experienceCondition">
+		<include refid="queryConditionSql"/>
+		limit 
+			#startRow#,#endRow# 
+	</select>
+	
+	<select id="countByCondition" parameterClass="experienceCondition" resultClass="java.lang.Integer">
+		select 
+			count(*) 
+		from 
+			(<include refid="queryConditionSql"/>) as da
+	</select>
+	
+</sqlMap>

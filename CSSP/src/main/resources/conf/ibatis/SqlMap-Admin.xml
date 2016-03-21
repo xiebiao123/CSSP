@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Admin">
+	<!--引入pojo-->
+	<typeAlias alias="admin" type="com.soshow.ssi.admin.dto.Admin" />
+	<typeAlias alias="adminCondition" type="com.soshow.ssi.admin.dto.AdminCondition" />
+
+	<!-- search resultMap -->
+	<resultMap id="adminResult" class="admin">
+		<result property="id" column="id" />
+		<result property="adminPassword" column="admin_password" />
+		<result property="adminName" column="admin_name" />
+		<result property="email" column="email" />
+		<result property="tel" column="tel" />
+		<result property="picture" column="picture" />
+	</resultMap>
+
+	<sql id="queryCondition">
+		id,admin_password,admin_name,email,tel,picture
+	</sql>
+	
+	<!--插入语句-->
+	<insert id="add">
+		INSERT INTO
+			admin(admin_password,admin_name,email,tel,picture)
+		values
+			<dynamic>
+		(
+		<isEmpty property="adminPassword">
+			'',
+		</isEmpty>
+		<isNotEmpty property="adminPassword">
+			#adminPassword#,
+		</isNotEmpty>
+		<isEmpty property="adminName">
+			'',
+		</isEmpty>
+		<isNotEmpty property="adminName">
+			#adminName#,
+		</isNotEmpty>
+		<isEmpty property="email">
+			null,
+		</isEmpty>
+		<isNotEmpty property="email">
+			#email#,
+		</isNotEmpty>
+		<isEmpty property="tel">
+			null,
+		</isEmpty>
+		<isNotEmpty property="tel">
+			#tel#,
+		</isNotEmpty>
+		<isEmpty property="picture">
+			null
+		</isEmpty>
+		<isNotEmpty property="picture">
+			#picture#
+		</isNotEmpty>
+		)
+		</dynamic>
+	</insert>
+
+	<!--删除语句 -->
+    <delete id="delete" parameterClass="java.lang.Integer">  
+        DELETE FROM 
+        	admin 
+        WHERE 
+        	id = #id#  
+    </delete>
+    
+    <!--修改语句 -->
+    <update id="update" parameterClass="admin">  
+        UPDATE 
+        	admin 
+        SET <!-- updateTime = sysdate  -->
+		<dynamic>
+			<isNotNull property="adminPassword">
+				<isEmpty property="adminPassword">
+					admin_password = ''
+				</isEmpty>
+				<isNotEmpty property="adminPassword">
+					admin_password = #adminPassword#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="adminName">
+				<isEmpty property="adminName">
+					admin_name = ''
+				</isEmpty>
+				<isNotEmpty property="adminName">
+					admin_name = #adminName#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="email">
+				<isEmpty property="email">
+					email = null
+				</isEmpty>
+				<isNotEmpty property="email">
+					email = #email#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="tel">
+				<isEmpty property="tel">
+					tel = null
+				</isEmpty>
+				<isNotEmpty property="tel">
+					tel = #tel#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="picture">
+				<isEmpty property="picture">
+					picture = null
+				</isEmpty>
+				<isNotEmpty property="picture">
+					picture = #picture#
+				</isNotEmpty>
+			</isNotNull>
+
+		</dynamic>
+        WHERE 
+        	id = #id# 
+    </update>
+    
+    <!--通过id查找 -->
+	<select id="findById" resultMap="adminResult">
+		SELECT  
+			<include refid="queryCondition"/> 
+		FROM 
+			admin 
+		WHERE
+			id = #id#
+	</select>
+	
+	
+	<sql id="queryConditionSql">
+		SELECT 
+			<include refid="queryCondition"/> 
+		FROM  
+			admin 
+	    <dynamic prepend="WHERE">
+			<isNotNull prepend="and" property="id">
+				id = #id#
+			</isNotNull>
+			<isNotNull prepend="and" property="adminPassword">
+				admin_password = #adminPassword#
+			</isNotNull>
+			<isNotNull prepend="and" property="adminName">
+				admin_name = #adminName#
+			</isNotNull>
+			<isNotNull prepend="and" property="email">
+				email = #email#
+			</isNotNull>
+			<isNotNull prepend="and" property="tel">
+				tel = #tel#
+			</isNotNull>
+			<isNotNull prepend="and" property="picture">
+				picture = #picture#
+			</isNotNull>
+
+	    </dynamic>
+	</sql>
+	
+	<!--分页查询-->
+	<select id="findPageByCondition" resultMap="adminResult" parameterClass="adminCondition">
+		<include refid="queryConditionSql"/>
+		limit 
+			#startRow#,#endRow# 
+	</select>
+	
+	<select id="countByCondition" parameterClass="adminCondition" resultClass="java.lang.Integer">
+		select 
+			count(*) 
+		from 
+			(<include refid="queryConditionSql"/>) as da
+	</select>
+	
+</sqlMap>

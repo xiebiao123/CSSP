@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="StudentWork">
+	<!--引入pojo-->
+	<typeAlias alias="studentWork" type="com.soshow.ssi.studentWork.dto.StudentWork" />
+	<typeAlias alias="studentWorkCondition" type="com.soshow.ssi.studentWork.dto.StudentWorkCondition" />
+
+	<!-- search resultMap -->
+	<resultMap id="studentWorkResult" class="studentWork">
+		<result property="id" column="id" />
+		<result property="studentId" column="student_id" />
+		<result property="workId" column="work_id" />
+		<result property="remark" column="remark" />
+	</resultMap>
+
+	<sql id="queryCondition">
+		id,student_id,work_id,remark
+	</sql>
+	
+	<!--插入语句-->
+	<insert id="add">
+		INSERT INTO
+			student_work(student_id,work_id,remark)
+		values
+			<dynamic>
+		(
+		<isEmpty property="studentId">
+			null,
+		</isEmpty>
+		<isNotEmpty property="studentId">
+			#studentId#,
+		</isNotEmpty>
+		<isEmpty property="workId">
+			null,
+		</isEmpty>
+		<isNotEmpty property="workId">
+			#workId#,
+		</isNotEmpty>
+		<isEmpty property="remark">
+			null
+		</isEmpty>
+		<isNotEmpty property="remark">
+			#remark#
+		</isNotEmpty>
+		)
+		</dynamic>
+	</insert>
+
+	<!--删除语句 -->
+    <delete id="delete" parameterClass="java.lang.Integer">  
+        DELETE FROM 
+        	student_work 
+        WHERE 
+        	id = #id#  
+    </delete>
+    
+    <!--修改语句 -->
+    <update id="update" parameterClass="studentWork">  
+        UPDATE 
+        	student_work 
+        SET <!-- updateTime = sysdate  -->
+		<dynamic>
+			<isNotNull property="studentId">
+				<isEmpty property="studentId">
+					student_id = null
+				</isEmpty>
+				<isNotEmpty property="studentId">
+					student_id = #studentId#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="workId">
+				<isEmpty property="workId">
+					work_id = null
+				</isEmpty>
+				<isNotEmpty property="workId">
+					work_id = #workId#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="remark">
+				<isEmpty property="remark">
+					remark = null
+				</isEmpty>
+				<isNotEmpty property="remark">
+					remark = #remark#
+				</isNotEmpty>
+			</isNotNull>
+
+		</dynamic>
+        WHERE 
+        	id = #id# 
+    </update>
+    
+    <!--通过id查找 -->
+	<select id="findById" resultMap="studentWorkResult">
+		SELECT  
+			<include refid="queryCondition"/> 
+		FROM 
+			student_work 
+		WHERE
+			id = #id#
+	</select>
+	
+	
+	<sql id="queryConditionSql">
+		SELECT 
+			<include refid="queryCondition"/> 
+		FROM  
+			student_work 
+	    <dynamic prepend="WHERE">
+			<isNotNull prepend="and" property="id">
+				id = #id#
+			</isNotNull>
+			<isNotNull prepend="and" property="studentId">
+				student_id = #studentId#
+			</isNotNull>
+			<isNotNull prepend="and" property="workId">
+				work_id = #workId#
+			</isNotNull>
+			<isNotNull prepend="and" property="remark">
+				remark = #remark#
+			</isNotNull>
+
+	    </dynamic>
+	</sql>
+	
+	<!--分页查询-->
+	<select id="findPageByCondition" resultMap="studentWorkResult" parameterClass="studentWorkCondition">
+		<include refid="queryConditionSql"/>
+		limit 
+			#startRow#,#endRow# 
+	</select>
+	
+	<select id="countByCondition" parameterClass="studentWorkCondition" resultClass="java.lang.Integer">
+		select 
+			count(*) 
+		from 
+			(<include refid="queryConditionSql"/>) as da
+	</select>
+	
+</sqlMap>

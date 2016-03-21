@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="ShoppingCart">
+	<!--引入pojo-->
+	<typeAlias alias="shoppingCart" type="com.soshow.ssi.shoppingCart.dto.ShoppingCart" />
+	<typeAlias alias="shoppingCartCondition" type="com.soshow.ssi.shoppingCart.dto.ShoppingCartCondition" />
+
+	<!-- search resultMap -->
+	<resultMap id="shoppingCartResult" class="shoppingCart">
+		<result property="id" column="id" />
+		<result property="studentId" column="student_id" />
+		<result property="sumPrice" column="sum_price" />
+	</resultMap>
+
+	<sql id="queryCondition">
+		id,student_id,sum_price
+	</sql>
+	
+	<!--插入语句-->
+	<insert id="add">
+		INSERT INTO
+			shopping_cart(student_id,sum_price)
+		values
+			<dynamic>
+		(
+		<isEmpty property="studentId">
+			null,
+		</isEmpty>
+		<isNotEmpty property="studentId">
+			#studentId#,
+		</isNotEmpty>
+		<isEmpty property="sumPrice">
+			null
+		</isEmpty>
+		<isNotEmpty property="sumPrice">
+			#sumPrice#
+		</isNotEmpty>
+		)
+		</dynamic>
+	</insert>
+
+	<!--删除语句 -->
+    <delete id="delete" parameterClass="java.lang.Integer">  
+        DELETE FROM 
+        	shopping_cart 
+        WHERE 
+        	id = #id#  
+    </delete>
+    
+    <!--修改语句 -->
+    <update id="update" parameterClass="shoppingCart">  
+        UPDATE 
+        	shopping_cart 
+        SET <!-- updateTime = sysdate  -->
+		<dynamic>
+			<isNotNull property="studentId">
+				<isEmpty property="studentId">
+					student_id = null
+				</isEmpty>
+				<isNotEmpty property="studentId">
+					student_id = #studentId#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="sumPrice">
+				<isEmpty property="sumPrice">
+					sum_price = null
+				</isEmpty>
+				<isNotEmpty property="sumPrice">
+					sum_price = #sumPrice#
+				</isNotEmpty>
+			</isNotNull>
+
+		</dynamic>
+        WHERE 
+        	id = #id# 
+    </update>
+    
+    <!--通过id查找 -->
+	<select id="findById" resultMap="shoppingCartResult">
+		SELECT  
+			<include refid="queryCondition"/> 
+		FROM 
+			shopping_cart 
+		WHERE
+			id = #id#
+	</select>
+	
+	
+	<sql id="queryConditionSql">
+		SELECT 
+			<include refid="queryCondition"/> 
+		FROM  
+			shopping_cart 
+	    <dynamic prepend="WHERE">
+			<isNotNull prepend="and" property="id">
+				id = #id#
+			</isNotNull>
+			<isNotNull prepend="and" property="studentId">
+				student_id = #studentId#
+			</isNotNull>
+			<isNotNull prepend="and" property="sumPrice">
+				sum_price = #sumPrice#
+			</isNotNull>
+
+	    </dynamic>
+	</sql>
+	
+	<!--分页查询-->
+	<select id="findPageByCondition" resultMap="shoppingCartResult" parameterClass="shoppingCartCondition">
+		<include refid="queryConditionSql"/>
+		limit 
+			#startRow#,#endRow# 
+	</select>
+	
+	<select id="countByCondition" parameterClass="shoppingCartCondition" resultClass="java.lang.Integer">
+		select 
+			count(*) 
+		from 
+			(<include refid="queryConditionSql"/>) as da
+	</select>
+	
+</sqlMap>

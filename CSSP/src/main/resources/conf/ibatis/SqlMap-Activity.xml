@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Activity">
+	<!--引入pojo-->
+	<typeAlias alias="activity" type="com.soshow.ssi.activity.dto.Activity" />
+	<typeAlias alias="activityCondition" type="com.soshow.ssi.activity.dto.ActivityCondition" />
+
+	<!-- search resultMap -->
+	<resultMap id="activityResult" class="activity">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="startTime" column="start_time" />
+		<result property="endTime" column="end_time" />
+		<result property="remark" column="remark" />
+		<result property="reason" column="reason" />
+		<result property="approver" column="approver" />
+		<result property="studentId" column="student_id" />
+		<result property="address" column="address" />
+	</resultMap>
+
+	<sql id="queryCondition">
+		id,name,start_time,end_time,remark,reason,approver,student_id,address
+	</sql>
+	
+	<!--插入语句-->
+	<insert id="add">
+		INSERT INTO
+			activity(name,start_time,end_time,remark,reason,approver,student_id,address)
+		values
+			<dynamic>
+		(
+		<isEmpty property="name">
+			null,
+		</isEmpty>
+		<isNotEmpty property="name">
+			#name#,
+		</isNotEmpty>
+		<isEmpty property="startTime">
+			null,
+		</isEmpty>
+		<isNotEmpty property="startTime">
+			#startTime#,
+		</isNotEmpty>
+		<isEmpty property="endTime">
+			null,
+		</isEmpty>
+		<isNotEmpty property="endTime">
+			#endTime#,
+		</isNotEmpty>
+		<isEmpty property="remark">
+			null,
+		</isEmpty>
+		<isNotEmpty property="remark">
+			#remark#,
+		</isNotEmpty>
+		<isEmpty property="reason">
+			null,
+		</isEmpty>
+		<isNotEmpty property="reason">
+			#reason#,
+		</isNotEmpty>
+		<isEmpty property="approver">
+			null,
+		</isEmpty>
+		<isNotEmpty property="approver">
+			#approver#,
+		</isNotEmpty>
+		<isEmpty property="studentId">
+			null,
+		</isEmpty>
+		<isNotEmpty property="studentId">
+			#studentId#,
+		</isNotEmpty>
+		<isEmpty property="address">
+			null
+		</isEmpty>
+		<isNotEmpty property="address">
+			#address#
+		</isNotEmpty>
+		)
+		</dynamic>
+	</insert>
+
+	<!--删除语句 -->
+    <delete id="delete" parameterClass="java.lang.Integer">  
+        DELETE FROM 
+        	activity 
+        WHERE 
+        	id = #id#  
+    </delete>
+    
+    <!--修改语句 -->
+    <update id="update" parameterClass="activity">  
+        UPDATE 
+        	activity 
+        SET <!-- updateTime = sysdate  -->
+		<dynamic>
+			<isNotNull property="name">
+				<isEmpty property="name">
+					name = null
+				</isEmpty>
+				<isNotEmpty property="name">
+					name = #name#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="startTime">
+				<isEmpty property="startTime">
+					start_time = null
+				</isEmpty>
+				<isNotEmpty property="startTime">
+					start_time = #startTime#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="endTime">
+				<isEmpty property="endTime">
+					end_time = null
+				</isEmpty>
+				<isNotEmpty property="endTime">
+					end_time = #endTime#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="remark">
+				<isEmpty property="remark">
+					remark = null
+				</isEmpty>
+				<isNotEmpty property="remark">
+					remark = #remark#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="reason">
+				<isEmpty property="reason">
+					reason = null
+				</isEmpty>
+				<isNotEmpty property="reason">
+					reason = #reason#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="approver">
+				<isEmpty property="approver">
+					approver = null
+				</isEmpty>
+				<isNotEmpty property="approver">
+					approver = #approver#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="studentId">
+				<isEmpty property="studentId">
+					student_id = null
+				</isEmpty>
+				<isNotEmpty property="studentId">
+					student_id = #studentId#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="address">
+				<isEmpty property="address">
+					address = null
+				</isEmpty>
+				<isNotEmpty property="address">
+					address = #address#
+				</isNotEmpty>
+			</isNotNull>
+
+		</dynamic>
+        WHERE 
+        	id = #id# 
+    </update>
+    
+    <!--通过id查找 -->
+	<select id="findById" resultMap="activityResult">
+		SELECT  
+			<include refid="queryCondition"/> 
+		FROM 
+			activity 
+		WHERE
+			id = #id#
+	</select>
+	
+	
+	<sql id="queryConditionSql">
+		SELECT 
+			<include refid="queryCondition"/> 
+		FROM  
+			activity 
+	    <dynamic prepend="WHERE">
+			<isNotNull prepend="and" property="id">
+				id = #id#
+			</isNotNull>
+			<isNotNull prepend="and" property="name">
+				name = #name#
+			</isNotNull>
+			<isNotNull prepend="and" property="startTime">
+				start_time = #startTime#
+			</isNotNull>
+			<isNotNull prepend="and" property="endTime">
+				end_time = #endTime#
+			</isNotNull>
+			<isNotNull prepend="and" property="remark">
+				remark = #remark#
+			</isNotNull>
+			<isNotNull prepend="and" property="reason">
+				reason = #reason#
+			</isNotNull>
+			<isNotNull prepend="and" property="approver">
+				approver = #approver#
+			</isNotNull>
+			<isNotNull prepend="and" property="studentId">
+				student_id = #studentId#
+			</isNotNull>
+			<isNotNull prepend="and" property="address">
+				address = #address#
+			</isNotNull>
+
+	    </dynamic>
+	</sql>
+	
+	<!--分页查询-->
+	<select id="findPageByCondition" resultMap="activityResult" parameterClass="activityCondition">
+		<include refid="queryConditionSql"/>
+		limit 
+			#startRow#,#endRow# 
+	</select>
+	
+	<select id="countByCondition" parameterClass="activityCondition" resultClass="java.lang.Integer">
+		select 
+			count(*) 
+		from 
+			(<include refid="queryConditionSql"/>) as da
+	</select>
+	
+</sqlMap>

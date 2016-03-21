@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Sprovince">
+	<!--引入pojo-->
+	<typeAlias alias="sprovince" type="com.soshow.ssi.sprovince.dto.Sprovince" />
+	<typeAlias alias="sprovinceCondition" type="com.soshow.ssi.sprovince.dto.SprovinceCondition" />
+
+	<!-- search resultMap -->
+	<resultMap id="sprovinceResult" class="sprovince">
+		<result property="provinceid" column="ProvinceID" />
+		<result property="provincename" column="ProvinceName" />
+	</resultMap>
+
+	<sql id="queryCondition">
+		ProvinceID,ProvinceName
+	</sql>
+	
+	<!--插入语句-->
+	<insert id="add">
+		INSERT INTO
+			s_province(ProvinceName)
+		values
+			<dynamic>
+		(
+		<isEmpty property="provincename">
+			null
+		</isEmpty>
+		<isNotEmpty property="provincename">
+			#provincename#
+		</isNotEmpty>
+		)
+		</dynamic>
+	</insert>
+
+	<!--删除语句 -->
+    <delete id="delete" parameterClass="java.lang.Integer">  
+        DELETE FROM 
+        	s_province 
+        WHERE 
+        	id = #id#  
+    </delete>
+    
+    <!--修改语句 -->
+    <update id="update" parameterClass="sprovince">  
+        UPDATE 
+        	s_province 
+        SET <!-- updateTime = sysdate  -->
+		<dynamic>
+			<isNotNull property="provincename">
+				<isEmpty property="provincename">
+					ProvinceName = null
+				</isEmpty>
+				<isNotEmpty property="provincename">
+					ProvinceName = #provincename#
+				</isNotEmpty>
+			</isNotNull>
+
+		</dynamic>
+        WHERE 
+        	id = #id# 
+    </update>
+    
+    <!--通过id查找 -->
+	<select id="findById" resultMap="sprovinceResult">
+		SELECT  
+			<include refid="queryCondition"/> 
+		FROM 
+			s_province 
+		WHERE
+			id = #id#
+	</select>
+	
+	
+	<sql id="queryConditionSql">
+		SELECT 
+			<include refid="queryCondition"/> 
+		FROM  
+			s_province 
+	    <dynamic prepend="WHERE">
+			<isNotNull prepend="and" property="provinceid">
+				ProvinceID = #provinceid#
+			</isNotNull>
+			<isNotNull prepend="and" property="provincename">
+				ProvinceName = #provincename#
+			</isNotNull>
+
+	    </dynamic>
+	</sql>
+	
+	<!--分页查询-->
+	<select id="findPageByCondition" resultMap="sprovinceResult" parameterClass="sprovinceCondition">
+		<include refid="queryConditionSql"/>
+		limit 
+			#startRow#,#endRow# 
+	</select>
+	
+	<select id="countByCondition" parameterClass="sprovinceCondition" resultClass="java.lang.Integer">
+		select 
+			count(*) 
+		from 
+			(<include refid="queryConditionSql"/>) as da
+	</select>
+	
+</sqlMap>

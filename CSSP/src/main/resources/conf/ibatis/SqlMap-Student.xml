@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Student">
+	<!--引入pojo-->
+	<typeAlias alias="student" type="com.soshow.ssi.student.dto.Student" />
+	<typeAlias alias="studentCondition" type="com.soshow.ssi.student.dto.StudentCondition" />
+
+	<!-- search resultMap -->
+	<resultMap id="studentResult" class="student">
+		<result property="id" column="id" />
+		<result property="password" column="password" />
+		<result property="name" column="name" />
+		<result property="age" column="age" />
+		<result property="email" column="email" />
+		<result property="tel" column="tel" />
+		<result property="sex" column="sex" />
+		<result property="address" column="address" />
+		<result property="picture" column="picture" />
+		<result property="remark" column="remark" />
+	</resultMap>
+
+	<sql id="queryCondition">
+		id,password,name,age,email,tel,sex,address,picture,remark
+	</sql>
+	
+	<!--插入语句-->
+	<insert id="add">
+		INSERT INTO
+			student(password,name,age,email,tel,sex,address,picture,remark)
+		values
+			<dynamic>
+		(
+		<isEmpty property="password">
+			null,
+		</isEmpty>
+		<isNotEmpty property="password">
+			#password#,
+		</isNotEmpty>
+		<isEmpty property="name">
+			null,
+		</isEmpty>
+		<isNotEmpty property="name">
+			#name#,
+		</isNotEmpty>
+		<isEmpty property="age">
+			null,
+		</isEmpty>
+		<isNotEmpty property="age">
+			#age#,
+		</isNotEmpty>
+		<isEmpty property="email">
+			null,
+		</isEmpty>
+		<isNotEmpty property="email">
+			#email#,
+		</isNotEmpty>
+		<isEmpty property="tel">
+			null,
+		</isEmpty>
+		<isNotEmpty property="tel">
+			#tel#,
+		</isNotEmpty>
+		<isEmpty property="sex">
+			null,
+		</isEmpty>
+		<isNotEmpty property="sex">
+			#sex#,
+		</isNotEmpty>
+		<isEmpty property="address">
+			null,
+		</isEmpty>
+		<isNotEmpty property="address">
+			#address#,
+		</isNotEmpty>
+		<isEmpty property="picture">
+			null,
+		</isEmpty>
+		<isNotEmpty property="picture">
+			#picture#,
+		</isNotEmpty>
+		<isEmpty property="remark">
+			null
+		</isEmpty>
+		<isNotEmpty property="remark">
+			#remark#
+		</isNotEmpty>
+		)
+		</dynamic>
+	</insert>
+
+	<!--删除语句 -->
+    <delete id="delete" parameterClass="java.lang.Integer">  
+        DELETE FROM 
+        	student 
+        WHERE 
+        	id = #id#  
+    </delete>
+    
+    <!--修改语句 -->
+    <update id="update" parameterClass="student">  
+        UPDATE 
+        	student 
+        SET <!-- updateTime = sysdate  -->
+		<dynamic>
+			<isNotNull property="password">
+				<isEmpty property="password">
+					password = null
+				</isEmpty>
+				<isNotEmpty property="password">
+					password = #password#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="name">
+				<isEmpty property="name">
+					name = null
+				</isEmpty>
+				<isNotEmpty property="name">
+					name = #name#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="age">
+				<isEmpty property="age">
+					age = null
+				</isEmpty>
+				<isNotEmpty property="age">
+					age = #age#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="email">
+				<isEmpty property="email">
+					email = null
+				</isEmpty>
+				<isNotEmpty property="email">
+					email = #email#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="tel">
+				<isEmpty property="tel">
+					tel = null
+				</isEmpty>
+				<isNotEmpty property="tel">
+					tel = #tel#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="sex">
+				<isEmpty property="sex">
+					sex = null
+				</isEmpty>
+				<isNotEmpty property="sex">
+					sex = #sex#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="address">
+				<isEmpty property="address">
+					address = null
+				</isEmpty>
+				<isNotEmpty property="address">
+					address = #address#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="picture">
+				<isEmpty property="picture">
+					picture = null
+				</isEmpty>
+				<isNotEmpty property="picture">
+					picture = #picture#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="remark">
+				<isEmpty property="remark">
+					remark = null
+				</isEmpty>
+				<isNotEmpty property="remark">
+					remark = #remark#
+				</isNotEmpty>
+			</isNotNull>
+
+		</dynamic>
+        WHERE 
+        	id = #id# 
+    </update>
+    
+    <!--通过id查找 -->
+	<select id="findById" resultMap="studentResult">
+		SELECT  
+			<include refid="queryCondition"/> 
+		FROM 
+			student 
+		WHERE
+			id = #id#
+	</select>
+	
+	
+	<sql id="queryConditionSql">
+		SELECT 
+			<include refid="queryCondition"/> 
+		FROM  
+			student 
+	    <dynamic prepend="WHERE">
+			<isNotNull prepend="and" property="id">
+				id = #id#
+			</isNotNull>
+			<isNotNull prepend="and" property="password">
+				password = #password#
+			</isNotNull>
+			<isNotNull prepend="and" property="name">
+				name = #name#
+			</isNotNull>
+			<isNotNull prepend="and" property="age">
+				age = #age#
+			</isNotNull>
+			<isNotNull prepend="and" property="email">
+				email = #email#
+			</isNotNull>
+			<isNotNull prepend="and" property="tel">
+				tel = #tel#
+			</isNotNull>
+			<isNotNull prepend="and" property="sex">
+				sex = #sex#
+			</isNotNull>
+			<isNotNull prepend="and" property="address">
+				address = #address#
+			</isNotNull>
+			<isNotNull prepend="and" property="picture">
+				picture = #picture#
+			</isNotNull>
+			<isNotNull prepend="and" property="remark">
+				remark = #remark#
+			</isNotNull>
+
+	    </dynamic>
+	</sql>
+	
+	<!--分页查询-->
+	<select id="findPageByCondition" resultMap="studentResult" parameterClass="studentCondition">
+		<include refid="queryConditionSql"/>
+		limit 
+			#startRow#,#endRow# 
+	</select>
+	
+	<select id="countByCondition" parameterClass="studentCondition" resultClass="java.lang.Integer">
+		select 
+			count(*) 
+		from 
+			(<include refid="queryConditionSql"/>) as da
+	</select>
+	
+</sqlMap>

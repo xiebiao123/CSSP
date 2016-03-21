@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="StudentClub">
+	<!--引入pojo-->
+	<typeAlias alias="studentClub" type="com.soshow.ssi.studentClub.dto.StudentClub" />
+	<typeAlias alias="studentClubCondition" type="com.soshow.ssi.studentClub.dto.StudentClubCondition" />
+
+	<!-- search resultMap -->
+	<resultMap id="studentClubResult" class="studentClub">
+		<result property="id" column="id" />
+		<result property="clubId" column="club_id" />
+		<result property="studentId" column="student_id" />
+		<result property="position" column="position" />
+		<result property="status" column="status" />
+	</resultMap>
+
+	<sql id="queryCondition">
+		id,club_id,student_id,position,status
+	</sql>
+	
+	<!--插入语句-->
+	<insert id="add">
+		INSERT INTO
+			student_club(club_id,student_id,position,status)
+		values
+			<dynamic>
+		(
+		<isEmpty property="clubId">
+			null,
+		</isEmpty>
+		<isNotEmpty property="clubId">
+			#clubId#,
+		</isNotEmpty>
+		<isEmpty property="studentId">
+			null,
+		</isEmpty>
+		<isNotEmpty property="studentId">
+			#studentId#,
+		</isNotEmpty>
+		<isEmpty property="position">
+			null,
+		</isEmpty>
+		<isNotEmpty property="position">
+			#position#,
+		</isNotEmpty>
+		<isEmpty property="status">
+			null
+		</isEmpty>
+		<isNotEmpty property="status">
+			#status#
+		</isNotEmpty>
+		)
+		</dynamic>
+	</insert>
+
+	<!--删除语句 -->
+    <delete id="delete" parameterClass="java.lang.Integer">  
+        DELETE FROM 
+        	student_club 
+        WHERE 
+        	id = #id#  
+    </delete>
+    
+    <!--修改语句 -->
+    <update id="update" parameterClass="studentClub">  
+        UPDATE 
+        	student_club 
+        SET <!-- updateTime = sysdate  -->
+		<dynamic>
+			<isNotNull property="clubId">
+				<isEmpty property="clubId">
+					club_id = null
+				</isEmpty>
+				<isNotEmpty property="clubId">
+					club_id = #clubId#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="studentId">
+				<isEmpty property="studentId">
+					student_id = null
+				</isEmpty>
+				<isNotEmpty property="studentId">
+					student_id = #studentId#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="position">
+				<isEmpty property="position">
+					position = null
+				</isEmpty>
+				<isNotEmpty property="position">
+					position = #position#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="status">
+				<isEmpty property="status">
+					status = null
+				</isEmpty>
+				<isNotEmpty property="status">
+					status = #status#
+				</isNotEmpty>
+			</isNotNull>
+
+		</dynamic>
+        WHERE 
+        	id = #id# 
+    </update>
+    
+    <!--通过id查找 -->
+	<select id="findById" resultMap="studentClubResult">
+		SELECT  
+			<include refid="queryCondition"/> 
+		FROM 
+			student_club 
+		WHERE
+			id = #id#
+	</select>
+	
+	
+	<sql id="queryConditionSql">
+		SELECT 
+			<include refid="queryCondition"/> 
+		FROM  
+			student_club 
+	    <dynamic prepend="WHERE">
+			<isNotNull prepend="and" property="id">
+				id = #id#
+			</isNotNull>
+			<isNotNull prepend="and" property="clubId">
+				club_id = #clubId#
+			</isNotNull>
+			<isNotNull prepend="and" property="studentId">
+				student_id = #studentId#
+			</isNotNull>
+			<isNotNull prepend="and" property="position">
+				position = #position#
+			</isNotNull>
+			<isNotNull prepend="and" property="status">
+				status = #status#
+			</isNotNull>
+
+	    </dynamic>
+	</sql>
+	
+	<!--分页查询-->
+	<select id="findPageByCondition" resultMap="studentClubResult" parameterClass="studentClubCondition">
+		<include refid="queryConditionSql"/>
+		limit 
+			#startRow#,#endRow# 
+	</select>
+	
+	<select id="countByCondition" parameterClass="studentClubCondition" resultClass="java.lang.Integer">
+		select 
+			count(*) 
+		from 
+			(<include refid="queryConditionSql"/>) as da
+	</select>
+	
+</sqlMap>

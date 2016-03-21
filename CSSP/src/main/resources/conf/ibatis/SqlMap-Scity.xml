@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Scity">
+	<!--引入pojo-->
+	<typeAlias alias="scity" type="com.soshow.ssi.scity.dto.Scity" />
+	<typeAlias alias="scityCondition" type="com.soshow.ssi.scity.dto.ScityCondition" />
+
+	<!-- search resultMap -->
+	<resultMap id="scityResult" class="scity">
+		<result property="cityid" column="CityID" />
+		<result property="cityname" column="CityName" />
+		<result property="zipcode" column="ZipCode" />
+		<result property="provinceid" column="ProvinceID" />
+	</resultMap>
+
+	<sql id="queryCondition">
+		CityID,CityName,ZipCode,ProvinceID
+	</sql>
+	
+	<!--插入语句-->
+	<insert id="add">
+		INSERT INTO
+			s_city(CityName,ZipCode,ProvinceID)
+		values
+			<dynamic>
+		(
+		<isEmpty property="cityname">
+			null,
+		</isEmpty>
+		<isNotEmpty property="cityname">
+			#cityname#,
+		</isNotEmpty>
+		<isEmpty property="zipcode">
+			null,
+		</isEmpty>
+		<isNotEmpty property="zipcode">
+			#zipcode#,
+		</isNotEmpty>
+		<isEmpty property="provinceid">
+			null
+		</isEmpty>
+		<isNotEmpty property="provinceid">
+			#provinceid#
+		</isNotEmpty>
+		)
+		</dynamic>
+	</insert>
+
+	<!--删除语句 -->
+    <delete id="delete" parameterClass="java.lang.Integer">  
+        DELETE FROM 
+        	s_city 
+        WHERE 
+        	id = #id#  
+    </delete>
+    
+    <!--修改语句 -->
+    <update id="update" parameterClass="scity">  
+        UPDATE 
+        	s_city 
+        SET <!-- updateTime = sysdate  -->
+		<dynamic>
+			<isNotNull property="cityname">
+				<isEmpty property="cityname">
+					CityName = null
+				</isEmpty>
+				<isNotEmpty property="cityname">
+					CityName = #cityname#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="zipcode">
+				<isEmpty property="zipcode">
+					ZipCode = null
+				</isEmpty>
+				<isNotEmpty property="zipcode">
+					ZipCode = #zipcode#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="provinceid">
+				<isEmpty property="provinceid">
+					ProvinceID = null
+				</isEmpty>
+				<isNotEmpty property="provinceid">
+					ProvinceID = #provinceid#
+				</isNotEmpty>
+			</isNotNull>
+
+		</dynamic>
+        WHERE 
+        	id = #id# 
+    </update>
+    
+    <!--通过id查找 -->
+	<select id="findById" resultMap="scityResult">
+		SELECT  
+			<include refid="queryCondition"/> 
+		FROM 
+			s_city 
+		WHERE
+			id = #id#
+	</select>
+	
+	
+	<sql id="queryConditionSql">
+		SELECT 
+			<include refid="queryCondition"/> 
+		FROM  
+			s_city 
+	    <dynamic prepend="WHERE">
+			<isNotNull prepend="and" property="cityid">
+				CityID = #cityid#
+			</isNotNull>
+			<isNotNull prepend="and" property="cityname">
+				CityName = #cityname#
+			</isNotNull>
+			<isNotNull prepend="and" property="zipcode">
+				ZipCode = #zipcode#
+			</isNotNull>
+			<isNotNull prepend="and" property="provinceid">
+				ProvinceID = #provinceid#
+			</isNotNull>
+
+	    </dynamic>
+	</sql>
+	
+	<!--分页查询-->
+	<select id="findPageByCondition" resultMap="scityResult" parameterClass="scityCondition">
+		<include refid="queryConditionSql"/>
+		limit 
+			#startRow#,#endRow# 
+	</select>
+	
+	<select id="countByCondition" parameterClass="scityCondition" resultClass="java.lang.Integer">
+		select 
+			count(*) 
+		from 
+			(<include refid="queryConditionSql"/>) as da
+	</select>
+	
+</sqlMap>

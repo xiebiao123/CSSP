@@ -16,8 +16,29 @@
 	<typeHandler jdbcType="BLOB" javaType="[B" callback="org.springframework.orm.ibatis.support.BlobByteArrayTypeHandler" />
 	<typeHandler jdbcType="CLOB" javaType="java.lang.String" callback="org.springframework.orm.ibatis.support.ClobStringTypeHandler" />
 	
-	<sqlMap resource="conf/ibatis/SqlMap-City.xml" />
-	<sqlMap resource="conf/ibatis/SqlMap-Emp.xml" />
-	<sqlMap resource="conf/ibatis/SqlMap-EmpAddress.xml" />
+	<sqlMap resource="conf/ibatis/SqlMap-Activity.xml" />
+	<sqlMap resource="conf/ibatis/SqlMap-Admin.xml" />
+	<sqlMap resource="conf/ibatis/SqlMap-Club.xml" />
+	<sqlMap resource="conf/ibatis/SqlMap-ClubActivity.xml" />
+	<sqlMap resource="conf/ibatis/SqlMap-Company.xml" />
+	<sqlMap resource="conf/ibatis/SqlMap-Experience.xml" />
+	<sqlMap resource="conf/ibatis/SqlMap-Goods.xml" />
+	<sqlMap resource="conf/ibatis/SqlMap-GoodsLeaveMessage.xml" />
+	<sqlMap resource="conf/ibatis/SqlMap-GoodsOrder.xml" />
+	<sqlMap resource="conf/ibatis/SqlMap-GoodsOrderDetailed.xml" />
+	<sqlMap resource="conf/ibatis/SqlMap-GoodsType.xml" />
+	<sqlMap resource="conf/ibatis/SqlMap-LeaveMessageComments.xml" />
+	<sqlMap resource="conf/ibatis/SqlMap-Notice.xml" />
+	<sqlMap resource="conf/ibatis/SqlMap-Resume.xml" />
+	<sqlMap resource="conf/ibatis/SqlMap-Scity.xml" />
+	<sqlMap resource="conf/ibatis/SqlMap-Sdistrict.xml" />
+	<sqlMap resource="conf/ibatis/SqlMap-Sprovince.xml" />
+	<sqlMap resource="conf/ibatis/SqlMap-ShoppingCart.xml" />
+	<sqlMap resource="conf/ibatis/SqlMap-Skill.xml" />
+	<sqlMap resource="conf/ibatis/SqlMap-Student.xml" />
+	<sqlMap resource="conf/ibatis/SqlMap-StudentClub.xml" />
+	<sqlMap resource="conf/ibatis/SqlMap-StudentWork.xml" />
+	<sqlMap resource="conf/ibatis/SqlMap-Work.xml" />
+	<sqlMap resource="conf/ibatis/SqlMap-WorkType.xml" />
 	
 </sqlMapConfig>
