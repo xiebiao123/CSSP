@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Work">
+	<!--引入pojo-->
+	<typeAlias alias="work" type="com.soshow.ssi.work.dto.Work" />
+	<typeAlias alias="workCondition" type="com.soshow.ssi.work.dto.WorkCondition" />
+
+	<!-- search resultMap -->
+	<resultMap id="workResult" class="work">
+		<result property="id" column="id" />
+		<result property="companyId" column="company_id" />
+		<result property="name" column="name" />
+		<result property="address" column="address" />
+		<result property="introduce" column="introduce" />
+		<result property="salary" column="salary" />
+		<result property="welfare" column="welfare" />
+		<result property="education" column="education" />
+		<result property="count" column="count" />
+		<result property="workTypeId" column="work_type_id" />
+		<result property="remark" column="remark" />
+		<result property="createTime" column="create_time" />
+	</resultMap>
+
+	<sql id="queryCondition">
+		id,company_id,name,address,introduce,salary,welfare,education,count,work_type_id,remark,create_time
+	</sql>
+	
+	<!--插入语句-->
+	<insert id="add">
+		INSERT INTO
+			work(company_id,name,address,introduce,salary,welfare,education,count,work_type_id,remark,create_time)
+		values
+			<dynamic>
+		(
+		<isEmpty property="companyId">
+			null,
+		</isEmpty>
+		<isNotEmpty property="companyId">
+			#companyId#,
+		</isNotEmpty>
+		<isEmpty property="name">
+			null,
+		</isEmpty>
+		<isNotEmpty property="name">
+			#name#,
+		</isNotEmpty>
+		<isEmpty property="address">
+			null,
+		</isEmpty>
+		<isNotEmpty property="address">
+			#address#,
+		</isNotEmpty>
+		<isEmpty property="introduce">
+			null,
+		</isEmpty>
+		<isNotEmpty property="introduce">
+			#introduce#,
+		</isNotEmpty>
+		<isEmpty property="salary">
+			null,
+		</isEmpty>
+		<isNotEmpty property="salary">
+			#salary#,
+		</isNotEmpty>
+		<isEmpty property="welfare">
+			null,
+		</isEmpty>
+		<isNotEmpty property="welfare">
+			#welfare#,
+		</isNotEmpty>
+		<isEmpty property="education">
+			null,
+		</isEmpty>
+		<isNotEmpty property="education">
+			#education#,
+		</isNotEmpty>
+		<isEmpty property="count">
+			null,
+		</isEmpty>
+		<isNotEmpty property="count">
+			#count#,
+		</isNotEmpty>
+		<isEmpty property="workTypeId">
+			null,
+		</isEmpty>
+		<isNotEmpty property="workTypeId">
+			#workTypeId#,
+		</isNotEmpty>
+		<isEmpty property="remark">
+			null,
+		</isEmpty>
+		<isNotEmpty property="remark">
+			#remark#,
+		</isNotEmpty>
+		<isEmpty property="createTime">
+			null
+		</isEmpty>
+		<isNotEmpty property="createTime">
+			#createTime#
+		</isNotEmpty>
+		)
+		</dynamic>
+	</insert>
+
+	<!--删除语句 -->
+    <delete id="delete" parameterClass="java.lang.Integer">  
+        DELETE FROM 
+        	work 
+        WHERE 
+        	id = #id#  
+    </delete>
+    
+    <!--修改语句 -->
+    <update id="update" parameterClass="work">  
+        UPDATE 
+        	work 
+        SET <!-- updateTime = sysdate  -->
+		<dynamic>
+			<isNotNull property="companyId">
+				<isEmpty property="companyId">
+					company_id = null
+				</isEmpty>
+				<isNotEmpty property="companyId">
+					company_id = #companyId#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="name">
+				<isEmpty property="name">
+					name = null
+				</isEmpty>
+				<isNotEmpty property="name">
+					name = #name#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="address">
+				<isEmpty property="address">
+					address = null
+				</isEmpty>
+				<isNotEmpty property="address">
+					address = #address#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="introduce">
+				<isEmpty property="introduce">
+					introduce = null
+				</isEmpty>
+				<isNotEmpty property="introduce">
+					introduce = #introduce#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="salary">
+				<isEmpty property="salary">
+					salary = null
+				</isEmpty>
+				<isNotEmpty property="salary">
+					salary = #salary#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="welfare">
+				<isEmpty property="welfare">
+					welfare = null
+				</isEmpty>
+				<isNotEmpty property="welfare">
+					welfare = #welfare#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="education">
+				<isEmpty property="education">
+					education = null
+				</isEmpty>
+				<isNotEmpty property="education">
+					education = #education#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="count">
+				<isEmpty property="count">
+					count = null
+				</isEmpty>
+				<isNotEmpty property="count">
+					count = #count#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="workTypeId">
+				<isEmpty property="workTypeId">
+					work_type_id = null
+				</isEmpty>
+				<isNotEmpty property="workTypeId">
+					work_type_id = #workTypeId#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="remark">
+				<isEmpty property="remark">
+					remark = null
+				</isEmpty>
+				<isNotEmpty property="remark">
+					remark = #remark#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="createTime">
+				<isEmpty property="createTime">
+					create_time = null
+				</isEmpty>
+				<isNotEmpty property="createTime">
+					create_time = #createTime#
+				</isNotEmpty>
+			</isNotNull>
+
+		</dynamic>
+        WHERE 
+        	id = #id# 
+    </update>
+    
+    <!--通过id查找 -->
+	<select id="findById" resultMap="workResult">
+		SELECT  
+			<include refid="queryCondition"/> 
+		FROM 
+			work 
+		WHERE
+			id = #id#
+	</select>
+	
+	
+	<sql id="queryConditionSql">
+		SELECT 
+			<include refid="queryCondition"/> 
+		FROM  
+			work 
+	    <dynamic prepend="WHERE">
+			<isNotNull prepend="and" property="id">
+				id = #id#
+			</isNotNull>
+			<isNotNull prepend="and" property="companyId">
+				company_id = #companyId#
+			</isNotNull>
+			<isNotNull prepend="and" property="name">
+				name = #name#
+			</isNotNull>
+			<isNotNull prepend="and" property="address">
+				address = #address#
+			</isNotNull>
+			<isNotNull prepend="and" property="introduce">
+				introduce = #introduce#
+			</isNotNull>
+			<isNotNull prepend="and" property="salary">
+				salary = #salary#
+			</isNotNull>
+			<isNotNull prepend="and" property="welfare">
+				welfare = #welfare#
+			</isNotNull>
+			<isNotNull prepend="and" property="education">
+				education = #education#
+			</isNotNull>
+			<isNotNull prepend="and" property="count">
+				count = #count#
+			</isNotNull>
+			<isNotNull prepend="and" property="workTypeId">
+				work_type_id = #workTypeId#
+			</isNotNull>
+			<isNotNull prepend="and" property="remark">
+				remark = #remark#
+			</isNotNull>
+			<isNotNull prepend="and" property="createTime">
+				create_time = #createTime#
+			</isNotNull>
+
+	    </dynamic>
+	</sql>
+	
+	<!--分页查询-->
+	<select id="findPageByCondition" resultMap="workResult" parameterClass="workCondition">
+		<include refid="queryConditionSql"/>
+		limit 
+			#startRow#,#endRow# 
+	</select>
+	
+	<select id="countByCondition" parameterClass="workCondition" resultClass="java.lang.Integer">
+		select 
+			count(*) 
+		from 
+			(<include refid="queryConditionSql"/>) as da
+	</select>
+	
+</sqlMap>

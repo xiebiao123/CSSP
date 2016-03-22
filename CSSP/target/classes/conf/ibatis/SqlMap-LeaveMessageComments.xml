@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="LeaveMessageComments">
+	<!--引入pojo-->
+	<typeAlias alias="leaveMessageComments" type="com.soshow.ssi.leaveMessageComments.dto.LeaveMessageComments" />
+	<typeAlias alias="leaveMessageCommentsCondition" type="com.soshow.ssi.leaveMessageComments.dto.LeaveMessageCommentsCondition" />
+
+	<!-- search resultMap -->
+	<resultMap id="leaveMessageCommentsResult" class="leaveMessageComments">
+		<result property="id" column="id" />
+		<result property="leaveMessageId" column="leave_message_id" />
+		<result property="studnetId" column="studnet_id" />
+		<result property="comments" column="comments" />
+		<result property="sortNum" column="sort_num" />
+		<result property="type" column="type" />
+	</resultMap>
+
+	<sql id="queryCondition">
+		id,leave_message_id,studnet_id,comments,sort_num,type
+	</sql>
+	
+	<!--插入语句-->
+	<insert id="add">
+		INSERT INTO
+			leave_message_comments(leave_message_id,studnet_id,comments,sort_num,type)
+		values
+			<dynamic>
+		(
+		<isEmpty property="leaveMessageId">
+			null,
+		</isEmpty>
+		<isNotEmpty property="leaveMessageId">
+			#leaveMessageId#,
+		</isNotEmpty>
+		<isEmpty property="studnetId">
+			null,
+		</isEmpty>
+		<isNotEmpty property="studnetId">
+			#studnetId#,
+		</isNotEmpty>
+		<isEmpty property="comments">
+			null,
+		</isEmpty>
+		<isNotEmpty property="comments">
+			#comments#,
+		</isNotEmpty>
+		<isEmpty property="sortNum">
+			null,
+		</isEmpty>
+		<isNotEmpty property="sortNum">
+			#sortNum#,
+		</isNotEmpty>
+		<isEmpty property="type">
+			null
+		</isEmpty>
+		<isNotEmpty property="type">
+			#type#
+		</isNotEmpty>
+		)
+		</dynamic>
+	</insert>
+
+	<!--删除语句 -->
+    <delete id="delete" parameterClass="java.lang.Integer">  
+        DELETE FROM 
+        	leave_message_comments 
+        WHERE 
+        	id = #id#  
+    </delete>
+    
+    <!--修改语句 -->
+    <update id="update" parameterClass="leaveMessageComments">  
+        UPDATE 
+        	leave_message_comments 
+        SET <!-- updateTime = sysdate  -->
+		<dynamic>
+			<isNotNull property="leaveMessageId">
+				<isEmpty property="leaveMessageId">
+					leave_message_id = null
+				</isEmpty>
+				<isNotEmpty property="leaveMessageId">
+					leave_message_id = #leaveMessageId#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="studnetId">
+				<isEmpty property="studnetId">
+					studnet_id = null
+				</isEmpty>
+				<isNotEmpty property="studnetId">
+					studnet_id = #studnetId#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="comments">
+				<isEmpty property="comments">
+					comments = null
+				</isEmpty>
+				<isNotEmpty property="comments">
+					comments = #comments#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="sortNum">
+				<isEmpty property="sortNum">
+					sort_num = null
+				</isEmpty>
+				<isNotEmpty property="sortNum">
+					sort_num = #sortNum#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="type">
+				<isEmpty property="type">
+					type = null
+				</isEmpty>
+				<isNotEmpty property="type">
+					type = #type#
+				</isNotEmpty>
+			</isNotNull>
+
+		</dynamic>
+        WHERE 
+        	id = #id# 
+    </update>
+    
+    <!--通过id查找 -->
+	<select id="findById" resultMap="leaveMessageCommentsResult">
+		SELECT  
+			<include refid="queryCondition"/> 
+		FROM 
+			leave_message_comments 
+		WHERE
+			id = #id#
+	</select>
+	
+	
+	<sql id="queryConditionSql">
+		SELECT 
+			<include refid="queryCondition"/> 
+		FROM  
+			leave_message_comments 
+	    <dynamic prepend="WHERE">
+			<isNotNull prepend="and" property="id">
+				id = #id#
+			</isNotNull>
+			<isNotNull prepend="and" property="leaveMessageId">
+				leave_message_id = #leaveMessageId#
+			</isNotNull>
+			<isNotNull prepend="and" property="studnetId">
+				studnet_id = #studnetId#
+			</isNotNull>
+			<isNotNull prepend="and" property="comments">
+				comments = #comments#
+			</isNotNull>
+			<isNotNull prepend="and" property="sortNum">
+				sort_num = #sortNum#
+			</isNotNull>
+			<isNotNull prepend="and" property="type">
+				type = #type#
+			</isNotNull>
+
+	    </dynamic>
+	</sql>
+	
+	<!--分页查询-->
+	<select id="findPageByCondition" resultMap="leaveMessageCommentsResult" parameterClass="leaveMessageCommentsCondition">
+		<include refid="queryConditionSql"/>
+		limit 
+			#startRow#,#endRow# 
+	</select>
+	
+	<select id="countByCondition" parameterClass="leaveMessageCommentsCondition" resultClass="java.lang.Integer">
+		select 
+			count(*) 
+		from 
+			(<include refid="queryConditionSql"/>) as da
+	</select>
+	
+</sqlMap>

@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Company">
+	<!--引入pojo-->
+	<typeAlias alias="company" type="com.soshow.ssi.company.dto.Company" />
+	<typeAlias alias="companyCondition" type="com.soshow.ssi.company.dto.CompanyCondition" />
+
+	<!-- search resultMap -->
+	<resultMap id="companyResult" class="company">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="address" column="address" />
+		<result property="introduce" column="introduce" />
+		<result property="tel" column="tel" />
+		<result property="email" column="email" />
+		<result property="remark" column="remark" />
+		<result property="contact" column="contact" />
+	</resultMap>
+
+	<sql id="queryCondition">
+		id,name,address,introduce,tel,email,remark,contact
+	</sql>
+	
+	<!--插入语句-->
+	<insert id="add">
+		INSERT INTO
+			company(name,address,introduce,tel,email,remark,contact)
+		values
+			<dynamic>
+		(
+		<isEmpty property="name">
+			'',
+		</isEmpty>
+		<isNotEmpty property="name">
+			#name#,
+		</isNotEmpty>
+		<isEmpty property="address">
+			null,
+		</isEmpty>
+		<isNotEmpty property="address">
+			#address#,
+		</isNotEmpty>
+		<isEmpty property="introduce">
+			'',
+		</isEmpty>
+		<isNotEmpty property="introduce">
+			#introduce#,
+		</isNotEmpty>
+		<isEmpty property="tel">
+			null,
+		</isEmpty>
+		<isNotEmpty property="tel">
+			#tel#,
+		</isNotEmpty>
+		<isEmpty property="email">
+			null,
+		</isEmpty>
+		<isNotEmpty property="email">
+			#email#,
+		</isNotEmpty>
+		<isEmpty property="remark">
+			null,
+		</isEmpty>
+		<isNotEmpty property="remark">
+			#remark#,
+		</isNotEmpty>
+		<isEmpty property="contact">
+			null
+		</isEmpty>
+		<isNotEmpty property="contact">
+			#contact#
+		</isNotEmpty>
+		)
+		</dynamic>
+	</insert>
+
+	<!--删除语句 -->
+    <delete id="delete" parameterClass="java.lang.Integer">  
+        DELETE FROM 
+        	company 
+        WHERE 
+        	id = #id#  
+    </delete>
+    
+    <!--修改语句 -->
+    <update id="update" parameterClass="company">  
+        UPDATE 
+        	company 
+        SET <!-- updateTime = sysdate  -->
+		<dynamic>
+			<isNotNull property="name">
+				<isEmpty property="name">
+					name = ''
+				</isEmpty>
+				<isNotEmpty property="name">
+					name = #name#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="address">
+				<isEmpty property="address">
+					address = null
+				</isEmpty>
+				<isNotEmpty property="address">
+					address = #address#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="introduce">
+				<isEmpty property="introduce">
+					introduce = ''
+				</isEmpty>
+				<isNotEmpty property="introduce">
+					introduce = #introduce#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="tel">
+				<isEmpty property="tel">
+					tel = null
+				</isEmpty>
+				<isNotEmpty property="tel">
+					tel = #tel#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="email">
+				<isEmpty property="email">
+					email = null
+				</isEmpty>
+				<isNotEmpty property="email">
+					email = #email#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="remark">
+				<isEmpty property="remark">
+					remark = null
+				</isEmpty>
+				<isNotEmpty property="remark">
+					remark = #remark#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="contact">
+				<isEmpty property="contact">
+					contact = null
+				</isEmpty>
+				<isNotEmpty property="contact">
+					contact = #contact#
+				</isNotEmpty>
+			</isNotNull>
+
+		</dynamic>
+        WHERE 
+        	id = #id# 
+    </update>
+    
+    <!--通过id查找 -->
+	<select id="findById" resultMap="companyResult">
+		SELECT  
+			<include refid="queryCondition"/> 
+		FROM 
+			company 
+		WHERE
+			id = #id#
+	</select>
+	
+	
+	<sql id="queryConditionSql">
+		SELECT 
+			<include refid="queryCondition"/> 
+		FROM  
+			company 
+	    <dynamic prepend="WHERE">
+			<isNotNull prepend="and" property="id">
+				id = #id#
+			</isNotNull>
+			<isNotNull prepend="and" property="name">
+				name = #name#
+			</isNotNull>
+			<isNotNull prepend="and" property="address">
+				address = #address#
+			</isNotNull>
+			<isNotNull prepend="and" property="introduce">
+				introduce = #introduce#
+			</isNotNull>
+			<isNotNull prepend="and" property="tel">
+				tel = #tel#
+			</isNotNull>
+			<isNotNull prepend="and" property="email">
+				email = #email#
+			</isNotNull>
+			<isNotNull prepend="and" property="remark">
+				remark = #remark#
+			</isNotNull>
+			<isNotNull prepend="and" property="contact">
+				contact = #contact#
+			</isNotNull>
+
+	    </dynamic>
+	</sql>
+	
+	<!--分页查询-->
+	<select id="findPageByCondition" resultMap="companyResult" parameterClass="companyCondition">
+		<include refid="queryConditionSql"/>
+		limit 
+			#startRow#,#endRow# 
+	</select>
+	
+	<select id="countByCondition" parameterClass="companyCondition" resultClass="java.lang.Integer">
+		select 
+			count(*) 
+		from 
+			(<include refid="queryConditionSql"/>) as da
+	</select>
+	
+</sqlMap>

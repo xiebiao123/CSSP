@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="GoodsOrder">
+	<!--引入pojo-->
+	<typeAlias alias="goodsOrder" type="com.soshow.ssi.goodsOrder.dto.GoodsOrder" />
+	<typeAlias alias="goodsOrderCondition" type="com.soshow.ssi.goodsOrder.dto.GoodsOrderCondition" />
+
+	<!-- search resultMap -->
+	<resultMap id="goodsOrderResult" class="goodsOrder">
+		<result property="id" column="id" />
+		<result property="orderDetailId" column="order_detail_id" />
+		<result property="sellerId" column="seller_id" />
+		<result property="buyersId" column="buyers_id" />
+		<result property="status" column="status" />
+		<result property="distribution" column="distribution" />
+		<result property="address" column="address" />
+		<result property="name" column="name" />
+		<result property="createTime" column="create_time" />
+		<result property="seller" column="seller" />
+		<result property="buyers" column="buyers" />
+		<result property="phone" column="phone" />
+		<result property="email" column="email" />
+		<result property="sumPrice" column="sum_price" />
+		<result property="remark" column="remark" />
+	</resultMap>
+
+	<sql id="queryCondition">
+		id,order_detail_id,seller_id,buyers_id,status,distribution,address,name,create_time,seller,buyers,phone,email,sum_price,remark
+	</sql>
+	
+	<!--插入语句-->
+	<insert id="add">
+		INSERT INTO
+			goods_order(order_detail_id,seller_id,buyers_id,status,distribution,address,name,create_time,seller,buyers,phone,email,sum_price,remark)
+		values
+			<dynamic>
+		(
+		<isEmpty property="orderDetailId">
+			null,
+		</isEmpty>
+		<isNotEmpty property="orderDetailId">
+			#orderDetailId#,
+		</isNotEmpty>
+		<isEmpty property="sellerId">
+			null,
+		</isEmpty>
+		<isNotEmpty property="sellerId">
+			#sellerId#,
+		</isNotEmpty>
+		<isEmpty property="buyersId">
+			null,
+		</isEmpty>
+		<isNotEmpty property="buyersId">
+			#buyersId#,
+		</isNotEmpty>
+		<isEmpty property="status">
+			null,
+		</isEmpty>
+		<isNotEmpty property="status">
+			#status#,
+		</isNotEmpty>
+		<isEmpty property="distribution">
+			null,
+		</isEmpty>
+		<isNotEmpty property="distribution">
+			#distribution#,
+		</isNotEmpty>
+		<isEmpty property="address">
+			null,
+		</isEmpty>
+		<isNotEmpty property="address">
+			#address#,
+		</isNotEmpty>
+		<isEmpty property="name">
+			null,
+		</isEmpty>
+		<isNotEmpty property="name">
+			#name#,
+		</isNotEmpty>
+		<isEmpty property="createTime">
+			null,
+		</isEmpty>
+		<isNotEmpty property="createTime">
+			#createTime#,
+		</isNotEmpty>
+		<isEmpty property="seller">
+			null,
+		</isEmpty>
+		<isNotEmpty property="seller">
+			#seller#,
+		</isNotEmpty>
+		<isEmpty property="buyers">
+			null,
+		</isEmpty>
+		<isNotEmpty property="buyers">
+			#buyers#,
+		</isNotEmpty>
+		<isEmpty property="phone">
+			null,
+		</isEmpty>
+		<isNotEmpty property="phone">
+			#phone#,
+		</isNotEmpty>
+		<isEmpty property="email">
+			null,
+		</isEmpty>
+		<isNotEmpty property="email">
+			#email#,
+		</isNotEmpty>
+		<isEmpty property="sumPrice">
+			null,
+		</isEmpty>
+		<isNotEmpty property="sumPrice">
+			#sumPrice#,
+		</isNotEmpty>
+		<isEmpty property="remark">
+			null
+		</isEmpty>
+		<isNotEmpty property="remark">
+			#remark#
+		</isNotEmpty>
+		)
+		</dynamic>
+	</insert>
+
+	<!--删除语句 -->
+    <delete id="delete" parameterClass="java.lang.Integer">  
+        DELETE FROM 
+        	goods_order 
+        WHERE 
+        	id = #id#  
+    </delete>
+    
+    <!--修改语句 -->
+    <update id="update" parameterClass="goodsOrder">  
+        UPDATE 
+        	goods_order 
+        SET <!-- updateTime = sysdate  -->
+		<dynamic>
+			<isNotNull property="orderDetailId">
+				<isEmpty property="orderDetailId">
+					order_detail_id = null
+				</isEmpty>
+				<isNotEmpty property="orderDetailId">
+					order_detail_id = #orderDetailId#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="sellerId">
+				<isEmpty property="sellerId">
+					seller_id = null
+				</isEmpty>
+				<isNotEmpty property="sellerId">
+					seller_id = #sellerId#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="buyersId">
+				<isEmpty property="buyersId">
+					buyers_id = null
+				</isEmpty>
+				<isNotEmpty property="buyersId">
+					buyers_id = #buyersId#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="status">
+				<isEmpty property="status">
+					status = null
+				</isEmpty>
+				<isNotEmpty property="status">
+					status = #status#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="distribution">
+				<isEmpty property="distribution">
+					distribution = null
+				</isEmpty>
+				<isNotEmpty property="distribution">
+					distribution = #distribution#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="address">
+				<isEmpty property="address">
+					address = null
+				</isEmpty>
+				<isNotEmpty property="address">
+					address = #address#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="name">
+				<isEmpty property="name">
+					name = null
+				</isEmpty>
+				<isNotEmpty property="name">
+					name = #name#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="createTime">
+				<isEmpty property="createTime">
+					create_time = null
+				</isEmpty>
+				<isNotEmpty property="createTime">
+					create_time = #createTime#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="seller">
+				<isEmpty property="seller">
+					seller = null
+				</isEmpty>
+				<isNotEmpty property="seller">
+					seller = #seller#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="buyers">
+				<isEmpty property="buyers">
+					buyers = null
+				</isEmpty>
+				<isNotEmpty property="buyers">
+					buyers = #buyers#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="phone">
+				<isEmpty property="phone">
+					phone = null
+				</isEmpty>
+				<isNotEmpty property="phone">
+					phone = #phone#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="email">
+				<isEmpty property="email">
+					email = null
+				</isEmpty>
+				<isNotEmpty property="email">
+					email = #email#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="sumPrice">
+				<isEmpty property="sumPrice">
+					sum_price = null
+				</isEmpty>
+				<isNotEmpty property="sumPrice">
+					sum_price = #sumPrice#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="remark">
+				<isEmpty property="remark">
+					remark = null
+				</isEmpty>
+				<isNotEmpty property="remark">
+					remark = #remark#
+				</isNotEmpty>
+			</isNotNull>
+
+		</dynamic>
+        WHERE 
+        	id = #id# 
+    </update>
+    
+    <!--通过id查找 -->
+	<select id="findById" resultMap="goodsOrderResult">
+		SELECT  
+			<include refid="queryCondition"/> 
+		FROM 
+			goods_order 
+		WHERE
+			id = #id#
+	</select>
+	
+	
+	<sql id="queryConditionSql">
+		SELECT 
+			<include refid="queryCondition"/> 
+		FROM  
+			goods_order 
+	    <dynamic prepend="WHERE">
+			<isNotNull prepend="and" property="id">
+				id = #id#
+			</isNotNull>
+			<isNotNull prepend="and" property="orderDetailId">
+				order_detail_id = #orderDetailId#
+			</isNotNull>
+			<isNotNull prepend="and" property="sellerId">
+				seller_id = #sellerId#
+			</isNotNull>
+			<isNotNull prepend="and" property="buyersId">
+				buyers_id = #buyersId#
+			</isNotNull>
+			<isNotNull prepend="and" property="status">
+				status = #status#
+			</isNotNull>
+			<isNotNull prepend="and" property="distribution">
+				distribution = #distribution#
+			</isNotNull>
+			<isNotNull prepend="and" property="address">
+				address = #address#
+			</isNotNull>
+			<isNotNull prepend="and" property="name">
+				name = #name#
+			</isNotNull>
+			<isNotNull prepend="and" property="createTime">
+				create_time = #createTime#
+			</isNotNull>
+			<isNotNull prepend="and" property="seller">
+				seller = #seller#
+			</isNotNull>
+			<isNotNull prepend="and" property="buyers">
+				buyers = #buyers#
+			</isNotNull>
+			<isNotNull prepend="and" property="phone">
+				phone = #phone#
+			</isNotNull>
+			<isNotNull prepend="and" property="email">
+				email = #email#
+			</isNotNull>
+			<isNotNull prepend="and" property="sumPrice">
+				sum_price = #sumPrice#
+			</isNotNull>
+			<isNotNull prepend="and" property="remark">
+				remark = #remark#
+			</isNotNull>
+
+	    </dynamic>
+	</sql>
+	
+	<!--分页查询-->
+	<select id="findPageByCondition" resultMap="goodsOrderResult" parameterClass="goodsOrderCondition">
+		<include refid="queryConditionSql"/>
+		limit 
+			#startRow#,#endRow# 
+	</select>
+	
+	<select id="countByCondition" parameterClass="goodsOrderCondition" resultClass="java.lang.Integer">
+		select 
+			count(*) 
+		from 
+			(<include refid="queryConditionSql"/>) as da
+	</select>
+	
+</sqlMap>

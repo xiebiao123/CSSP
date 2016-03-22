@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+	PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+	"http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="City">
+	<!--引入pojo-->
+	<typeAlias alias="city" type="com.soshow.ssi.city.dto.City" />
+	<typeAlias alias="cityCondition" type="com.soshow.ssi.city.dto.CityCondition" />
+	
+	<resultMap id="cityResult" class="city"> 
+	    <result property="id" column="id"/> 
+	    <result property="cityName" column="city_name"/> 
+	    <result property="provinceId" column="province_id"/> 
+  	</resultMap> 
+	
+	<sql id="queryCondition">
+		id,city_name,province_id
+	</sql>
+	
+	<insert id="add" parameterClass="city"> 
+        INSERT INTO
+        	city(city_name, province_id) 
+        VALUES 
+       		(#cityName#,#provinceId# )  
+         <selectKey resultClass="java.lang.Integer" keyProperty="id">  
+        	select last_insert_id() as ID from city limit 1  
+    	</selectKey>
+    </insert>  	
+	
+	<delete id="delete" parameterClass="java.lang.Integer">  
+        DELETE FROM 
+        	city 
+        WHERE 
+        	id = #id#  
+    </delete>  
+	 
+	<update id="update" parameterClass="city">  
+        UPDATE 
+        	city 
+        SET <!-- updateTime = sysdate  -->
+        <dynamic>
+			<isNotNull property="cityName" >
+		           city_name=#cityName#
+			</isNotNull>
+			<isNotNull prepend="," property="provinceId" >
+		           province_id=#provinceId#
+			</isNotNull>
+	    </dynamic>
+        WHERE 
+        	id = #id# 
+    </update> 
+	  
+	<!--通过id查找 -->
+	<select id="findById" resultMap="cityResult">
+		SELECT  
+			<include refid="queryCondition"/> 
+		FROM 
+			city 
+		WHERE
+			id = #id#
+	</select>
+
+	<sql id="queryConditionSql">
+		SELECT 
+			<include refid="queryCondition"/> 
+		FROM  
+			city 
+	    <dynamic prepend="WHERE">
+			<isNotNull prepend="AND" property="cityName" >
+		           city_name=#cityName#
+			</isNotNull>
+			<isNotNull prepend="AND" property="provinceId" >
+		           province_id=#provinceId#
+			</isNotNull>
+	    </dynamic>
+	</sql>
+
+	<!--分页查询-->
+	<select id="findPageByCondition" resultMap="cityResult" parameterClass="cityCondition">
+		<include refid="queryConditionSql"/> 
+		limit 
+			#startRow#,#endRow# 
+	</select>
+	
+	<select id="countByCondition" parameterClass="cityCondition" resultClass="java.lang.Integer">
+		select 
+			count(*) 
+		from 
+			(<include refid="queryConditionSql"/>) as da
+	</select>
+	
+</sqlMap>

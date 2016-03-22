@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Notice">
+	<!--引入pojo-->
+	<typeAlias alias="notice" type="com.soshow.ssi.notice.dto.Notice" />
+	<typeAlias alias="noticeCondition" type="com.soshow.ssi.notice.dto.NoticeCondition" />
+
+	<!-- search resultMap -->
+	<resultMap id="noticeResult" class="notice">
+		<result property="id" column="id" />
+		<result property="content" column="content" />
+		<result property="title" column="title" />
+		<result property="createTime" column="create_time" />
+		<result property="adminId" column="admin_id" />
+	</resultMap>
+
+	<sql id="queryCondition">
+		id,content,title,create_time,admin_id
+	</sql>
+	
+	<!--插入语句-->
+	<insert id="add">
+		INSERT INTO
+			notice(content,title,create_time,admin_id)
+		values
+			<dynamic>
+		(
+		<isEmpty property="content">
+			null,
+		</isEmpty>
+		<isNotEmpty property="content">
+			#content#,
+		</isNotEmpty>
+		<isEmpty property="title">
+			null,
+		</isEmpty>
+		<isNotEmpty property="title">
+			#title#,
+		</isNotEmpty>
+		<isEmpty property="createTime">
+			null,
+		</isEmpty>
+		<isNotEmpty property="createTime">
+			#createTime#,
+		</isNotEmpty>
+		<isEmpty property="adminId">
+			null
+		</isEmpty>
+		<isNotEmpty property="adminId">
+			#adminId#
+		</isNotEmpty>
+		)
+		</dynamic>
+	</insert>
+
+	<!--删除语句 -->
+    <delete id="delete" parameterClass="java.lang.Integer">  
+        DELETE FROM 
+        	notice 
+        WHERE 
+        	id = #id#  
+    </delete>
+    
+    <!--修改语句 -->
+    <update id="update" parameterClass="notice">  
+        UPDATE 
+        	notice 
+        SET <!-- updateTime = sysdate  -->
+		<dynamic>
+			<isNotNull property="content">
+				<isEmpty property="content">
+					content = null
+				</isEmpty>
+				<isNotEmpty property="content">
+					content = #content#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="title">
+				<isEmpty property="title">
+					title = null
+				</isEmpty>
+				<isNotEmpty property="title">
+					title = #title#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="createTime">
+				<isEmpty property="createTime">
+					create_time = null
+				</isEmpty>
+				<isNotEmpty property="createTime">
+					create_time = #createTime#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="adminId">
+				<isEmpty property="adminId">
+					admin_id = null
+				</isEmpty>
+				<isNotEmpty property="adminId">
+					admin_id = #adminId#
+				</isNotEmpty>
+			</isNotNull>
+
+		</dynamic>
+        WHERE 
+        	id = #id# 
+    </update>
+    
+    <!--通过id查找 -->
+	<select id="findById" resultMap="noticeResult">
+		SELECT  
+			<include refid="queryCondition"/> 
+		FROM 
+			notice 
+		WHERE
+			id = #id#
+	</select>
+	
+	
+	<sql id="queryConditionSql">
+		SELECT 
+			<include refid="queryCondition"/> 
+		FROM  
+			notice 
+	    <dynamic prepend="WHERE">
+			<isNotNull prepend="and" property="id">
+				id = #id#
+			</isNotNull>
+			<isNotNull prepend="and" property="content">
+				content = #content#
+			</isNotNull>
+			<isNotNull prepend="and" property="title">
+				title = #title#
+			</isNotNull>
+			<isNotNull prepend="and" property="createTime">
+				create_time = #createTime#
+			</isNotNull>
+			<isNotNull prepend="and" property="adminId">
+				admin_id = #adminId#
+			</isNotNull>
+
+	    </dynamic>
+	</sql>
+	
+	<!--分页查询-->
+	<select id="findPageByCondition" resultMap="noticeResult" parameterClass="noticeCondition">
+		<include refid="queryConditionSql"/>
+		limit 
+			#startRow#,#endRow# 
+	</select>
+	
+	<select id="countByCondition" parameterClass="noticeCondition" resultClass="java.lang.Integer">
+		select 
+			count(*) 
+		from 
+			(<include refid="queryConditionSql"/>) as da
+	</select>
+	
+</sqlMap>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="ClubActivity">
+	<!--引入pojo-->
+	<typeAlias alias="clubActivity" type="com.soshow.ssi.clubActivity.dto.ClubActivity" />
+	<typeAlias alias="clubActivityCondition" type="com.soshow.ssi.clubActivity.dto.ClubActivityCondition" />
+
+	<!-- search resultMap -->
+	<resultMap id="clubActivityResult" class="clubActivity">
+		<result property="id" column="id" />
+		<result property="activityId" column="activity_id" />
+		<result property="clubId" column="club_id" />
+		<result property="count" column="count" />
+		<result property="remark" column="remark" />
+	</resultMap>
+
+	<sql id="queryCondition">
+		id,activity_id,club_id,count,remark
+	</sql>
+	
+	<!--插入语句-->
+	<insert id="add">
+		INSERT INTO
+			club_activity(activity_id,club_id,count,remark)
+		values
+			<dynamic>
+		(
+		<isEmpty property="activityId">
+			null,
+		</isEmpty>
+		<isNotEmpty property="activityId">
+			#activityId#,
+		</isNotEmpty>
+		<isEmpty property="clubId">
+			null,
+		</isEmpty>
+		<isNotEmpty property="clubId">
+			#clubId#,
+		</isNotEmpty>
+		<isEmpty property="count">
+			null,
+		</isEmpty>
+		<isNotEmpty property="count">
+			#count#,
+		</isNotEmpty>
+		<isEmpty property="remark">
+			null
+		</isEmpty>
+		<isNotEmpty property="remark">
+			#remark#
+		</isNotEmpty>
+		)
+		</dynamic>
+	</insert>
+
+	<!--删除语句 -->
+    <delete id="delete" parameterClass="java.lang.Integer">  
+        DELETE FROM 
+        	club_activity 
+        WHERE 
+        	id = #id#  
+    </delete>
+    
+    <!--修改语句 -->
+    <update id="update" parameterClass="clubActivity">  
+        UPDATE 
+        	club_activity 
+        SET <!-- updateTime = sysdate  -->
+		<dynamic>
+			<isNotNull property="activityId">
+				<isEmpty property="activityId">
+					activity_id = null
+				</isEmpty>
+				<isNotEmpty property="activityId">
+					activity_id = #activityId#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="clubId">
+				<isEmpty property="clubId">
+					club_id = null
+				</isEmpty>
+				<isNotEmpty property="clubId">
+					club_id = #clubId#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="count">
+				<isEmpty property="count">
+					count = null
+				</isEmpty>
+				<isNotEmpty property="count">
+					count = #count#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="remark">
+				<isEmpty property="remark">
+					remark = null
+				</isEmpty>
+				<isNotEmpty property="remark">
+					remark = #remark#
+				</isNotEmpty>
+			</isNotNull>
+
+		</dynamic>
+        WHERE 
+        	id = #id# 
+    </update>
+    
+    <!--通过id查找 -->
+	<select id="findById" resultMap="clubActivityResult">
+		SELECT  
+			<include refid="queryCondition"/> 
+		FROM 
+			club_activity 
+		WHERE
+			id = #id#
+	</select>
+	
+	
+	<sql id="queryConditionSql">
+		SELECT 
+			<include refid="queryCondition"/> 
+		FROM  
+			club_activity 
+	    <dynamic prepend="WHERE">
+			<isNotNull prepend="and" property="id">
+				id = #id#
+			</isNotNull>
+			<isNotNull prepend="and" property="activityId">
+				activity_id = #activityId#
+			</isNotNull>
+			<isNotNull prepend="and" property="clubId">
+				club_id = #clubId#
+			</isNotNull>
+			<isNotNull prepend="and" property="count">
+				count = #count#
+			</isNotNull>
+			<isNotNull prepend="and" property="remark">
+				remark = #remark#
+			</isNotNull>
+
+	    </dynamic>
+	</sql>
+	
+	<!--分页查询-->
+	<select id="findPageByCondition" resultMap="clubActivityResult" parameterClass="clubActivityCondition">
+		<include refid="queryConditionSql"/>
+		limit 
+			#startRow#,#endRow# 
+	</select>
+	
+	<select id="countByCondition" parameterClass="clubActivityCondition" resultClass="java.lang.Integer">
+		select 
+			count(*) 
+		from 
+			(<include refid="queryConditionSql"/>) as da
+	</select>
+	
+</sqlMap>

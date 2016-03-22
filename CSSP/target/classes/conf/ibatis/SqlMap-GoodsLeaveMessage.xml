@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="GoodsLeaveMessage">
+	<!--引入pojo-->
+	<typeAlias alias="goodsLeaveMessage" type="com.soshow.ssi.goodsLeaveMessage.dto.GoodsLeaveMessage" />
+	<typeAlias alias="goodsLeaveMessageCondition" type="com.soshow.ssi.goodsLeaveMessage.dto.GoodsLeaveMessageCondition" />
+
+	<!-- search resultMap -->
+	<resultMap id="goodsLeaveMessageResult" class="goodsLeaveMessage">
+		<result property="id" column="id" />
+		<result property="goodsId" column="goods_id" />
+		<result property="studentId" column="student_id" />
+		<result property="leaveMessage" column="leave_message" />
+		<result property="createTime" column="create_time" />
+		<result property="rank" column="rank" />
+	</resultMap>
+
+	<sql id="queryCondition">
+		id,goods_id,student_id,leave_message,create_time,rank
+	</sql>
+	
+	<!--插入语句-->
+	<insert id="add">
+		INSERT INTO
+			goods_leave_message(goods_id,student_id,leave_message,create_time,rank)
+		values
+			<dynamic>
+		(
+		<isEmpty property="goodsId">
+			null,
+		</isEmpty>
+		<isNotEmpty property="goodsId">
+			#goodsId#,
+		</isNotEmpty>
+		<isEmpty property="studentId">
+			null,
+		</isEmpty>
+		<isNotEmpty property="studentId">
+			#studentId#,
+		</isNotEmpty>
+		<isEmpty property="leaveMessage">
+			null,
+		</isEmpty>
+		<isNotEmpty property="leaveMessage">
+			#leaveMessage#,
+		</isNotEmpty>
+		<isEmpty property="createTime">
+			null,
+		</isEmpty>
+		<isNotEmpty property="createTime">
+			#createTime#,
+		</isNotEmpty>
+		<isEmpty property="rank">
+			null
+		</isEmpty>
+		<isNotEmpty property="rank">
+			#rank#
+		</isNotEmpty>
+		)
+		</dynamic>
+	</insert>
+
+	<!--删除语句 -->
+    <delete id="delete" parameterClass="java.lang.Integer">  
+        DELETE FROM 
+        	goods_leave_message 
+        WHERE 
+        	id = #id#  
+    </delete>
+    
+    <!--修改语句 -->
+    <update id="update" parameterClass="goodsLeaveMessage">  
+        UPDATE 
+        	goods_leave_message 
+        SET <!-- updateTime = sysdate  -->
+		<dynamic>
+			<isNotNull property="goodsId">
+				<isEmpty property="goodsId">
+					goods_id = null
+				</isEmpty>
+				<isNotEmpty property="goodsId">
+					goods_id = #goodsId#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="studentId">
+				<isEmpty property="studentId">
+					student_id = null
+				</isEmpty>
+				<isNotEmpty property="studentId">
+					student_id = #studentId#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="leaveMessage">
+				<isEmpty property="leaveMessage">
+					leave_message = null
+				</isEmpty>
+				<isNotEmpty property="leaveMessage">
+					leave_message = #leaveMessage#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="createTime">
+				<isEmpty property="createTime">
+					create_time = null
+				</isEmpty>
+				<isNotEmpty property="createTime">
+					create_time = #createTime#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="rank">
+				<isEmpty property="rank">
+					rank = null
+				</isEmpty>
+				<isNotEmpty property="rank">
+					rank = #rank#
+				</isNotEmpty>
+			</isNotNull>
+
+		</dynamic>
+        WHERE 
+        	id = #id# 
+    </update>
+    
+    <!--通过id查找 -->
+	<select id="findById" resultMap="goodsLeaveMessageResult">
+		SELECT  
+			<include refid="queryCondition"/> 
+		FROM 
+			goods_leave_message 
+		WHERE
+			id = #id#
+	</select>
+	
+	
+	<sql id="queryConditionSql">
+		SELECT 
+			<include refid="queryCondition"/> 
+		FROM  
+			goods_leave_message 
+	    <dynamic prepend="WHERE">
+			<isNotNull prepend="and" property="id">
+				id = #id#
+			</isNotNull>
+			<isNotNull prepend="and" property="goodsId">
+				goods_id = #goodsId#
+			</isNotNull>
+			<isNotNull prepend="and" property="studentId">
+				student_id = #studentId#
+			</isNotNull>
+			<isNotNull prepend="and" property="leaveMessage">
+				leave_message = #leaveMessage#
+			</isNotNull>
+			<isNotNull prepend="and" property="createTime">
+				create_time = #createTime#
+			</isNotNull>
+			<isNotNull prepend="and" property="rank">
+				rank = #rank#
+			</isNotNull>
+
+	    </dynamic>
+	</sql>
+	
+	<!--分页查询-->
+	<select id="findPageByCondition" resultMap="goodsLeaveMessageResult" parameterClass="goodsLeaveMessageCondition">
+		<include refid="queryConditionSql"/>
+		limit 
+			#startRow#,#endRow# 
+	</select>
+	
+	<select id="countByCondition" parameterClass="goodsLeaveMessageCondition" resultClass="java.lang.Integer">
+		select 
+			count(*) 
+		from 
+			(<include refid="queryConditionSql"/>) as da
+	</select>
+	
+</sqlMap>

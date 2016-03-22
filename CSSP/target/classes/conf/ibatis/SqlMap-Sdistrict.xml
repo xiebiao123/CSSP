@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Sdistrict">
+	<!--引入pojo-->
+	<typeAlias alias="sdistrict" type="com.soshow.ssi.sdistrict.dto.Sdistrict" />
+	<typeAlias alias="sdistrictCondition" type="com.soshow.ssi.sdistrict.dto.SdistrictCondition" />
+
+	<!-- search resultMap -->
+	<resultMap id="sdistrictResult" class="sdistrict">
+		<result property="districtid" column="DistrictID" />
+		<result property="districtname" column="DistrictName" />
+		<result property="cityid" column="CityID" />
+	</resultMap>
+
+	<sql id="queryCondition">
+		DistrictID,DistrictName,CityID
+	</sql>
+	
+	<!--插入语句-->
+	<insert id="add">
+		INSERT INTO
+			s_district(DistrictName,CityID)
+		values
+			<dynamic>
+		(
+		<isEmpty property="districtname">
+			null,
+		</isEmpty>
+		<isNotEmpty property="districtname">
+			#districtname#,
+		</isNotEmpty>
+		<isEmpty property="cityid">
+			null
+		</isEmpty>
+		<isNotEmpty property="cityid">
+			#cityid#
+		</isNotEmpty>
+		)
+		</dynamic>
+	</insert>
+
+	<!--删除语句 -->
+    <delete id="delete" parameterClass="java.lang.Integer">  
+        DELETE FROM 
+        	s_district 
+        WHERE 
+        	id = #id#  
+    </delete>
+    
+    <!--修改语句 -->
+    <update id="update" parameterClass="sdistrict">  
+        UPDATE 
+        	s_district 
+        SET <!-- updateTime = sysdate  -->
+		<dynamic>
+			<isNotNull property="districtname">
+				<isEmpty property="districtname">
+					DistrictName = null
+				</isEmpty>
+				<isNotEmpty property="districtname">
+					DistrictName = #districtname#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="cityid">
+				<isEmpty property="cityid">
+					CityID = null
+				</isEmpty>
+				<isNotEmpty property="cityid">
+					CityID = #cityid#
+				</isNotEmpty>
+			</isNotNull>
+
+		</dynamic>
+        WHERE 
+        	id = #id# 
+    </update>
+    
+    <!--通过id查找 -->
+	<select id="findById" resultMap="sdistrictResult">
+		SELECT  
+			<include refid="queryCondition"/> 
+		FROM 
+			s_district 
+		WHERE
+			id = #id#
+	</select>
+	
+	
+	<sql id="queryConditionSql">
+		SELECT 
+			<include refid="queryCondition"/> 
+		FROM  
+			s_district 
+	    <dynamic prepend="WHERE">
+			<isNotNull prepend="and" property="districtid">
+				DistrictID = #districtid#
+			</isNotNull>
+			<isNotNull prepend="and" property="districtname">
+				DistrictName = #districtname#
+			</isNotNull>
+			<isNotNull prepend="and" property="cityid">
+				CityID = #cityid#
+			</isNotNull>
+
+	    </dynamic>
+	</sql>
+	
+	<!--分页查询-->
+	<select id="findPageByCondition" resultMap="sdistrictResult" parameterClass="sdistrictCondition">
+		<include refid="queryConditionSql"/>
+		limit 
+			#startRow#,#endRow# 
+	</select>
+	
+	<select id="countByCondition" parameterClass="sdistrictCondition" resultClass="java.lang.Integer">
+		select 
+			count(*) 
+		from 
+			(<include refid="queryConditionSql"/>) as da
+	</select>
+	
+</sqlMap>

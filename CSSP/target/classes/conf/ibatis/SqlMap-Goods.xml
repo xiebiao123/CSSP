@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Goods">
+	<!--引入pojo-->
+	<typeAlias alias="goods" type="com.soshow.ssi.goods.dto.Goods" />
+	<typeAlias alias="goodsCondition" type="com.soshow.ssi.goods.dto.GoodsCondition" />
+
+	<!-- search resultMap -->
+	<resultMap id="goodsResult" class="goods">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="typeId" column="type_id" />
+		<result property="image" column="image" />
+		<result property="introduce" column="introduce" />
+		<result property="oldLevel" column="old_level" />
+		<result property="studentId" column="student_id" />
+		<result property="price" column="price" />
+		<result property="number" column="number" />
+		<result property="hotLevel" column="hot_level" />
+		<result property="originalPrice" column="original_price" />
+		<result property="sortNum" column="sort_num" />
+		<result property="status" column="status" />
+		<result property="remark" column="remark" />
+		<result property="rank" column="rank" />
+	</resultMap>
+
+	<sql id="queryCondition">
+		id,name,type_id,image,introduce,old_level,student_id,price,number,hot_level,original_price,sort_num,status,remark,rank
+	</sql>
+	
+	<!--插入语句-->
+	<insert id="add">
+		INSERT INTO
+			goods(name,type_id,image,introduce,old_level,student_id,price,number,hot_level,original_price,sort_num,status,remark,rank)
+		values
+			<dynamic>
+		(
+		<isEmpty property="name">
+			'',
+		</isEmpty>
+		<isNotEmpty property="name">
+			#name#,
+		</isNotEmpty>
+		<isEmpty property="typeId">
+			null,
+		</isEmpty>
+		<isNotEmpty property="typeId">
+			#typeId#,
+		</isNotEmpty>
+		<isEmpty property="image">
+			null,
+		</isEmpty>
+		<isNotEmpty property="image">
+			#image#,
+		</isNotEmpty>
+		<isEmpty property="introduce">
+			'',
+		</isEmpty>
+		<isNotEmpty property="introduce">
+			#introduce#,
+		</isNotEmpty>
+		<isEmpty property="oldLevel">
+			null,
+		</isEmpty>
+		<isNotEmpty property="oldLevel">
+			#oldLevel#,
+		</isNotEmpty>
+		<isEmpty property="studentId">
+			null,
+		</isEmpty>
+		<isNotEmpty property="studentId">
+			#studentId#,
+		</isNotEmpty>
+		<isEmpty property="price">
+			null,
+		</isEmpty>
+		<isNotEmpty property="price">
+			#price#,
+		</isNotEmpty>
+		<isEmpty property="number">
+			null,
+		</isEmpty>
+		<isNotEmpty property="number">
+			#number#,
+		</isNotEmpty>
+		<isEmpty property="hotLevel">
+			null,
+		</isEmpty>
+		<isNotEmpty property="hotLevel">
+			#hotLevel#,
+		</isNotEmpty>
+		<isEmpty property="originalPrice">
+			null,
+		</isEmpty>
+		<isNotEmpty property="originalPrice">
+			#originalPrice#,
+		</isNotEmpty>
+		<isEmpty property="sortNum">
+			null,
+		</isEmpty>
+		<isNotEmpty property="sortNum">
+			#sortNum#,
+		</isNotEmpty>
+		<isEmpty property="status">
+			null,
+		</isEmpty>
+		<isNotEmpty property="status">
+			#status#,
+		</isNotEmpty>
+		<isEmpty property="remark">
+			null,
+		</isEmpty>
+		<isNotEmpty property="remark">
+			#remark#,
+		</isNotEmpty>
+		<isEmpty property="rank">
+			null
+		</isEmpty>
+		<isNotEmpty property="rank">
+			#rank#
+		</isNotEmpty>
+		)
+		</dynamic>
+	</insert>
+
+	<!--删除语句 -->
+    <delete id="delete" parameterClass="java.lang.Integer">  
+        DELETE FROM 
+        	goods 
+        WHERE 
+        	id = #id#  
+    </delete>
+    
+    <!--修改语句 -->
+    <update id="update" parameterClass="goods">  
+        UPDATE 
+        	goods 
+        SET <!-- updateTime = sysdate  -->
+		<dynamic>
+			<isNotNull property="name">
+				<isEmpty property="name">
+					name = ''
+				</isEmpty>
+				<isNotEmpty property="name">
+					name = #name#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="typeId">
+				<isEmpty property="typeId">
+					type_id = null
+				</isEmpty>
+				<isNotEmpty property="typeId">
+					type_id = #typeId#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="image">
+				<isEmpty property="image">
+					image = null
+				</isEmpty>
+				<isNotEmpty property="image">
+					image = #image#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="introduce">
+				<isEmpty property="introduce">
+					introduce = ''
+				</isEmpty>
+				<isNotEmpty property="introduce">
+					introduce = #introduce#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="oldLevel">
+				<isEmpty property="oldLevel">
+					old_level = null
+				</isEmpty>
+				<isNotEmpty property="oldLevel">
+					old_level = #oldLevel#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="studentId">
+				<isEmpty property="studentId">
+					student_id = null
+				</isEmpty>
+				<isNotEmpty property="studentId">
+					student_id = #studentId#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="price">
+				<isEmpty property="price">
+					price = null
+				</isEmpty>
+				<isNotEmpty property="price">
+					price = #price#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="number">
+				<isEmpty property="number">
+					number = null
+				</isEmpty>
+				<isNotEmpty property="number">
+					number = #number#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="hotLevel">
+				<isEmpty property="hotLevel">
+					hot_level = null
+				</isEmpty>
+				<isNotEmpty property="hotLevel">
+					hot_level = #hotLevel#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="originalPrice">
+				<isEmpty property="originalPrice">
+					original_price = null
+				</isEmpty>
+				<isNotEmpty property="originalPrice">
+					original_price = #originalPrice#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="sortNum">
+				<isEmpty property="sortNum">
+					sort_num = null
+				</isEmpty>
+				<isNotEmpty property="sortNum">
+					sort_num = #sortNum#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="status">
+				<isEmpty property="status">
+					status = null
+				</isEmpty>
+				<isNotEmpty property="status">
+					status = #status#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="remark">
+				<isEmpty property="remark">
+					remark = null
+				</isEmpty>
+				<isNotEmpty property="remark">
+					remark = #remark#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="rank">
+				<isEmpty property="rank">
+					rank = null
+				</isEmpty>
+				<isNotEmpty property="rank">
+					rank = #rank#
+				</isNotEmpty>
+			</isNotNull>
+
+		</dynamic>
+        WHERE 
+        	id = #id# 
+    </update>
+    
+    <!--通过id查找 -->
+	<select id="findById" resultMap="goodsResult">
+		SELECT  
+			<include refid="queryCondition"/> 
+		FROM 
+			goods 
+		WHERE
+			id = #id#
+	</select>
+	
+	
+	<sql id="queryConditionSql">
+		SELECT 
+			<include refid="queryCondition"/> 
+		FROM  
+			goods 
+	    <dynamic prepend="WHERE">
+			<isNotNull prepend="and" property="id">
+				id = #id#
+			</isNotNull>
+			<isNotNull prepend="and" property="name">
+				name = #name#
+			</isNotNull>
+			<isNotNull prepend="and" property="typeId">
+				type_id = #typeId#
+			</isNotNull>
+			<isNotNull prepend="and" property="image">
+				image = #image#
+			</isNotNull>
+			<isNotNull prepend="and" property="introduce">
+				introduce = #introduce#
+			</isNotNull>
+			<isNotNull prepend="and" property="oldLevel">
+				old_level = #oldLevel#
+			</isNotNull>
+			<isNotNull prepend="and" property="studentId">
+				student_id = #studentId#
+			</isNotNull>
+			<isNotNull prepend="and" property="price">
+				price = #price#
+			</isNotNull>
+			<isNotNull prepend="and" property="number">
+				number = #number#
+			</isNotNull>
+			<isNotNull prepend="and" property="hotLevel">
+				hot_level = #hotLevel#
+			</isNotNull>
+			<isNotNull prepend="and" property="originalPrice">
+				original_price = #originalPrice#
+			</isNotNull>
+			<isNotNull prepend="and" property="sortNum">
+				sort_num = #sortNum#
+			</isNotNull>
+			<isNotNull prepend="and" property="status">
+				status = #status#
+			</isNotNull>
+			<isNotNull prepend="and" property="remark">
+				remark = #remark#
+			</isNotNull>
+			<isNotNull prepend="and" property="rank">
+				rank = #rank#
+			</isNotNull>
+
+	    </dynamic>
+	</sql>
+	
+	<!--分页查询-->
+	<select id="findPageByCondition" resultMap="goodsResult" parameterClass="goodsCondition">
+		<include refid="queryConditionSql"/>
+		limit 
+			#startRow#,#endRow# 
+	</select>
+	
+	<select id="countByCondition" parameterClass="goodsCondition" resultClass="java.lang.Integer">
+		select 
+			count(*) 
+		from 
+			(<include refid="queryConditionSql"/>) as da
+	</select>
+	
+</sqlMap>

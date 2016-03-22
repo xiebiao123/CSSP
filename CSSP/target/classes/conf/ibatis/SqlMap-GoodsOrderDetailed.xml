@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="GoodsOrderDetailed">
+	<!--引入pojo-->
+	<typeAlias alias="goodsOrderDetailed" type="com.soshow.ssi.goodsOrderDetailed.dto.GoodsOrderDetailed" />
+	<typeAlias alias="goodsOrderDetailedCondition" type="com.soshow.ssi.goodsOrderDetailed.dto.GoodsOrderDetailedCondition" />
+
+	<!-- search resultMap -->
+	<resultMap id="goodsOrderDetailedResult" class="goodsOrderDetailed">
+		<result property="id" column="id" />
+		<result property="goodsId" column="goods_id" />
+		<result property="goodsName" column="goods_name" />
+		<result property="goodsPicture" column="goods_picture" />
+		<result property="goodsNum" column="goods_num" />
+		<result property="goodsUnitPrice" column="goods_unit_price" />
+		<result property="goodsTotalPrice" column="goods_total_price" />
+		<result property="shoppingCartId" column="shopping_cart_id" />
+	</resultMap>
+
+	<sql id="queryCondition">
+		id,goods_id,goods_name,goods_picture,goods_num,goods_unit_price,goods_total_price,shopping_cart_id
+	</sql>
+	
+	<!--插入语句-->
+	<insert id="add">
+		INSERT INTO
+			goods_order_detailed(goods_id,goods_name,goods_picture,goods_num,goods_unit_price,goods_total_price,shopping_cart_id)
+		values
+			<dynamic>
+		(
+		<isEmpty property="goodsId">
+			null,
+		</isEmpty>
+		<isNotEmpty property="goodsId">
+			#goodsId#,
+		</isNotEmpty>
+		<isEmpty property="goodsName">
+			null,
+		</isEmpty>
+		<isNotEmpty property="goodsName">
+			#goodsName#,
+		</isNotEmpty>
+		<isEmpty property="goodsPicture">
+			null,
+		</isEmpty>
+		<isNotEmpty property="goodsPicture">
+			#goodsPicture#,
+		</isNotEmpty>
+		<isEmpty property="goodsNum">
+			null,
+		</isEmpty>
+		<isNotEmpty property="goodsNum">
+			#goodsNum#,
+		</isNotEmpty>
+		<isEmpty property="goodsUnitPrice">
+			null,
+		</isEmpty>
+		<isNotEmpty property="goodsUnitPrice">
+			#goodsUnitPrice#,
+		</isNotEmpty>
+		<isEmpty property="goodsTotalPrice">
+			null,
+		</isEmpty>
+		<isNotEmpty property="goodsTotalPrice">
+			#goodsTotalPrice#,
+		</isNotEmpty>
+		<isEmpty property="shoppingCartId">
+			null
+		</isEmpty>
+		<isNotEmpty property="shoppingCartId">
+			#shoppingCartId#
+		</isNotEmpty>
+		)
+		</dynamic>
+	</insert>
+
+	<!--删除语句 -->
+    <delete id="delete" parameterClass="java.lang.Integer">  
+        DELETE FROM 
+        	goods_order_detailed 
+        WHERE 
+        	id = #id#  
+    </delete>
+    
+    <!--修改语句 -->
+    <update id="update" parameterClass="goodsOrderDetailed">  
+        UPDATE 
+        	goods_order_detailed 
+        SET <!-- updateTime = sysdate  -->
+		<dynamic>
+			<isNotNull property="goodsId">
+				<isEmpty property="goodsId">
+					goods_id = null
+				</isEmpty>
+				<isNotEmpty property="goodsId">
+					goods_id = #goodsId#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="goodsName">
+				<isEmpty property="goodsName">
+					goods_name = null
+				</isEmpty>
+				<isNotEmpty property="goodsName">
+					goods_name = #goodsName#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="goodsPicture">
+				<isEmpty property="goodsPicture">
+					goods_picture = null
+				</isEmpty>
+				<isNotEmpty property="goodsPicture">
+					goods_picture = #goodsPicture#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="goodsNum">
+				<isEmpty property="goodsNum">
+					goods_num = null
+				</isEmpty>
+				<isNotEmpty property="goodsNum">
+					goods_num = #goodsNum#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="goodsUnitPrice">
+				<isEmpty property="goodsUnitPrice">
+					goods_unit_price = null
+				</isEmpty>
+				<isNotEmpty property="goodsUnitPrice">
+					goods_unit_price = #goodsUnitPrice#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="goodsTotalPrice">
+				<isEmpty property="goodsTotalPrice">
+					goods_total_price = null
+				</isEmpty>
+				<isNotEmpty property="goodsTotalPrice">
+					goods_total_price = #goodsTotalPrice#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="shoppingCartId">
+				<isEmpty property="shoppingCartId">
+					shopping_cart_id = null
+				</isEmpty>
+				<isNotEmpty property="shoppingCartId">
+					shopping_cart_id = #shoppingCartId#
+				</isNotEmpty>
+			</isNotNull>
+
+		</dynamic>
+        WHERE 
+        	id = #id# 
+    </update>
+    
+    <!--通过id查找 -->
+	<select id="findById" resultMap="goodsOrderDetailedResult">
+		SELECT  
+			<include refid="queryCondition"/> 
+		FROM 
+			goods_order_detailed 
+		WHERE
+			id = #id#
+	</select>
+	
+	
+	<sql id="queryConditionSql">
+		SELECT 
+			<include refid="queryCondition"/> 
+		FROM  
+			goods_order_detailed 
+	    <dynamic prepend="WHERE">
+			<isNotNull prepend="and" property="id">
+				id = #id#
+			</isNotNull>
+			<isNotNull prepend="and" property="goodsId">
+				goods_id = #goodsId#
+			</isNotNull>
+			<isNotNull prepend="and" property="goodsName">
+				goods_name = #goodsName#
+			</isNotNull>
+			<isNotNull prepend="and" property="goodsPicture">
+				goods_picture = #goodsPicture#
+			</isNotNull>
+			<isNotNull prepend="and" property="goodsNum">
+				goods_num = #goodsNum#
+			</isNotNull>
+			<isNotNull prepend="and" property="goodsUnitPrice">
+				goods_unit_price = #goodsUnitPrice#
+			</isNotNull>
+			<isNotNull prepend="and" property="goodsTotalPrice">
+				goods_total_price = #goodsTotalPrice#
+			</isNotNull>
+			<isNotNull prepend="and" property="shoppingCartId">
+				shopping_cart_id = #shoppingCartId#
+			</isNotNull>
+
+	    </dynamic>
+	</sql>
+	
+	<!--分页查询-->
+	<select id="findPageByCondition" resultMap="goodsOrderDetailedResult" parameterClass="goodsOrderDetailedCondition">
+		<include refid="queryConditionSql"/>
+		limit 
+			#startRow#,#endRow# 
+	</select>
+	
+	<select id="countByCondition" parameterClass="goodsOrderDetailedCondition" resultClass="java.lang.Integer">
+		select 
+			count(*) 
+		from 
+			(<include refid="queryConditionSql"/>) as da
+	</select>
+	
+</sqlMap>
