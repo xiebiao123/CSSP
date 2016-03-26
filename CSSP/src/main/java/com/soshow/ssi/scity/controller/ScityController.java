@@ -118,6 +118,10 @@ public class ScityController extends BaseController{
 	public MyResponse<List<Scity>> findCityPageByCondition(ScityCondition condition) {
 		MyResponse<List<Scity>> response = new MyResponse<List<Scity>>();
 		try {
+			/*初始化分页查询*/
+			if(condition.getPageSize()>0){
+				condition.init();
+			}
 			int count =  scityService.countByCondition(condition);
 			if(count==0){
 				response.setStatusResponse(CommStatusEnum.NOFIND);

@@ -118,6 +118,10 @@ public class AdminController extends BaseController{
 	public MyResponse<List<Admin>> findCityPageByCondition(AdminCondition condition) {
 		MyResponse<List<Admin>> response = new MyResponse<List<Admin>>();
 		try {
+			/*初始化分页查询*/
+			if(condition.getPageSize()>0){
+				condition.init();
+			}
 			int count =  adminService.countByCondition(condition);
 			if(count==0){
 				response.setStatusResponse(CommStatusEnum.NOFIND);

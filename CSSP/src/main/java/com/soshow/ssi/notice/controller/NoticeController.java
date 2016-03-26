@@ -118,6 +118,10 @@ public class NoticeController extends BaseController{
 	public MyResponse<List<Notice>> findCityPageByCondition(NoticeCondition condition) {
 		MyResponse<List<Notice>> response = new MyResponse<List<Notice>>();
 		try {
+			/*初始化分页查询*/
+			if(condition.getPageSize()>0){
+				condition.init();
+			}
 			int count =  noticeService.countByCondition(condition);
 			if(count==0){
 				response.setStatusResponse(CommStatusEnum.NOFIND);

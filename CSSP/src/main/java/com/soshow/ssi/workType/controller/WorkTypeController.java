@@ -118,6 +118,10 @@ public class WorkTypeController extends BaseController{
 	public MyResponse<List<WorkType>> findCityPageByCondition(WorkTypeCondition condition) {
 		MyResponse<List<WorkType>> response = new MyResponse<List<WorkType>>();
 		try {
+			/*初始化分页查询*/
+			if(condition.getPageSize()>0){
+				condition.init();
+			}
 			int count =  workTypeService.countByCondition(condition);
 			if(count==0){
 				response.setStatusResponse(CommStatusEnum.NOFIND);

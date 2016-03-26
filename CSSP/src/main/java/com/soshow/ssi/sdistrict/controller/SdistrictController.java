@@ -118,6 +118,10 @@ public class SdistrictController extends BaseController{
 	public MyResponse<List<Sdistrict>> findCityPageByCondition(SdistrictCondition condition) {
 		MyResponse<List<Sdistrict>> response = new MyResponse<List<Sdistrict>>();
 		try {
+			/*初始化分页查询*/
+			if(condition.getPageSize()>0){
+				condition.init();
+			}
 			int count =  sdistrictService.countByCondition(condition);
 			if(count==0){
 				response.setStatusResponse(CommStatusEnum.NOFIND);

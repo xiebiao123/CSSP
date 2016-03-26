@@ -103,7 +103,10 @@ public class CityController extends BaseController{
 	public MyResponse<List<City>> findCityPageByCondition(CityCondition condition) {
 		MyResponse<List<City>> response = new MyResponse<List<City>>();
 		try {
-			
+			/*初始化分页查询*/
+			if(condition.getPageSize()>0){
+				condition.init();
+			}
 			int count = cityService.countByCondition(condition);
 			if(count==0){
 				response.setStatusResponse(CommStatusEnum.NOFIND);

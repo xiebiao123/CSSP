@@ -118,6 +118,10 @@ public class GoodsLeaveMessageController extends BaseController{
 	public MyResponse<List<GoodsLeaveMessage>> findCityPageByCondition(GoodsLeaveMessageCondition condition) {
 		MyResponse<List<GoodsLeaveMessage>> response = new MyResponse<List<GoodsLeaveMessage>>();
 		try {
+			/*初始化分页查询*/
+			if(condition.getPageSize()>0){
+				condition.init();
+			}
 			int count =  goodsLeaveMessageService.countByCondition(condition);
 			if(count==0){
 				response.setStatusResponse(CommStatusEnum.NOFIND);

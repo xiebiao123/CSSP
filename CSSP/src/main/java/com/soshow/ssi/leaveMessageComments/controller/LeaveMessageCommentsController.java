@@ -118,6 +118,10 @@ public class LeaveMessageCommentsController extends BaseController{
 	public MyResponse<List<LeaveMessageComments>> findCityPageByCondition(LeaveMessageCommentsCondition condition) {
 		MyResponse<List<LeaveMessageComments>> response = new MyResponse<List<LeaveMessageComments>>();
 		try {
+			/*初始化分页查询*/
+			if(condition.getPageSize()>0){
+				condition.init();
+			}
 			int count =  leaveMessageCommentsService.countByCondition(condition);
 			if(count==0){
 				response.setStatusResponse(CommStatusEnum.NOFIND);

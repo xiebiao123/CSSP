@@ -32,6 +32,9 @@
 			</list>
 		</property>
 	</bean>
+	
+    <mvc:resources mapping="/HT/**" location="/HT/"/>      
+    <mvc:default-servlet-handler />   
 
 	<!-- 对模型视图名称的解析，即在模型视图名称添加前后缀
 	     InternalResourceViewResolver默认的就是JstlView所以这里就不用配置viewClass了 -->

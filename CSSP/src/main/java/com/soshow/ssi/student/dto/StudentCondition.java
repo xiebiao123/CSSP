@@ -39,9 +39,7 @@ public class StudentCondition extends Paging{
     /**  */
     private String remark;
 
-
-
-    public Integer getId() {
+	public Integer getId() {
         return id;
     }
 

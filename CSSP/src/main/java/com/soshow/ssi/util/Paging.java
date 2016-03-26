@@ -17,7 +17,7 @@ public class Paging {
 		init();
 	}
 	
-	private void init(){
+	public void init(){
 		startRow= (pageNo-1)*pageSize;
 		endRow= pageNo*pageSize;
 	}

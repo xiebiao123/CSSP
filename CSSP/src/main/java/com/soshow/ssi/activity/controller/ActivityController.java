@@ -118,6 +118,10 @@ public class ActivityController extends BaseController{
 	public MyResponse<List<Activity>> findCityPageByCondition(ActivityCondition condition) {
 		MyResponse<List<Activity>> response = new MyResponse<List<Activity>>();
 		try {
+			/*初始化分页查询*/
+			if(condition.getPageSize()>0){
+				condition.init();
+			}
 			int count =  activityService.countByCondition(condition);
 			if(count==0){
 				response.setStatusResponse(CommStatusEnum.NOFIND);

@@ -118,6 +118,10 @@ public class StudentWorkController extends BaseController{
 	public MyResponse<List<StudentWork>> findCityPageByCondition(StudentWorkCondition condition) {
 		MyResponse<List<StudentWork>> response = new MyResponse<List<StudentWork>>();
 		try {
+			/*初始化分页查询*/
+			if(condition.getPageSize()>0){
+				condition.init();
+			}
 			int count =  studentWorkService.countByCondition(condition);
 			if(count==0){
 				response.setStatusResponse(CommStatusEnum.NOFIND);

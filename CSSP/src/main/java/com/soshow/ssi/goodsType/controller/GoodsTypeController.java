@@ -118,6 +118,10 @@ public class GoodsTypeController extends BaseController{
 	public MyResponse<List<GoodsType>> findCityPageByCondition(GoodsTypeCondition condition) {
 		MyResponse<List<GoodsType>> response = new MyResponse<List<GoodsType>>();
 		try {
+			/*初始化分页查询*/
+			if(condition.getPageSize()>0){
+				condition.init();
+			}
 			int count =  goodsTypeService.countByCondition(condition);
 			if(count==0){
 				response.setStatusResponse(CommStatusEnum.NOFIND);

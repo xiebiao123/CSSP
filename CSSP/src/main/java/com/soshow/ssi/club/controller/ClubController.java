@@ -118,6 +118,10 @@ public class ClubController extends BaseController{
 	public MyResponse<List<Club>> findCityPageByCondition(ClubCondition condition) {
 		MyResponse<List<Club>> response = new MyResponse<List<Club>>();
 		try {
+			/*初始化分页查询*/
+			if(condition.getPageSize()>0){
+				condition.init();
+			}
 			int count =  clubService.countByCondition(condition);
 			if(count==0){
 				response.setStatusResponse(CommStatusEnum.NOFIND);

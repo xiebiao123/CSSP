@@ -118,6 +118,10 @@ public class ExperienceController extends BaseController{
 	public MyResponse<List<Experience>> findCityPageByCondition(ExperienceCondition condition) {
 		MyResponse<List<Experience>> response = new MyResponse<List<Experience>>();
 		try {
+			/*初始化分页查询*/
+			if(condition.getPageSize()>0){
+				condition.init();
+			}
 			int count =  experienceService.countByCondition(condition);
 			if(count==0){
 				response.setStatusResponse(CommStatusEnum.NOFIND);

@@ -118,6 +118,10 @@ public class ResumeController extends BaseController{
 	public MyResponse<List<Resume>> findCityPageByCondition(ResumeCondition condition) {
 		MyResponse<List<Resume>> response = new MyResponse<List<Resume>>();
 		try {
+			/*初始化分页查询*/
+			if(condition.getPageSize()>0){
+				condition.init();
+			}
 			int count =  resumeService.countByCondition(condition);
 			if(count==0){
 				response.setStatusResponse(CommStatusEnum.NOFIND);

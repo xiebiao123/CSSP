@@ -118,6 +118,10 @@ public class ShoppingCartController extends BaseController{
 	public MyResponse<List<ShoppingCart>> findCityPageByCondition(ShoppingCartCondition condition) {
 		MyResponse<List<ShoppingCart>> response = new MyResponse<List<ShoppingCart>>();
 		try {
+			/*初始化分页查询*/
+			if(condition.getPageSize()>0){
+				condition.init();
+			}
 			int count =  shoppingCartService.countByCondition(condition);
 			if(count==0){
 				response.setStatusResponse(CommStatusEnum.NOFIND);

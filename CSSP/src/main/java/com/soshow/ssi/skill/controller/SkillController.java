@@ -118,6 +118,10 @@ public class SkillController extends BaseController{
 	public MyResponse<List<Skill>> findCityPageByCondition(SkillCondition condition) {
 		MyResponse<List<Skill>> response = new MyResponse<List<Skill>>();
 		try {
+			/*初始化分页查询*/
+			if(condition.getPageSize()>0){
+				condition.init();
+			}
 			int count =  skillService.countByCondition(condition);
 			if(count==0){
 				response.setStatusResponse(CommStatusEnum.NOFIND);

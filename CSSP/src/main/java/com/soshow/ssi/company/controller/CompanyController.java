@@ -118,6 +118,10 @@ public class CompanyController extends BaseController{
 	public MyResponse<List<Company>> findCityPageByCondition(CompanyCondition condition) {
 		MyResponse<List<Company>> response = new MyResponse<List<Company>>();
 		try {
+			/*初始化分页查询*/
+			if(condition.getPageSize()>0){
+				condition.init();
+			}
 			int count =  companyService.countByCondition(condition);
 			if(count==0){
 				response.setStatusResponse(CommStatusEnum.NOFIND);
