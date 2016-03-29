@@ -19,7 +19,7 @@ public class Paging {
 	
 	public void init(){
 		startRow= (pageNo-1)*pageSize;
-		endRow= pageNo*pageSize;
+		endRow=pageSize;
 	}
 	
 	public int getPageNo() {
