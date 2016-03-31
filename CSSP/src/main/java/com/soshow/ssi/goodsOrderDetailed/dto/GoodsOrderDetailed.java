@@ -3,7 +3,7 @@ package com.soshow.ssi.goodsOrderDetailed.dto;
  * 订单详细实体类
  * @author xieb
  * @version 1.00
- * 2016/03/21
+ * 2016/03/31
  */
 public class GoodsOrderDetailed{
 
@@ -23,6 +23,8 @@ public class GoodsOrderDetailed{
     private Double goodsTotalPrice;
     /**  */
     private Integer shoppingCartId;
+    /**  */
+    private Integer goodsOrderId;
 
 
     public Integer getId() {
@@ -94,6 +96,15 @@ public class GoodsOrderDetailed{
 
     public void setShoppingCartId(Integer shoppingCartId) {
         this.shoppingCartId = shoppingCartId;
+    }
+
+
+    public Integer getGoodsOrderId() {
+        return goodsOrderId;
+    }
+
+    public void setGoodsOrderId(Integer goodsOrderId) {
+        this.goodsOrderId = goodsOrderId;
     }
 
 }

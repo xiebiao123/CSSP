@@ -5,7 +5,7 @@ import com.soshow.ssi.util.Paging;
  * 订单详细condition
  * @author xieb
  * @version 1.00
- * 2016/03/21
+ * 2016/03/31
  */
 public class GoodsOrderDetailedCondition extends Paging{
 
@@ -32,6 +32,9 @@ public class GoodsOrderDetailedCondition extends Paging{
 
     /**  */
     private Integer shoppingCartId;
+
+    /**  */
+    private Integer goodsOrderId;
 
 
 
@@ -97,6 +100,14 @@ public class GoodsOrderDetailedCondition extends Paging{
 
     public void setShoppingCartId(Integer shoppingCartId) {
         this.shoppingCartId = shoppingCartId;
+    }
+
+    public Integer getGoodsOrderId() {
+        return goodsOrderId;
+    }
+
+    public void setGoodsOrderId(Integer goodsOrderId) {
+        this.goodsOrderId = goodsOrderId;
     }
 }
 

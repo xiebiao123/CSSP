@@ -16,16 +16,17 @@
 		<result property="goodsUnitPrice" column="goods_unit_price" />
 		<result property="goodsTotalPrice" column="goods_total_price" />
 		<result property="shoppingCartId" column="shopping_cart_id" />
+		<result property="goodsOrderId" column="goods_order_id" />
 	</resultMap>
 
 	<sql id="queryCondition">
-		id,goods_id,goods_name,goods_picture,goods_num,goods_unit_price,goods_total_price,shopping_cart_id
+		id,goods_id,goods_name,goods_picture,goods_num,goods_unit_price,goods_total_price,shopping_cart_id,goods_order_id
 	</sql>
 	
 	<!--插入语句-->
 	<insert id="add">
 		INSERT INTO
-			goods_order_detailed(goods_id,goods_name,goods_picture,goods_num,goods_unit_price,goods_total_price,shopping_cart_id)
+			goods_order_detailed(goods_id,goods_name,goods_picture,goods_num,goods_unit_price,goods_total_price,shopping_cart_id,goods_order_id)
 		values
 			<dynamic>
 		(
@@ -66,10 +67,16 @@
 			#goodsTotalPrice#,
 		</isNotEmpty>
 		<isEmpty property="shoppingCartId">
-			null
+			null,
 		</isEmpty>
 		<isNotEmpty property="shoppingCartId">
-			#shoppingCartId#
+			#shoppingCartId#,
+		</isNotEmpty>
+		<isEmpty property="goodsOrderId">
+			null
+		</isEmpty>
+		<isNotEmpty property="goodsOrderId">
+			#goodsOrderId#
 		</isNotEmpty>
 		)
 		</dynamic>
@@ -145,6 +152,14 @@
 					shopping_cart_id = #shoppingCartId#
 				</isNotEmpty>
 			</isNotNull>
+			<isNotNull prepend="," property="goodsOrderId">
+				<isEmpty property="goodsOrderId">
+					goods_order_id = null
+				</isEmpty>
+				<isNotEmpty property="goodsOrderId">
+					goods_order_id = #goodsOrderId#
+				</isNotEmpty>
+			</isNotNull>
 
 		</dynamic>
         WHERE 
@@ -191,6 +206,9 @@
 			</isNotNull>
 			<isNotNull prepend="and" property="shoppingCartId">
 				shopping_cart_id = #shoppingCartId#
+			</isNotNull>
+			<isNotNull prepend="and" property="goodsOrderId">
+				goods_order_id = #goodsOrderId#
 			</isNotNull>
 
 	    </dynamic>

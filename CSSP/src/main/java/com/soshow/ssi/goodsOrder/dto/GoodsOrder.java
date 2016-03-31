@@ -6,14 +6,12 @@ import java.sql.Timestamp;
  * 商品订单实体类
  * @author xieb
  * @version 1.00
- * 2016/03/21
+ * 2016/03/31
  */
 public class GoodsOrder{
 
     /**  */
     private Integer id;
-    /**  */
-    private Integer orderDetailId;
     /**  */
     private Integer sellerId;
     /**  */
@@ -31,15 +29,17 @@ public class GoodsOrder{
     /**  */
     private String seller;
     /**  */
-    private String buyers;
+    private String buyer;
     /**  */
-    private Long phone;
+    private Long buyerPhone;
     /**  */
     private String email;
     /**  */
     private Double sumPrice;
     /**  */
     private String remark;
+    /**  */
+    private Long sellerPhone;
 
 
     public Integer getId() {
@@ -48,15 +48,6 @@ public class GoodsOrder{
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-
-    public Integer getOrderDetailId() {
-        return orderDetailId;
-    }
-
-    public void setOrderDetailId(Integer orderDetailId) {
-        this.orderDetailId = orderDetailId;
     }
 
 
@@ -132,21 +123,21 @@ public class GoodsOrder{
     }
 
 
-    public String getBuyers() {
-        return buyers;
+    public String getBuyer() {
+        return buyer;
     }
 
-    public void setBuyers(String buyers) {
-        this.buyers = buyers;
+    public void setBuyer(String buyer) {
+        this.buyer = buyer;
     }
 
 
-    public Long getPhone() {
-        return phone;
+    public Long getBuyerPhone() {
+        return buyerPhone;
     }
 
-    public void setPhone(Long phone) {
-        this.phone = phone;
+    public void setBuyerPhone(Long buyerPhone) {
+        this.buyerPhone = buyerPhone;
     }
 
 
@@ -174,6 +165,15 @@ public class GoodsOrder{
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+
+    public Long getSellerPhone() {
+        return sellerPhone;
+    }
+
+    public void setSellerPhone(Long sellerPhone) {
+        this.sellerPhone = sellerPhone;
     }
 
 }

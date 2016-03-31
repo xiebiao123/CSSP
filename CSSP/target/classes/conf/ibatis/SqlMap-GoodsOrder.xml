@@ -9,7 +9,6 @@
 	<!-- search resultMap -->
 	<resultMap id="goodsOrderResult" class="goodsOrder">
 		<result property="id" column="id" />
-		<result property="orderDetailId" column="order_detail_id" />
 		<result property="sellerId" column="seller_id" />
 		<result property="buyersId" column="buyers_id" />
 		<result property="status" column="status" />
@@ -18,30 +17,25 @@
 		<result property="name" column="name" />
 		<result property="createTime" column="create_time" />
 		<result property="seller" column="seller" />
-		<result property="buyers" column="buyers" />
-		<result property="phone" column="phone" />
+		<result property="buyer" column="buyer" />
+		<result property="buyerPhone" column="buyer_phone" />
 		<result property="email" column="email" />
 		<result property="sumPrice" column="sum_price" />
 		<result property="remark" column="remark" />
+		<result property="sellerPhone" column="seller_phone" />
 	</resultMap>
 
 	<sql id="queryCondition">
-		id,order_detail_id,seller_id,buyers_id,status,distribution,address,name,create_time,seller,buyers,phone,email,sum_price,remark
+		id,seller_id,buyers_id,status,distribution,address,name,create_time,seller,buyer,buyer_phone,email,sum_price,remark,seller_phone
 	</sql>
 	
 	<!--插入语句-->
 	<insert id="add">
 		INSERT INTO
-			goods_order(order_detail_id,seller_id,buyers_id,status,distribution,address,name,create_time,seller,buyers,phone,email,sum_price,remark)
+			goods_order(seller_id,buyers_id,status,distribution,address,name,create_time,seller,buyer,buyer_phone,email,sum_price,remark,seller_phone)
 		values
 			<dynamic>
 		(
-		<isEmpty property="orderDetailId">
-			null,
-		</isEmpty>
-		<isNotEmpty property="orderDetailId">
-			#orderDetailId#,
-		</isNotEmpty>
 		<isEmpty property="sellerId">
 			null,
 		</isEmpty>
@@ -90,17 +84,17 @@
 		<isNotEmpty property="seller">
 			#seller#,
 		</isNotEmpty>
-		<isEmpty property="buyers">
+		<isEmpty property="buyer">
 			null,
 		</isEmpty>
-		<isNotEmpty property="buyers">
-			#buyers#,
+		<isNotEmpty property="buyer">
+			#buyer#,
 		</isNotEmpty>
-		<isEmpty property="phone">
+		<isEmpty property="buyerPhone">
 			null,
 		</isEmpty>
-		<isNotEmpty property="phone">
-			#phone#,
+		<isNotEmpty property="buyerPhone">
+			#buyerPhone#,
 		</isNotEmpty>
 		<isEmpty property="email">
 			null,
@@ -115,10 +109,16 @@
 			#sumPrice#,
 		</isNotEmpty>
 		<isEmpty property="remark">
-			null
+			null,
 		</isEmpty>
 		<isNotEmpty property="remark">
-			#remark#
+			#remark#,
+		</isNotEmpty>
+		<isEmpty property="sellerPhone">
+			null
+		</isEmpty>
+		<isNotEmpty property="sellerPhone">
+			#sellerPhone#
 		</isNotEmpty>
 		)
 		</dynamic>
@@ -138,15 +138,7 @@
         	goods_order 
         SET <!-- updateTime = sysdate  -->
 		<dynamic>
-			<isNotNull property="orderDetailId">
-				<isEmpty property="orderDetailId">
-					order_detail_id = null
-				</isEmpty>
-				<isNotEmpty property="orderDetailId">
-					order_detail_id = #orderDetailId#
-				</isNotEmpty>
-			</isNotNull>
-			<isNotNull prepend="," property="sellerId">
+			<isNotNull property="sellerId">
 				<isEmpty property="sellerId">
 					seller_id = null
 				</isEmpty>
@@ -210,20 +202,20 @@
 					seller = #seller#
 				</isNotEmpty>
 			</isNotNull>
-			<isNotNull prepend="," property="buyers">
-				<isEmpty property="buyers">
-					buyers = null
+			<isNotNull prepend="," property="buyer">
+				<isEmpty property="buyer">
+					buyer = null
 				</isEmpty>
-				<isNotEmpty property="buyers">
-					buyers = #buyers#
+				<isNotEmpty property="buyer">
+					buyer = #buyer#
 				</isNotEmpty>
 			</isNotNull>
-			<isNotNull prepend="," property="phone">
-				<isEmpty property="phone">
-					phone = null
+			<isNotNull prepend="," property="buyerPhone">
+				<isEmpty property="buyerPhone">
+					buyer_phone = null
 				</isEmpty>
-				<isNotEmpty property="phone">
-					phone = #phone#
+				<isNotEmpty property="buyerPhone">
+					buyer_phone = #buyerPhone#
 				</isNotEmpty>
 			</isNotNull>
 			<isNotNull prepend="," property="email">
@@ -248,6 +240,14 @@
 				</isEmpty>
 				<isNotEmpty property="remark">
 					remark = #remark#
+				</isNotEmpty>
+			</isNotNull>
+			<isNotNull prepend="," property="sellerPhone">
+				<isEmpty property="sellerPhone">
+					seller_phone = null
+				</isEmpty>
+				<isNotEmpty property="sellerPhone">
+					seller_phone = #sellerPhone#
 				</isNotEmpty>
 			</isNotNull>
 
@@ -276,9 +276,6 @@
 			<isNotNull prepend="and" property="id">
 				id = #id#
 			</isNotNull>
-			<isNotNull prepend="and" property="orderDetailId">
-				order_detail_id = #orderDetailId#
-			</isNotNull>
 			<isNotNull prepend="and" property="sellerId">
 				seller_id = #sellerId#
 			</isNotNull>
@@ -303,11 +300,11 @@
 			<isNotNull prepend="and" property="seller">
 				seller = #seller#
 			</isNotNull>
-			<isNotNull prepend="and" property="buyers">
-				buyers = #buyers#
+			<isNotNull prepend="and" property="buyer">
+				buyer = #buyer#
 			</isNotNull>
-			<isNotNull prepend="and" property="phone">
-				phone = #phone#
+			<isNotNull prepend="and" property="buyerPhone">
+				buyer_phone = #buyerPhone#
 			</isNotNull>
 			<isNotNull prepend="and" property="email">
 				email = #email#
@@ -317,6 +314,9 @@
 			</isNotNull>
 			<isNotNull prepend="and" property="remark">
 				remark = #remark#
+			</isNotNull>
+			<isNotNull prepend="and" property="sellerPhone">
+				seller_phone = #sellerPhone#
 			</isNotNull>
 
 	    </dynamic>

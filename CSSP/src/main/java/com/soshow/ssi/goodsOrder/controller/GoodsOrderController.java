@@ -26,7 +26,7 @@ import com.soshow.ssi.util.MyResponse;
  * 商品订单controller
  * @author xieb
  * @version 1.00
- * 2016/03/21
+ * 2016/03/31
  */
 @Controller
 @RequestMapping(value = "goodsOrder")

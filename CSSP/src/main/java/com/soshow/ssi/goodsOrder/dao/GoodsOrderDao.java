@@ -7,7 +7,7 @@ import com.soshow.ssi.goodsOrder.dto.GoodsOrderCondition;
  * 商品订单dao
  * @author xieb
  * @version 1.00
- * 2016/03/21
+ * 2016/03/31
  */
 public interface GoodsOrderDao extends BaseDao<GoodsOrder,GoodsOrderCondition>{
 

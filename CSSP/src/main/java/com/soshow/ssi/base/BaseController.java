@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.context.MessageSource;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -27,8 +28,14 @@ public class BaseController {
 		MyResponse<Void> response =  new MyResponse<Void>();
 		if(t instanceof MethodArgumentNotValidException){
 			handler(response,(MethodArgumentNotValidException)t);
+		}else if(t instanceof HttpMessageNotReadableException){
+			handler(response,(HttpMessageNotReadableException)t);
 		}
 		return response;
+	}
+
+	private void handler(MyResponse<Void> response, HttpMessageNotReadableException t) {
+		response.setErrorResponse(CommErrorEnum.Err02);
 	}
 
 	private void handler(MyResponse<Void> response, MethodArgumentNotValidException t) {
