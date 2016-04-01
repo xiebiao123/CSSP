@@ -2,6 +2,8 @@ package com.soshow.ssi.goods.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.soshow.ssi.goods.dto.Goods;
 import com.soshow.ssi.goods.dto.GoodsCondition;
 
@@ -40,4 +42,10 @@ public interface GoodsService {
 	 */
 	public Integer countByCondition(GoodsCondition pc);
 	
+	 /** 
+	  * 上传图片 
+	  * @param file 
+	  * @return 
+	  */ 
+	public String upload(MultipartFile file);
 }

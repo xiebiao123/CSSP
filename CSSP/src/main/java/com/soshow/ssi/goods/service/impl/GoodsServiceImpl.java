@@ -3,11 +3,13 @@ package com.soshow.ssi.goods.service.impl;
 import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.soshow.ssi.goods.dao.GoodsDao;
 import com.soshow.ssi.goods.dto.Goods;
 import com.soshow.ssi.goods.dto.GoodsCondition;
 import com.soshow.ssi.goods.service.GoodsService;
+import com.soshow.ssi.util.UploadUtil;
 
 /**
  * 商品信息ServiceImpl
@@ -44,5 +46,11 @@ public class GoodsServiceImpl implements GoodsService{
 	
 	public Integer countByCondition(GoodsCondition pc) {
 		return goodsDao.countByCondition(pc);
+	}
+
+
+	public String upload(MultipartFile file) { 
+	      String imgFile =UploadUtil.saveFile(file); 
+	      return imgFile; 
 	}
 }

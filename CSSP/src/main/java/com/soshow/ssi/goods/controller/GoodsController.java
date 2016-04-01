@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.soshow.ssi.base.BaseController;
 
@@ -138,4 +140,24 @@ public class GoodsController extends BaseController{
 		}
 		return response;
 	}
+	
+	  /** 
+	    * 上传图片 
+	    * @param file 
+	    * @return 
+	    */ 
+	   @ResponseBody 
+	   @RequestMapping(value="/upload", method = RequestMethod.POST) 
+	   public MyResponse<String> upload(@RequestParam(value="file") MultipartFile file){ 
+	      MyResponse<String> response=new MyResponse<String>(); 
+	      try { 
+	      String url=goodsService.upload(file); 
+	      response.setData(url); 
+	      }catch(Throwable t){ 
+	         logger.error("系统错误",t); 
+	         response.setErrorResponse(CommErrorEnum.Err03); 
+	      } 
+	      return response; 
+	   }
+	   
 }
