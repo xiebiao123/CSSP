@@ -1,17 +1,20 @@
 package com.soshow.ssi.util; 
 
 import java.io.File; 
-import java.io.FileInputStream; 
-import java.io.InputStream; 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
-import org.apache.log4j.Logger; 
+import org.apache.log4j.Logger;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.web.multipart.MultipartFile; 
 
-import Decoder.BASE64Encoder; 
-
+import sun.misc.BASE64Decoder;
 /** 
 * 文件上传工具类 
-* @author wangjq 
+* @author xieb 
 * 
 */ 
 public class UploadUtil { 
@@ -36,8 +39,7 @@ public class UploadUtil {
          File saveFile=new File(path, fileName); 
          try{ 
             file.transferTo(saveFile); 
-            return path+"\\"+fileName; 
-             
+            return path+"\\"+fileName;
          }catch(Exception e){ 
             logger.info("保存文件出错",e); 
          } 
@@ -45,37 +47,76 @@ public class UploadUtil {
          logger.error("文件不存在！"); 
           
       } 
-      return null; 
-       
+      return null;
    } 
-   /** 
-    * 将图片转化为base64格式 
-    * @param url 
-    * @return 
-    */ 
-   public static String getImgBase64(String url){ 
-       
-      InputStream is=null; 
-      byte[] data=null; 
-      try{ 
-         is=new FileInputStream(url); 
-         data=new byte[is.available()]; 
-         is.read(data); 
-         is.close(); 
-      }catch(Exception e ){ 
-         logger.info("读取文件错误", e); 
-      } 
-      BASE64Encoder encoder=new BASE64Encoder(); 
-      return encoder.encode(data); 
-       
-   } 
-    
-    
-   public static void main(String[] args) { 
-      String url="D:\\images\\1.png"; 
-      String base64=getImgBase64(url); 
-      System.out.println(base64); 
-   } 
-    
-
+   
+   /**
+    * 根据路径获取图片的base64编码
+    * @return
+    */
+   public static String GetImageStr()
+   {//将图片文件转化为字节数组字符串，并对其进行Base64编码处理
+       String imgFile = "d:\\images\\4.jpg";//待处理的图片
+       InputStream in = null;
+       byte[] data = null;
+       //读取图片字节数组
+       try 
+       {
+           in = new FileInputStream(imgFile);        
+           data = new byte[in.available()];
+           in.read(data);
+           in.close();
+       } 
+       catch (IOException e) 
+       {
+           e.printStackTrace();
+       }
+//       //对字节数组Base64编码
+//       BASE64Encoder encoder = new BASE64Encoder();
+//       return encoder.encode(data);//返回Base64编码过的字节数组字符串
+       Base64 base64 = new Base64();
+       return base64.encodeToString(data);
+   }
+   
+   /**
+    * 根据图片的base64编码转换成图片
+    * @param imgStr
+    * @return
+    */
+   public static boolean GenerateImage(String imgStr)
+   {//对字节数组字符串进行Base64解码并生成图片
+       if (imgStr == null) //图像数据为空
+           return false;
+       BASE64Decoder decoder = new BASE64Decoder();
+       try 
+       {
+           //Base64解码
+           byte[] b = decoder.decodeBuffer(imgStr);
+           for(int i=0;i<b.length;++i)
+           {
+               if(b[i]<0)
+               {//调整异常数据
+                   b[i]+=256;
+               }
+           }
+           //生成jpeg图片
+           String imgFilePath = "d:\\images\\8.gif";//新生成的图片
+           OutputStream out = new FileOutputStream(imgFilePath);    
+           out.write(b);
+           out.flush();
+           out.close();
+           return true;
+       } 
+       catch (Exception e) 
+       {
+           return false;
+       }
+   }
+   
+   public static void main(String[] args)
+   {
+       String strImg = GetImageStr();
+       System.out.println(strImg);
+       GenerateImage(strImg);
+   }
 }
