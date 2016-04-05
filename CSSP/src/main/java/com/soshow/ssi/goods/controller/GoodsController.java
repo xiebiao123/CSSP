@@ -151,8 +151,9 @@ public class GoodsController extends BaseController{
 	   public MyResponse<String> upload(@RequestParam(value="file") MultipartFile file){ 
 	      MyResponse<String> response=new MyResponse<String>(); 
 	      try { 
-	      String url=goodsService.upload(file); 
-	      response.setData(url); 
+	      String image=goodsService.upload(file); 
+	      response.setData(image);
+	      response.setStatusResponse(CommStatusEnum.UPLOAD);
 	      }catch(Throwable t){ 
 	         logger.error("系统错误",t); 
 	         response.setErrorResponse(CommErrorEnum.Err03); 

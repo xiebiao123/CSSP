@@ -26,11 +26,10 @@ public class UploadUtil {
     * @return 
     */ 
    public static String saveFile(MultipartFile file){ 
-      String path="D:\\images";   
+      String path="D:\\image";   
        
       if(!file.isEmpty()&&file.getSize()>0){ 
-         String fileName=file.getOriginalFilename(); 
-         System.out.println("****"+path); 
+         String fileName=System.currentTimeMillis()+file.getOriginalFilename();
          File pathFile =new File(path); 
          if(!pathFile.exists()){ 
             pathFile.mkdirs(); 
@@ -39,7 +38,9 @@ public class UploadUtil {
          File saveFile=new File(path, fileName); 
          try{ 
             file.transferTo(saveFile); 
-            return path+"\\"+fileName;
+            
+//          return path+"\\"+fileName;
+            return GetImageStr(path+"\\"+fileName);
          }catch(Exception e){ 
             logger.info("保存文件出错",e); 
          } 
@@ -54,9 +55,9 @@ public class UploadUtil {
     * 根据路径获取图片的base64编码
     * @return
     */
-   public static String GetImageStr()
+   public static String GetImageStr(String imgFile)
    {//将图片文件转化为字节数组字符串，并对其进行Base64编码处理
-       String imgFile = "d:\\images\\4.jpg";//待处理的图片
+//     String imgFile = "d:\\images\\4.jpg";//待处理的图片
        InputStream in = null;
        byte[] data = null;
        //读取图片字节数组
@@ -115,7 +116,7 @@ public class UploadUtil {
    
    public static void main(String[] args)
    {
-       String strImg = GetImageStr();
+       String strImg = GetImageStr("d:\\images\\4.jpg");
        System.out.println(strImg);
        GenerateImage(strImg);
    }
