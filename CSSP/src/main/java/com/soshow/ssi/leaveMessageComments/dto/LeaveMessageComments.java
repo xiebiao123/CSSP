@@ -1,4 +1,7 @@
 package com.soshow.ssi.leaveMessageComments.dto;
+
+import java.sql.Timestamp;
+
 /**
  * 留言评论实体类
  * @author xieb
@@ -18,7 +21,7 @@ public class LeaveMessageComments{
     /**  */
     private Integer sortNum;
     /**  */
-    private Integer type;
+    private Timestamp createTime;
 
 
     public Integer getId() {
@@ -65,13 +68,11 @@ public class LeaveMessageComments{
         this.sortNum = sortNum;
     }
 
+	public Timestamp getCreateTime() {
+		return createTime;
+	}
 
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
-    }
-
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
+	}
 }

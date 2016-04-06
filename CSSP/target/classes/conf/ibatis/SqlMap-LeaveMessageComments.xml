@@ -13,17 +13,17 @@
 		<result property="studnetId" column="studnet_id" />
 		<result property="comments" column="comments" />
 		<result property="sortNum" column="sort_num" />
-		<result property="type" column="type" />
+		<result property="createTime" column="create_time" />
 	</resultMap>
 
 	<sql id="queryCondition">
-		id,leave_message_id,studnet_id,comments,sort_num,type
+		id,leave_message_id,studnet_id,comments,sort_num,create_time
 	</sql>
 	
 	<!--插入语句-->
 	<insert id="add">
 		INSERT INTO
-			leave_message_comments(leave_message_id,studnet_id,comments,sort_num,type)
+			leave_message_comments(leave_message_id,studnet_id,comments,sort_num,create_time)
 		values
 			<dynamic>
 		(
@@ -51,11 +51,11 @@
 		<isNotEmpty property="sortNum">
 			#sortNum#,
 		</isNotEmpty>
-		<isEmpty property="type">
+		<isEmpty property="createTime">
 			null
 		</isEmpty>
-		<isNotEmpty property="type">
-			#type#
+		<isNotEmpty property="createTime">
+			#createTime#
 		</isNotEmpty>
 		)
 		</dynamic>
@@ -107,12 +107,12 @@
 					sort_num = #sortNum#
 				</isNotEmpty>
 			</isNotNull>
-			<isNotNull prepend="," property="type">
-				<isEmpty property="type">
-					type = null
+			<isNotNull prepend="," property="createTime">
+				<isEmpty property="createTime">
+					create_time = null
 				</isEmpty>
-				<isNotEmpty property="type">
-					type = #type#
+				<isNotEmpty property="createTime">
+					create_time = #createTime#
 				</isNotEmpty>
 			</isNotNull>
 
@@ -153,8 +153,8 @@
 			<isNotNull prepend="and" property="sortNum">
 				sort_num = #sortNum#
 			</isNotNull>
-			<isNotNull prepend="and" property="type">
-				type = #type#
+			<isNotNull prepend="and" property="createTime">
+				create_time = #createTime#
 			</isNotNull>
 
 	    </dynamic>

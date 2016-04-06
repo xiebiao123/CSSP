@@ -1,5 +1,7 @@
 package com.soshow.ssi.leaveMessageComments.dto;
 
+import java.sql.Timestamp;
+
 import com.soshow.ssi.util.Paging;
 /**
  * 留言评论condition
@@ -25,7 +27,7 @@ public class LeaveMessageCommentsCondition extends Paging{
     private Integer sortNum;
 
     /**  */
-    private Integer type;
+    private Timestamp createTime;
 
 
 
@@ -69,12 +71,12 @@ public class LeaveMessageCommentsCondition extends Paging{
         this.sortNum = sortNum;
     }
 
-    public Integer getType() {
-        return type;
-    }
+	public Timestamp getCreateTime() {
+		return createTime;
+	}
 
-    public void setType(Integer type) {
-        this.type = type;
-    }
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
+	}
 }
 
