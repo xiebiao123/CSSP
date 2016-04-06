@@ -17,16 +17,17 @@
 		<result property="approver" column="approver" />
 		<result property="studentId" column="student_id" />
 		<result property="address" column="address" />
+		<result property="status" column="status" />
 	</resultMap>
 
 	<sql id="queryCondition">
-		id,name,start_time,end_time,remark,reason,approver,student_id,address
+		id,name,start_time,end_time,remark,reason,approver,student_id,address,status
 	</sql>
 	
 	<!--插入语句-->
 	<insert id="add">
 		INSERT INTO
-			activity(name,start_time,end_time,remark,reason,approver,student_id,address)
+			activity(name,start_time,end_time,remark,reason,approver,student_id,address,status)
 		values
 			<dynamic>
 		(
@@ -73,10 +74,16 @@
 			#studentId#,
 		</isNotEmpty>
 		<isEmpty property="address">
-			null
+			null,
 		</isEmpty>
 		<isNotEmpty property="address">
-			#address#
+			#address#,
+		</isNotEmpty>
+		<isEmpty property="status">
+			null
+		</isEmpty>
+		<isNotEmpty property="status">
+			#status#
 		</isNotEmpty>
 		)
 		</dynamic>
@@ -160,7 +167,14 @@
 					address = #address#
 				</isNotEmpty>
 			</isNotNull>
-
+			<isNotNull prepend="," property="status">
+				<isEmpty property="status">
+					status = null
+				</isEmpty>
+				<isNotEmpty property="status">
+					status = #status#
+				</isNotEmpty>
+			</isNotNull>
 		</dynamic>
         WHERE 
         	id = #id# 
@@ -210,7 +224,9 @@
 			<isNotNull prepend="and" property="address">
 				address = #address#
 			</isNotNull>
-
+			<isNotNull prepend="and" property="status">
+				status = #status#
+			</isNotNull>
 	    </dynamic>
 	</sql>
 	

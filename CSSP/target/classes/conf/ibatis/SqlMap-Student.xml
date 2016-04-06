@@ -18,16 +18,17 @@
 		<result property="address" column="address" />
 		<result property="picture" column="picture" />
 		<result property="remark" column="remark" />
+		<result property="status" column="status" />
 	</resultMap>
 
 	<sql id="queryCondition">
-		id,password,name,age,email,tel,sex,address,picture,remark
+		id,password,name,age,email,tel,sex,address,picture,remark,status
 	</sql>
 	
 	<!--插入语句-->
 	<insert id="add">
 		INSERT INTO
-			student(password,name,age,email,tel,sex,address,picture,remark)
+			student(password,name,age,email,tel,sex,address,picture,remark,status)
 		values
 			<dynamic>
 		(
@@ -80,10 +81,16 @@
 			#picture#,
 		</isNotEmpty>
 		<isEmpty property="remark">
-			null
+			null,
 		</isEmpty>
 		<isNotEmpty property="remark">
-			#remark#
+			#remark#,
+		</isNotEmpty>
+		<isEmpty property="status">
+			null
+		</isEmpty>
+		<isNotEmpty property="status">
+			#status#
 		</isNotEmpty>
 		)
 		</dynamic>
@@ -175,7 +182,14 @@
 					remark = #remark#
 				</isNotEmpty>
 			</isNotNull>
-
+			<isNotNull prepend="," property="status">
+				<isEmpty property="status">
+					status = null
+				</isEmpty>
+				<isNotEmpty property="status">
+					status = #status#
+				</isNotEmpty>
+			</isNotNull>
 		</dynamic>
         WHERE 
         	id = #id# 
@@ -228,7 +242,9 @@
 			<isNotNull prepend="and" property="remark">
 				remark = #remark#
 			</isNotNull>
-
+			<isNotNull prepend="and" property="status">
+				status = #status#
+			</isNotNull>
 	    </dynamic>
 	</sql>
 	

@@ -38,6 +38,9 @@ public class StudentCondition extends Paging{
 
     /**  */
     private String remark;
+    
+    /**  */
+    private Integer status;
 
 	public Integer getId() {
         return id;
@@ -118,5 +121,13 @@ public class StudentCondition extends Paging{
     public void setRemark(String remark) {
         this.remark = remark;
     }
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 }
 

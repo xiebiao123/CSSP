@@ -23,7 +23,7 @@
         	city(city_name, province_id) 
         VALUES 
        		(#cityName#,#provinceId# )  
-         <selectKey resultClass="java.lang.Integer" keyProperty="id">  
+        <selectKey resultClass="java.lang.Integer" keyProperty="id">  
         	select last_insert_id() as ID from city limit 1  
     	</selectKey>
     </insert>  	
