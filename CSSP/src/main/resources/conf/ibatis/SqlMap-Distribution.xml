@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Distribution">
+	<!--引入pojo-->
+	<typeAlias alias="distribution" type="com.soshow.ssi.distribution.dto.Distribution" />
+	<typeAlias alias="distributionCondition" type="com.soshow.ssi.distribution.dto.DistributionCondition" />
+
+	<!-- search resultMap -->
+	<resultMap id="distributionResult" class="distribution">
+		<result property="id" column="id" />
+		<result property="typeName" column="type_name" />
+	</resultMap>
+
+	<sql id="queryCondition">
+		id,type_name
+	</sql>
+	
+	<!--插入语句-->
+	<insert id="add">
+		INSERT INTO
+			distribution(type_name)
+		values
+			<dynamic>
+		(
+		<isEmpty property="typeName">
+			null
+		</isEmpty>
+		<isNotEmpty property="typeName">
+			#typeName#
+		</isNotEmpty>
+		)
+		</dynamic>
+		<selectKey resultClass="java.lang.Integer" keyProperty="id">  
+        	select last_insert_id() as ID from distribution limit 1  
+    	</selectKey>
+	</insert>
+
+	<!--删除语句 -->
+    <delete id="delete" parameterClass="java.lang.Integer">  
+        DELETE FROM 
+        	distribution 
+        WHERE 
+        	id = #id#  
+    </delete>
+    
+    <!--修改语句 -->
+    <update id="update" parameterClass="distribution">  
+        UPDATE 
+        	distribution 
+        SET <!-- updateTime = sysdate  -->
+		<dynamic>
+			<isNotNull property="typeName">
+				<isEmpty property="typeName">
+					type_name = null
+				</isEmpty>
+				<isNotEmpty property="typeName">
+					type_name = #typeName#
+				</isNotEmpty>
+			</isNotNull>
+
+		</dynamic>
+        WHERE 
+        	id = #id# 
+    </update>
+    
+    <!--通过id查找 -->
+	<select id="findById" resultMap="distributionResult">
+		SELECT  
+			<include refid="queryCondition"/> 
+		FROM 
+			distribution 
+		WHERE
+			id = #id#
+	</select>
+	
+	
+	<sql id="queryConditionSql">
+		SELECT 
+			<include refid="queryCondition"/> 
+		FROM  
+			distribution 
+	    <dynamic prepend="WHERE">
+			<isNotNull prepend="and" property="id">
+				id = #id#
+			</isNotNull>
+			<isNotNull prepend="and" property="typeName">
+				type_name = #typeName#
+			</isNotNull>
+
+	    </dynamic>
+	</sql>
+	
+	<!--分页查询-->
+	<select id="findPageByCondition" resultMap="distributionResult" parameterClass="distributionCondition">
+		<include refid="queryConditionSql"/>
+		limit 
+			#startRow#,#endRow# 
+	</select>
+	
+	<select id="countByCondition" parameterClass="distributionCondition" resultClass="java.lang.Integer">
+		select 
+			count(*) 
+		from 
+			(<include refid="queryConditionSql"/>) as da
+	</select>
+	
+</sqlMap>

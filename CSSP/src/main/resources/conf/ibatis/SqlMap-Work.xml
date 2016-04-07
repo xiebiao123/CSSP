@@ -20,16 +20,17 @@
 		<result property="workTypeId" column="work_type_id" />
 		<result property="remark" column="remark" />
 		<result property="createTime" column="create_time" />
+		<result property="status" column="status" />
 	</resultMap>
 
 	<sql id="queryCondition">
-		id,company_id,name,address,introduce,salary,welfare,education,count,work_type_id,remark,create_time
+		id,company_id,name,address,introduce,salary,welfare,education,count,work_type_id,remark,create_time,status
 	</sql>
 	
 	<!--插入语句-->
 	<insert id="add">
 		INSERT INTO
-			work(company_id,name,address,introduce,salary,welfare,education,count,work_type_id,remark,create_time)
+			work(company_id,name,address,introduce,salary,welfare,education,count,work_type_id,remark,create_time,status)
 		values
 			<dynamic>
 		(
@@ -94,10 +95,16 @@
 			#remark#,
 		</isNotEmpty>
 		<isEmpty property="createTime">
-			null
+			null,
 		</isEmpty>
 		<isNotEmpty property="createTime">
-			#createTime#
+			#createTime#,
+		</isNotEmpty>
+		<isEmpty property="status">
+			null
+		</isEmpty>
+		<isNotEmpty property="status">
+			#status#
 		</isNotEmpty>
 		)
 		</dynamic>
@@ -205,7 +212,14 @@
 					create_time = #createTime#
 				</isNotEmpty>
 			</isNotNull>
-
+			<isNotNull prepend="," property="status">
+				<isEmpty property="status">
+					status = null
+				</isEmpty>
+				<isNotEmpty property="createTime">
+					status = #status#
+				</isNotEmpty>
+			</isNotNull>
 		</dynamic>
         WHERE 
         	id = #id# 
@@ -264,7 +278,9 @@
 			<isNotNull prepend="and" property="createTime">
 				create_time = #createTime#
 			</isNotNull>
-
+			<isNotNull prepend="and" property="status">
+				status = #status#
+			</isNotNull>
 	    </dynamic>
 	</sql>
 	

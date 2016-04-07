@@ -40,5 +40,6 @@
 	<sqlMap resource="conf/ibatis/SqlMap-StudentWork.xml" />
 	<sqlMap resource="conf/ibatis/SqlMap-Work.xml" />
 	<sqlMap resource="conf/ibatis/SqlMap-WorkType.xml" />
+	<sqlMap resource="conf/ibatis/SqlMap-Distribution.xml" />
 	
 </sqlMapConfig>
