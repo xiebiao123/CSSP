@@ -10,8 +10,6 @@ import org.apache.tomcat.util.codec.binary.Base64;
 
 import sun.misc.BASE64Decoder;
 
-
-
 public class MyTest 
 {
     public static void main(String[] args)
@@ -45,7 +43,7 @@ public class MyTest
     }
     
     
-    public static boolean GenerateImage(String imgStr)
+	public static boolean GenerateImage(String imgStr)
     {//对字节数组字符串进行Base64解码并生成图片
         if (imgStr == null) //图像数据为空
             return false;
