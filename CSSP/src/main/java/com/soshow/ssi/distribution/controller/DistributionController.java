@@ -19,8 +19,8 @@ import com.soshow.ssi.distribution.dto.Distribution;
 import com.soshow.ssi.distribution.dto.DistributionCondition;
 import com.soshow.ssi.distribution.service.DistributionService;
 import com.soshow.ssi.enums.CommStatusEnum;
+import com.soshow.ssi.util.common.MyResponse;
 import com.soshow.ssi.enums.CommErrorEnum;
-import com.soshow.ssi.util.MyResponse;
 
 /**
  * 配送方式controller

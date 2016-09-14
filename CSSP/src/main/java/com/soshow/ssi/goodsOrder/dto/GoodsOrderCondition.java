@@ -2,7 +2,7 @@ package com.soshow.ssi.goodsOrder.dto;
 
 import java.sql.Timestamp;
 
-import com.soshow.ssi.util.Paging;
+import com.soshow.ssi.util.common.Paging;
 /**
  * 商品订单condition
  * @author xieb

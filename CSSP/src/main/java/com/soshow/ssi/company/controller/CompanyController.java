@@ -19,8 +19,8 @@ import com.soshow.ssi.company.dto.Company;
 import com.soshow.ssi.company.dto.CompanyCondition;
 import com.soshow.ssi.company.service.CompanyService;
 import com.soshow.ssi.enums.CommStatusEnum;
+import com.soshow.ssi.util.common.MyResponse;
 import com.soshow.ssi.enums.CommErrorEnum;
-import com.soshow.ssi.util.MyResponse;
 
 /**
  * 公司信息controller

@@ -18,9 +18,9 @@ import com.soshow.ssi.base.BaseController;
 import com.soshow.ssi.goodsLeaveMessage.dto.GoodsLeaveMessage;
 import com.soshow.ssi.goodsLeaveMessage.dto.GoodsLeaveMessageCondition;
 import com.soshow.ssi.goodsLeaveMessage.service.GoodsLeaveMessageService;
+import com.soshow.ssi.util.common.MyResponse;
 import com.soshow.ssi.enums.CommStatusEnum;
 import com.soshow.ssi.enums.CommErrorEnum;
-import com.soshow.ssi.util.MyResponse;
 
 /**
  * 留言信息表controller

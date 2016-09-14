@@ -2,7 +2,7 @@ package com.soshow.ssi.goodsLeaveMessage.dto;
 
 import java.sql.Timestamp;
 
-import com.soshow.ssi.util.Paging;
+import com.soshow.ssi.util.common.Paging;
 /**
  * 留言信息表condition
  * @author xieb

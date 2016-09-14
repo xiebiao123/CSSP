@@ -18,9 +18,9 @@ import com.soshow.ssi.base.BaseController;
 import com.soshow.ssi.goodsOrderDetailed.dto.GoodsOrderDetailed;
 import com.soshow.ssi.goodsOrderDetailed.dto.GoodsOrderDetailedCondition;
 import com.soshow.ssi.goodsOrderDetailed.service.GoodsOrderDetailedService;
+import com.soshow.ssi.util.common.MyResponse;
 import com.soshow.ssi.enums.CommStatusEnum;
 import com.soshow.ssi.enums.CommErrorEnum;
-import com.soshow.ssi.util.MyResponse;
 
 /**
  * 订单详细controller

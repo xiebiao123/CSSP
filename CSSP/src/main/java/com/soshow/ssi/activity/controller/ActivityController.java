@@ -19,8 +19,8 @@ import com.soshow.ssi.activity.dto.Activity;
 import com.soshow.ssi.activity.dto.ActivityCondition;
 import com.soshow.ssi.activity.service.ActivityService;
 import com.soshow.ssi.enums.CommStatusEnum;
+import com.soshow.ssi.util.common.MyResponse;
 import com.soshow.ssi.enums.CommErrorEnum;
-import com.soshow.ssi.util.MyResponse;
 
 /**
  * 活动信息controller

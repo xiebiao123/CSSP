@@ -19,7 +19,7 @@ import com.soshow.ssi.city.dto.CityCondition;
 import com.soshow.ssi.city.service.CityService;
 import com.soshow.ssi.enums.CommErrorEnum;
 import com.soshow.ssi.enums.CommStatusEnum;
-import com.soshow.ssi.util.MyResponse;
+import com.soshow.ssi.util.common.MyResponse;
 
 /**
  * 

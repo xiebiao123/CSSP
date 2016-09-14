@@ -1,6 +1,6 @@
 package com.soshow.ssi.company.dto;
 
-import com.soshow.ssi.util.Paging;
+import com.soshow.ssi.util.common.Paging;
 /**
  * 公司信息condition
  * @author xieb

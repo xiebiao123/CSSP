@@ -1,6 +1,6 @@
 package com.soshow.ssi.student.dto;
 
-import com.soshow.ssi.util.Paging;
+import com.soshow.ssi.util.common.Paging;
 /**
  * 学生信息condition
  * @author xieb

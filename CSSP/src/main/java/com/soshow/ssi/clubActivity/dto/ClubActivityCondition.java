@@ -1,6 +1,6 @@
 package com.soshow.ssi.clubActivity.dto;
 
-import com.soshow.ssi.util.Paging;
+import com.soshow.ssi.util.common.Paging;
 /**
  * 社团活动关联condition
  * @author xieb

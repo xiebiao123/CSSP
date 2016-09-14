@@ -1,6 +1,6 @@
 package com.soshow.ssi.goodsOrderDetailed.dto;
 
-import com.soshow.ssi.util.Paging;
+import com.soshow.ssi.util.common.Paging;
 /**
  * 订单详细condition
  * @author xieb

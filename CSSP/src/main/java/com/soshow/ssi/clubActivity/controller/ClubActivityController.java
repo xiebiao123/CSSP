@@ -19,8 +19,8 @@ import com.soshow.ssi.clubActivity.dto.ClubActivity;
 import com.soshow.ssi.clubActivity.dto.ClubActivityCondition;
 import com.soshow.ssi.clubActivity.service.ClubActivityService;
 import com.soshow.ssi.enums.CommStatusEnum;
+import com.soshow.ssi.util.common.MyResponse;
 import com.soshow.ssi.enums.CommErrorEnum;
-import com.soshow.ssi.util.MyResponse;
 
 /**
  * 社团活动关联controller

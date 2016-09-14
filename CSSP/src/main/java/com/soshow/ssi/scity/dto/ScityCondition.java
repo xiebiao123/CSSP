@@ -1,6 +1,6 @@
 package com.soshow.ssi.scity.dto;
 
-import com.soshow.ssi.util.Paging;
+import com.soshow.ssi.util.common.Paging;
 /**
  * 城市condition
  * @author xieb

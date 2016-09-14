@@ -1,6 +1,6 @@
 package com.soshow.ssi.sprovince.dto;
 
-import com.soshow.ssi.util.Paging;
+import com.soshow.ssi.util.common.Paging;
 /**
  * 省份condition
  * @author xieb

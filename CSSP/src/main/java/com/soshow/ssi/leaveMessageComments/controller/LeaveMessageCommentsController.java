@@ -18,9 +18,9 @@ import com.soshow.ssi.base.BaseController;
 import com.soshow.ssi.leaveMessageComments.dto.LeaveMessageComments;
 import com.soshow.ssi.leaveMessageComments.dto.LeaveMessageCommentsCondition;
 import com.soshow.ssi.leaveMessageComments.service.LeaveMessageCommentsService;
+import com.soshow.ssi.util.common.MyResponse;
 import com.soshow.ssi.enums.CommStatusEnum;
 import com.soshow.ssi.enums.CommErrorEnum;
-import com.soshow.ssi.util.MyResponse;
 
 /**
  * 留言评论controller

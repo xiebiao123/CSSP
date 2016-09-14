@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.soshow.ssi.enums.CommErrorEnum;
-import com.soshow.ssi.util.MyError;
-import com.soshow.ssi.util.MyResponse;
+import com.soshow.ssi.util.common.MyError;
+import com.soshow.ssi.util.common.MyResponse;
 
 
 public class BaseController {

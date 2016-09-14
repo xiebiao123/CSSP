@@ -18,9 +18,9 @@ import com.soshow.ssi.base.BaseController;
 import com.soshow.ssi.goodsType.dto.GoodsType;
 import com.soshow.ssi.goodsType.dto.GoodsTypeCondition;
 import com.soshow.ssi.goodsType.service.GoodsTypeService;
+import com.soshow.ssi.util.common.MyResponse;
 import com.soshow.ssi.enums.CommStatusEnum;
 import com.soshow.ssi.enums.CommErrorEnum;
-import com.soshow.ssi.util.MyResponse;
 
 /**
  * 商品类别controller

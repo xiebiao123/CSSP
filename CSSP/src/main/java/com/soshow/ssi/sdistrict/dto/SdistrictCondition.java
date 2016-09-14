@@ -1,6 +1,6 @@
 package com.soshow.ssi.sdistrict.dto;
 
-import com.soshow.ssi.util.Paging;
+import com.soshow.ssi.util.common.Paging;
 /**
  * 县乡condition
  * @author xieb

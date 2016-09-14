@@ -1,6 +1,6 @@
 package com.soshow.ssi.shoppingCart.dto;
 
-import com.soshow.ssi.util.Paging;
+import com.soshow.ssi.util.common.Paging;
 /**
  * 购物车condition
  * @author xieb

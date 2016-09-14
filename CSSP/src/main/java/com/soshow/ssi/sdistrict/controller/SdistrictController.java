@@ -18,9 +18,9 @@ import com.soshow.ssi.base.BaseController;
 import com.soshow.ssi.sdistrict.dto.Sdistrict;
 import com.soshow.ssi.sdistrict.dto.SdistrictCondition;
 import com.soshow.ssi.sdistrict.service.SdistrictService;
+import com.soshow.ssi.util.common.MyResponse;
 import com.soshow.ssi.enums.CommStatusEnum;
 import com.soshow.ssi.enums.CommErrorEnum;
-import com.soshow.ssi.util.MyResponse;
 
 /**
  * 县乡controller

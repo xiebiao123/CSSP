@@ -19,8 +19,8 @@ import com.soshow.ssi.admin.dto.Admin;
 import com.soshow.ssi.admin.dto.AdminCondition;
 import com.soshow.ssi.admin.service.AdminService;
 import com.soshow.ssi.enums.CommStatusEnum;
+import com.soshow.ssi.util.common.MyResponse;
 import com.soshow.ssi.enums.CommErrorEnum;
-import com.soshow.ssi.util.MyResponse;
 
 /**
  * 管理员controller

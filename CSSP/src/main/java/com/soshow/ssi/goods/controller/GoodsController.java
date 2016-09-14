@@ -20,9 +20,9 @@ import com.soshow.ssi.base.BaseController;
 import com.soshow.ssi.goods.dto.Goods;
 import com.soshow.ssi.goods.dto.GoodsCondition;
 import com.soshow.ssi.goods.service.GoodsService;
+import com.soshow.ssi.util.common.MyResponse;
 import com.soshow.ssi.enums.CommStatusEnum;
 import com.soshow.ssi.enums.CommErrorEnum;
-import com.soshow.ssi.util.MyResponse;
 
 /**
  * 商品信息controller

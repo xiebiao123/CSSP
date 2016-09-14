@@ -2,7 +2,7 @@ package com.soshow.ssi.activity.dto;
 
 import java.sql.Timestamp;
 
-import com.soshow.ssi.util.Paging;
+import com.soshow.ssi.util.common.Paging;
 /**
  * 活动信息condition
  * @author xieb

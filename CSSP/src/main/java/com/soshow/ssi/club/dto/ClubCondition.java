@@ -2,7 +2,7 @@ package com.soshow.ssi.club.dto;
 
 import java.sql.Timestamp;
 
-import com.soshow.ssi.util.Paging;
+import com.soshow.ssi.util.common.Paging;
 /**
  * 社团信息condition
  * @author xieb

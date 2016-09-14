@@ -2,7 +2,7 @@ package com.soshow.ssi.notice.dto;
 
 import java.sql.Timestamp;
 
-import com.soshow.ssi.util.Paging;
+import com.soshow.ssi.util.common.Paging;
 /**
  * 公告condition
  * @author xieb

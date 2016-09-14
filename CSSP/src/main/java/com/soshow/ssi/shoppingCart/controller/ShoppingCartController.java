@@ -18,9 +18,9 @@ import com.soshow.ssi.base.BaseController;
 import com.soshow.ssi.shoppingCart.dto.ShoppingCart;
 import com.soshow.ssi.shoppingCart.dto.ShoppingCartCondition;
 import com.soshow.ssi.shoppingCart.service.ShoppingCartService;
+import com.soshow.ssi.util.common.MyResponse;
 import com.soshow.ssi.enums.CommStatusEnum;
 import com.soshow.ssi.enums.CommErrorEnum;
-import com.soshow.ssi.util.MyResponse;
 
 /**
  * 购物车controller

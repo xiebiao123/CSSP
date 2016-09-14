@@ -1,6 +1,6 @@
 package com.soshow.ssi.goods.dto;
 
-import com.soshow.ssi.util.Paging;
+import com.soshow.ssi.util.common.Paging;
 /**
  * 商品信息condition
  * @author xieb

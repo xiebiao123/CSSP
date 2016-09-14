@@ -1,6 +1,6 @@
 package com.soshow.ssi.resume.dto;
 
-import com.soshow.ssi.util.Paging;
+import com.soshow.ssi.util.common.Paging;
 /**
  * 简历condition
  * @author xieb

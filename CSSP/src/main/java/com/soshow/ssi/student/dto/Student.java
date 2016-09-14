@@ -1,19 +1,25 @@
 package com.soshow.ssi.student.dto;
+
+import com.soshow.ssi.annotation.Excel;
+import com.soshow.ssi.club.dto.Club;
+
 /**
  * 学生信息实体类
  * @author xieb
  * @version 1.00
  * 2016/03/21
  */
-public class Student{
+public class Student extends Club{
 
     /**  */
     private Integer id;
     /**  */
     private String password;
     /**  */
+    @Excel(name="姓名" , width=30)
     private String name;
     /**  */
+    @Excel(name="年龄" , width=30)
     private Integer age;
     /**  */
     private String email;
@@ -28,6 +34,7 @@ public class Student{
     /**  */
     private String remark;
     /**  */
+    @Excel(name="状态" , width=30)
     private Integer status;
 
 

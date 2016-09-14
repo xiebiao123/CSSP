@@ -18,9 +18,9 @@ import com.soshow.ssi.base.BaseController;
 import com.soshow.ssi.experience.dto.Experience;
 import com.soshow.ssi.experience.dto.ExperienceCondition;
 import com.soshow.ssi.experience.service.ExperienceService;
+import com.soshow.ssi.util.common.MyResponse;
 import com.soshow.ssi.enums.CommStatusEnum;
 import com.soshow.ssi.enums.CommErrorEnum;
-import com.soshow.ssi.util.MyResponse;
 
 /**
  * 个人经验controller

@@ -1,6 +1,6 @@
 package com.soshow.ssi.distribution.dto;
 
-import com.soshow.ssi.util.Paging;
+import com.soshow.ssi.util.common.Paging;
 /**
  * 配送方式condition
  * @author xieb
