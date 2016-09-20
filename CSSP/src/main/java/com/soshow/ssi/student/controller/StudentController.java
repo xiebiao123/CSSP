@@ -1,6 +1,8 @@
 package com.soshow.ssi.student.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -11,7 +13,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.soshow.ssi.base.BaseController;
 
@@ -19,6 +24,9 @@ import com.soshow.ssi.student.dto.Student;
 import com.soshow.ssi.student.dto.StudentCondition;
 import com.soshow.ssi.student.service.StudentService;
 import com.soshow.ssi.util.common.MyResponse;
+import com.soshow.ssi.util.excel.ExcelDataFormatter;
+import com.soshow.ssi.util.excel.ExcelUtils;
+import com.soshow.ssi.util.excel.view.ExcelView;
 import com.soshow.ssi.enums.CommStatusEnum;
 import com.soshow.ssi.enums.CommErrorEnum;
 
@@ -56,6 +64,48 @@ public class StudentController extends BaseController{
 		return response;
 	}
 
+	/**
+	 *	导出
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/download", method = RequestMethod.GET)
+	public ModelAndView download(StudentCondition pc) {
+	
+		List<Student> studentList = studentService.findPageByCondition(pc);
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		modelMap.put(ExcelView.EXCEL_MODEL_LIST, studentList);
+	
+		
+		ExcelDataFormatter edf = new ExcelDataFormatter();
+        Map<Object, Object> map = new HashMap<Object, Object>();
+        map.put(0, "有效");
+        map.put(1, "无效");
+        edf.set("status", map);
+		modelMap.put(ExcelView.EXCEL_MODEL_FORMAT, edf);
+		
+		return new ModelAndView(ExcelView.EXCEL_MODEL_VIEW, modelMap);
+	
+	}
+	
+	/**
+	 *	导入
+	 * @throws Exception 
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/upload", method = RequestMethod.POST)
+	public void upload(@RequestParam(value="file",required=false) MultipartFile file) throws Exception {
+		ExcelDataFormatter edf = new ExcelDataFormatter();
+        Map<Object, Object> map = new HashMap<Object, Object>();
+        map.put("有效",0);
+        map.put("无效",1);
+        edf.set("status", map);
+		List<Student> xx = new ExcelUtils<Student>(new Student()).readFromFile(edf, file);
+		for (Student s : xx) {
+			System.out.println(s.getName());
+			System.out.println(s.getStatus());
+		}
+	}
+	
 	/**
 	 *添加学生信息
 	 */

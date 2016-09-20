@@ -35,11 +35,6 @@
 	
     <mvc:resources mapping="/HT/**" location="/HT/"/>      
     <mvc:default-servlet-handler />   
-   
-     <!-- 定义excel视图 -->
-    <bean class="org.springframework.web.servlet.view.XmlViewResolver">
-        <property name="location" value="classpath:conf/spring/applicationContext-web-mvc-views.xml"></property>
-    </bean> 
 
 	<!-- 对模型视图名称的解析，即在模型视图名称添加前后缀
 	     InternalResourceViewResolver默认的就是JstlView所以这里就不用配置viewClass了 -->
@@ -72,4 +67,5 @@
 	</bean>   
 	
 	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"></bean>  
+    
 </beans>

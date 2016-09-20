@@ -15,9 +15,9 @@
         http://www.springframework.org/schema/tx  
         http://www.springframework.org/schema/tx/spring-tx-3.0.xsd  
         http://www.springframework.org/schema/aop  
-        http://www.springframework.org/schema/aop/spring-aop-3.0.xsd"  default-autowire="byName">  
+        http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">  
   
-	<import resource="applicationContext-resource.xml"/>
-	
-
+    <!-- 定义excel视图 -->
+    <bean id="excelView" class="com.soshow.ssi.util.excel.view.ExcelView"></bean>
+    
 </beans>

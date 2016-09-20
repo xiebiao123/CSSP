@@ -1,7 +1,5 @@
 package com.soshow.ssi.util.excel;
  
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -32,7 +30,8 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
- 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.soshow.ssi.annotation.Excel;
 import com.soshow.ssi.student.dto.Student;
  
@@ -293,24 +292,18 @@ public class ExcelUtils<E> {
         map.put(0, "有效");
         map.put(1, "无效");
         edf.set("status", map);
- 
         writeToFile(list,edf, "D:\\x.xlsx");
-        
-        
         ExcelDataFormatter xedf = new ExcelDataFormatter();
         Map<Object, Object> xmap = new HashMap<Object, Object>();
         xmap.put("有效", 0);
         xmap.put("无效", 1);
         xedf.set("status", xmap);
-        
- 
-        List<Student> xx = new ExcelUtils<Student>(new Student()).readFromFile(xedf, new File("D:\\x.xlsx"));
-        for (Student s : xx) {
-			System.out.println(s.getName());
-			System.out.println(s.getStatus());
-		}
-        //System.out.println(new GsonBuilder().create().toJson(xx));
- 
+//        List<Student> xx = new ExcelUtils<Student>(new Student()).readFromFile(xedf, new File("D:\\x.xlsx"));
+//        for (Student s : xx) {
+//			System.out.println(s.getName());
+//			System.out.println(s.getStatus());
+//		}
+
     }
  
     /**
@@ -320,7 +313,7 @@ public class ExcelUtils<E> {
      * @return
      * @throws Exception
      */
-    public List<E> readFromFile(ExcelDataFormatter edf, File file) throws Exception {
+    public List<E> readFromFile(ExcelDataFormatter edf, MultipartFile file) throws Exception {
     	
         Field[] fields = ReflectUtils.getClassFieldsAndSuperClassFields(e.getClass());
         Map<String, String> textToKey = new HashMap<String, String>();
@@ -333,7 +326,8 @@ public class ExcelUtils<E> {
             textToKey.put(_excel.name(), field.getName());
         }
  
-        InputStream is = new FileInputStream(file);
+        //InputStream is = new FileInputStream(file);
+        InputStream is = file.getInputStream();
  
         Workbook wb = new XSSFWorkbook(is);
  
@@ -467,7 +461,8 @@ public class ExcelUtils<E> {
                             if (bool) {
                                 field.set(e, map.get(o.toString()) != null ? Integer.parseInt(map.get(o.toString())+"") : Integer.parseInt(o.toString()));
                             } else {
-                                field.set(e, Integer.parseInt(o.toString()));
+                            	String str = o.toString();
+                                field.set(e, Integer.parseInt(str.substring(0, str.indexOf("."))));
                             }
  
                         }

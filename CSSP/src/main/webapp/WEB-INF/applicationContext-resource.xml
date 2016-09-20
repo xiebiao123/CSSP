@@ -56,5 +56,10 @@
 	</bean>
 
 	<!--  启用 annotation事务 --> 
-    <tx:annotation-driven transaction-manager="transactionManager" />
+    <tx:annotation-driven transaction-manager="transactionManager" /> 
+    
+    <!-- 定义excel视图 -->
+    <bean class="org.springframework.web.servlet.view.XmlViewResolver">
+        <property name="location" value="/WEB-INFO/applicationContext-web-mvc-views.xml"></property>
+    </bean>
 </beans>
