@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
  
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -329,7 +330,7 @@ public class ExcelUtils<E> {
         //InputStream is = new FileInputStream(file);
         InputStream is = file.getInputStream();
  
-        Workbook wb = new XSSFWorkbook(is);
+        Workbook wb = new HSSFWorkbook(is);
  
         Sheet sheet = wb.getSheetAt(0);
         Row title = sheet.getRow(0);

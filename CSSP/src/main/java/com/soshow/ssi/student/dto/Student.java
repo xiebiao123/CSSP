@@ -26,6 +26,7 @@ public class Student extends Club{
     /**  */
     private Long tel;
     /**  */
+    @Excel(name="性别" , width=30)
     private Integer sex;
     /**  */
     private String address;

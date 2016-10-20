@@ -5,11 +5,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -18,21 +17,45 @@ import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.springframework.web.servlet.view.document.AbstractExcelView;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.web.servlet.view.AbstractView;
 
 import com.soshow.ssi.annotation.Excel;
 import com.soshow.ssi.util.excel.ExcelDataFormatter;
 import com.soshow.ssi.util.excel.ReflectUtils;
 
-public class ExcelView extends AbstractExcelView {
+public class XlsxView extends AbstractView {
 
-	public static final String EXCEL_MODEL_VIEW ="excelView"; 
+	//当从浏览器返回一个文件时,需要指定ContentType:
+	private String CONTENT_TYPE="application/vnd.openxmlformats-officedocument.spreadsheetml.template";
+	
+	public static final String EXCEL_MODEL_VIEW ="xlsxView"; 
 	public static final String EXCEL_MODEL_LIST ="excelModelList";
 	public static final String EXCEL_MODEL_FORMAT ="excelModelFormat";
 	
-	@SuppressWarnings("unchecked")
+	public XlsxView() {
+		setContentType(CONTENT_TYPE);
+	}
+	
 	@Override
-	protected void buildExcelDocument(Map<String, Object> model, HSSFWorkbook wb, HttpServletRequest request,
+	protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		
+		buildExcelDocument(model, workbook, request, response);
+
+		// Set the content type.
+		response.setContentType(getContentType());
+
+		// Flush byte array to servlet output stream.
+		ServletOutputStream out = response.getOutputStream();
+		workbook.write(out);
+		out.flush();
+	}
+	
+	@SuppressWarnings("unchecked")
+	protected void buildExcelDocument(Map<String, Object> model, XSSFWorkbook wb, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		List<Object> list = (List<Object>) model.get(EXCEL_MODEL_LIST);
 		ExcelDataFormatter edf = (ExcelDataFormatter) model.get(EXCEL_MODEL_FORMAT);
@@ -46,7 +69,7 @@ public class ExcelView extends AbstractExcelView {
         CreationHelper createHelper = wb.getCreationHelper();
         
         // 设置标题样式
-        HSSFCellStyle titleStyle =  wb.createCellStyle();
+        XSSFCellStyle titleStyle =  wb.createCellStyle();
         titleStyle.setFillForegroundColor(IndexedColors.LIGHT_BLUE.getIndex());
         titleStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
         titleStyle.setAlignment(CellStyle.ALIGN_CENTER);
