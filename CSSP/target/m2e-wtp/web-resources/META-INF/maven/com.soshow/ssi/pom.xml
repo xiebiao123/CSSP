@@ -21,6 +21,7 @@
 
 		<junit.version>3.8.1</junit.version>
 		<spring.version>3.1.0.RELEASE</spring.version>
+		<aspectj>1.8.5</aspectj>
 		<commons.dbcp.version>1.4</commons.dbcp.version>
 		<ibatis.sqlmap.version>2.3.4.726</ibatis.sqlmap.version>
 		<jackson.mapper.asl.version>1.9.4</jackson.mapper.asl.version>
@@ -48,6 +49,29 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
+
+		 <!-- Spring AOP -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>${aspectj}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj}</version>
+        </dependency>
+        <dependency>
+    <groupId>cglib</groupId>
+	<artifactId>cglib-nodep</artifactId>
+	<version>2.1_3</version>
+</dependency>
+        
 
 		<dependency>
 			<groupId>commons-dbcp</groupId>

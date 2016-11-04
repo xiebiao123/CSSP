@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.soshow.ssi.annotation.Log;
 import com.soshow.ssi.base.BaseController;
 
 import com.soshow.ssi.student.dto.Student;
@@ -188,4 +189,23 @@ public class StudentController extends BaseController{
 		}
 		return response;
 	}
+	
+	
+	@Log(name="您访问了aop1方法")
+    @ResponseBody
+    @RequestMapping(value="/aop1")
+    public String aop1(){
+        return "AOP";
+    }
+     
+    @Log(name="您访问了aop2方法")
+    @ResponseBody
+    @RequestMapping(value="/aop2")
+    public List<Student> aop2(Integer sex){
+        StudentCondition pc = new StudentCondition();
+        pc.setSex(sex);;
+        List<Student> studentList = studentService.findPageByCondition(pc);
+        return studentList;
+    }
+	
 }

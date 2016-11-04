@@ -4,15 +4,25 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd  
              http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd  
              http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd              
-             http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+             http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd 
+             http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd ">
 
+    
+    <!-- 最重要:::如果放在spring-context.xml中，这里的aop设置将不会生效 -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
 	<!-- 激活@Controller模式 -->
 	<mvc:annotation-driven />
 	<!--  对web包中的所有类进行扫描，以完成启动扫描所有的controller --> 
-    <context:component-scan base-package="com.soshow.ssi.*.controller" /> 
+	<!-- 
+    <context:component-scan base-package="com.soshow.ssi.*.controller" />
+     -->
+    <context:component-scan base-package="com.soshow.ssi">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
 	
 	<!-- 配置springmvc支持自动转换json -->
 	<bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
