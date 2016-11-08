@@ -38,6 +38,6 @@ public interface AdminService {
 	/**
 	 * 统计查询数据的条数
 	 */
-	public Integer countByCondition(AdminCondition pc);
+	public Long countByCondition(AdminCondition pc);
 	
 }

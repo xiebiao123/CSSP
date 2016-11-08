@@ -42,7 +42,7 @@ public class GoodsOrderServiceImpl implements GoodsOrderService{
 		return goodsOrderDao.findPageByCondition(pc);
 	}
 	
-	public Integer countByCondition(GoodsOrderCondition pc) {
+	public Long countByCondition(GoodsOrderCondition pc) {
 		return goodsOrderDao.countByCondition(pc);
 	}
 }

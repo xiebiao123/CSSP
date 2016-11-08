@@ -221,7 +221,7 @@
 			#startRow#,#endRow# 
 	</select>
 	
-	<select id="countByCondition" parameterClass="goodsOrderDetailedCondition" resultClass="java.lang.Integer">
+	<select id="countByCondition" parameterClass="goodsOrderDetailedCondition" resultClass="java.lang.Long">
 		select 
 			count(*) 
 		from 

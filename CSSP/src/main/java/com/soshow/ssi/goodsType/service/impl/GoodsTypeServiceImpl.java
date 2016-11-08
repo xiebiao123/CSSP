@@ -42,7 +42,7 @@ public class GoodsTypeServiceImpl implements GoodsTypeService{
 		return goodsTypeDao.findPageByCondition(pc);
 	}
 	
-	public Integer countByCondition(GoodsTypeCondition pc) {
+	public Long countByCondition(GoodsTypeCondition pc) {
 		return goodsTypeDao.countByCondition(pc);
 	}
 }

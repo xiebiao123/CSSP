@@ -38,6 +38,6 @@ public interface SdistrictService {
 	/**
 	 * 统计查询数据的条数
 	 */
-	public Integer countByCondition(SdistrictCondition pc);
+	public Long countByCondition(SdistrictCondition pc);
 	
 }

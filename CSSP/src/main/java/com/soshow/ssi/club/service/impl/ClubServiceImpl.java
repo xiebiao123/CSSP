@@ -42,7 +42,7 @@ public class ClubServiceImpl implements ClubService{
 		return clubDao.findPageByCondition(pc);
 	}
 	
-	public Integer countByCondition(ClubCondition pc) {
+	public Long countByCondition(ClubCondition pc) {
 		return clubDao.countByCondition(pc);
 	}
 }

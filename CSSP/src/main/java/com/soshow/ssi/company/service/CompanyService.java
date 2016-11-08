@@ -38,6 +38,6 @@ public interface CompanyService {
 	/**
 	 * 统计查询数据的条数
 	 */
-	public Integer countByCondition(CompanyCondition pc);
+	public Long countByCondition(CompanyCondition pc);
 	
 }

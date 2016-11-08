@@ -38,6 +38,6 @@ public interface LeaveMessageCommentsService {
 	/**
 	 * 统计查询数据的条数
 	 */
-	public Integer countByCondition(LeaveMessageCommentsCondition pc);
+	public Long countByCondition(LeaveMessageCommentsCondition pc);
 	
 }

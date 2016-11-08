@@ -122,7 +122,7 @@ public class GoodsLeaveMessageController extends BaseController{
 			if(condition.getPageSize()>0){
 				condition.init();
 			}
-			int count =  goodsLeaveMessageService.countByCondition(condition);
+			long count =  goodsLeaveMessageService.countByCondition(condition);
 			if(count==0){
 				response.setStatusResponse(CommStatusEnum.NOFIND);
 				return response;

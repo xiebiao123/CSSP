@@ -42,7 +42,7 @@ public class GoodsOrderDetailedServiceImpl implements GoodsOrderDetailedService{
 		return goodsOrderDetailedDao.findPageByCondition(pc);
 	}
 	
-	public Integer countByCondition(GoodsOrderDetailedCondition pc) {
+	public Long countByCondition(GoodsOrderDetailedCondition pc) {
 		return goodsOrderDetailedDao.countByCondition(pc);
 	}
 }

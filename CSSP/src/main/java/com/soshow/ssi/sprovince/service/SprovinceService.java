@@ -38,6 +38,6 @@ public interface SprovinceService {
 	/**
 	 * 统计查询数据的条数
 	 */
-	public Integer countByCondition(SprovinceCondition pc);
+	public Long countByCondition(SprovinceCondition pc);
 	
 }

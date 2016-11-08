@@ -239,7 +239,7 @@
 			#startRow#,#endRow# 
 	</select>
 	
-	<select id="countByCondition" parameterClass="empCondition" resultClass="java.lang.Integer">
+	<select id="countByCondition" parameterClass="empCondition" resultClass="java.lang.Long">
 		select 
 			count(*) 
 		from 

@@ -38,6 +38,6 @@ public interface ResumeService {
 	/**
 	 * 统计查询数据的条数
 	 */
-	public Integer countByCondition(ResumeCondition pc);
+	public Long countByCondition(ResumeCondition pc);
 	
 }

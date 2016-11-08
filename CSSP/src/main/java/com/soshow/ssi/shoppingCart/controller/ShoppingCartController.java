@@ -122,7 +122,7 @@ public class ShoppingCartController extends BaseController{
 			if(condition.getPageSize()>0){
 				condition.init();
 			}
-			int count =  shoppingCartService.countByCondition(condition);
+			long count =  shoppingCartService.countByCondition(condition);
 			if(count==0){
 				response.setStatusResponse(CommStatusEnum.NOFIND);
 				return response;

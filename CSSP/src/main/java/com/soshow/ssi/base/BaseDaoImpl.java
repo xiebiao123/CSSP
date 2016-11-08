@@ -40,8 +40,8 @@ public class BaseDaoImpl<T,K> implements BaseDao<T,K> {
 		return (T) this.sqlMapClientTemplate.queryForObject(poClassName+".findById", id);
 	}
 	
-	public Integer countByCondition(K pc) {
-		return (Integer) this.sqlMapClientTemplate.queryForObject(poClassName+".countByCondition", pc);
+	public Long countByCondition(K pc) {
+		return (Long) this.sqlMapClientTemplate.queryForObject(poClassName+".countByCondition", pc);
 	}
 	
 	@SuppressWarnings("unchecked")

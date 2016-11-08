@@ -107,7 +107,7 @@ public class CityController extends BaseController{
 			if(condition.getPageSize()>0){
 				condition.init();
 			}
-			int count = cityService.countByCondition(condition);
+			long count = cityService.countByCondition(condition);
 			if(count==0){
 				response.setStatusResponse(CommStatusEnum.NOFIND);
 				return response;

@@ -42,7 +42,7 @@ public class CityServiceImpl implements CityService{
 		return cityDao.findPageByCondition(pc);
 	}
 
-	public Integer countByCondition(CityCondition pc) {
+	public Long countByCondition(CityCondition pc) {
 		return cityDao.countByCondition(pc);
 	}
 }

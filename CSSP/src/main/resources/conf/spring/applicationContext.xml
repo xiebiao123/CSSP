@@ -18,6 +18,7 @@
         http://www.springframework.org/schema/aop/spring-aop-3.0.xsd"  default-autowire="byName">  
   
 	<import resource="applicationContext-resource.xml"/>
-	
+	<!-- 引入mongodb的相关配置 -->
+    <import resource="applicationContext-mongodb.xml"/>
 
 </beans>

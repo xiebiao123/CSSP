@@ -122,7 +122,7 @@ public class ClubController extends BaseController{
 			if(condition.getPageSize()>0){
 				condition.init();
 			}
-			int count =  clubService.countByCondition(condition);
+			long count =  clubService.countByCondition(condition);
 			if(count==0){
 				response.setStatusResponse(CommStatusEnum.NOFIND);
 				return response;

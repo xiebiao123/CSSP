@@ -42,7 +42,7 @@ public class ResumeServiceImpl implements ResumeService{
 		return resumeDao.findPageByCondition(pc);
 	}
 	
-	public Integer countByCondition(ResumeCondition pc) {
+	public Long countByCondition(ResumeCondition pc) {
 		return resumeDao.countByCondition(pc);
 	}
 }

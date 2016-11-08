@@ -38,6 +38,6 @@ public interface ShoppingCartService {
 	/**
 	 * 统计查询数据的条数
 	 */
-	public Integer countByCondition(ShoppingCartCondition pc);
+	public Long countByCondition(ShoppingCartCondition pc);
 	
 }

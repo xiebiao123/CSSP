@@ -122,7 +122,7 @@ public class DistributionController extends BaseController{
 			if(condition.getPageSize()>0){
 				condition.init();
 			}
-			int count =  distributionService.countByCondition(condition);
+			long count =  distributionService.countByCondition(condition);
 			if(count==0){
 				response.setStatusResponse(CommStatusEnum.NOFIND);
 				return response;

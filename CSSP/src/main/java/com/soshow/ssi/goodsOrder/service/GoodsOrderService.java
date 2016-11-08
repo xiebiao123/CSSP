@@ -38,6 +38,6 @@ public interface GoodsOrderService {
 	/**
 	 * 统计查询数据的条数
 	 */
-	public Integer countByCondition(GoodsOrderCondition pc);
+	public Long countByCondition(GoodsOrderCondition pc);
 	
 }

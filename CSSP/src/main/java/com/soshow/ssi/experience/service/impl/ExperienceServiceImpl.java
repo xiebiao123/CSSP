@@ -42,7 +42,7 @@ public class ExperienceServiceImpl implements ExperienceService{
 		return experienceDao.findPageByCondition(pc);
 	}
 	
-	public Integer countByCondition(ExperienceCondition pc) {
+	public Long countByCondition(ExperienceCondition pc) {
 		return experienceDao.countByCondition(pc);
 	}
 }

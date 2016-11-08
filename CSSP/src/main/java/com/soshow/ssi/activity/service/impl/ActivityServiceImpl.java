@@ -42,7 +42,7 @@ public class ActivityServiceImpl implements ActivityService{
 		return activityDao.findPageByCondition(pc);
 	}
 	
-	public Integer countByCondition(ActivityCondition pc) {
+	public Long countByCondition(ActivityCondition pc) {
 		return activityDao.countByCondition(pc);
 	}
 }

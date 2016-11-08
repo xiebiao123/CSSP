@@ -42,7 +42,7 @@ public class SprovinceServiceImpl implements SprovinceService{
 		return sprovinceDao.findPageByCondition(pc);
 	}
 	
-	public Integer countByCondition(SprovinceCondition pc) {
+	public Long countByCondition(SprovinceCondition pc) {
 		return sprovinceDao.countByCondition(pc);
 	}
 }

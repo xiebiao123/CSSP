@@ -38,6 +38,6 @@ public interface StudentService {
 	/**
 	 * 统计查询数据的条数
 	 */
-	public Integer countByCondition(StudentCondition pc);
+	public Long countByCondition(StudentCondition pc);
 	
 }

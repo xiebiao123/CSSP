@@ -42,7 +42,7 @@ public class StudentServiceImpl implements StudentService{
 		return studentDao.findPageByCondition(pc);
 	}
 	
-	public Integer countByCondition(StudentCondition pc) {
+	public Long countByCondition(StudentCondition pc) {
 		return studentDao.countByCondition(pc);
 	}
 }

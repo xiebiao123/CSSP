@@ -95,7 +95,7 @@
 			#startRow#,#endRow# 
 	</select>
 	
-	<select id="countByCondition" parameterClass="sprovinceCondition" resultClass="java.lang.Integer">
+	<select id="countByCondition" parameterClass="sprovinceCondition" resultClass="java.lang.Long">
 		select 
 			count(*) 
 		from 

@@ -38,6 +38,6 @@ public interface ScityService {
 	/**
 	 * 统计查询数据的条数
 	 */
-	public Integer countByCondition(ScityCondition pc);
+	public Long countByCondition(ScityCondition pc);
 	
 }

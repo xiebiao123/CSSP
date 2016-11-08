@@ -42,7 +42,7 @@ public class LeaveMessageCommentsServiceImpl implements LeaveMessageCommentsServ
 		return leaveMessageCommentsDao.findPageByCondition(pc);
 	}
 	
-	public Integer countByCondition(LeaveMessageCommentsCondition pc) {
+	public Long countByCondition(LeaveMessageCommentsCondition pc) {
 		return leaveMessageCommentsDao.countByCondition(pc);
 	}
 }

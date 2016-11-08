@@ -42,7 +42,7 @@ public class SdistrictServiceImpl implements SdistrictService{
 		return sdistrictDao.findPageByCondition(pc);
 	}
 	
-	public Integer countByCondition(SdistrictCondition pc) {
+	public Long countByCondition(SdistrictCondition pc) {
 		return sdistrictDao.countByCondition(pc);
 	}
 }

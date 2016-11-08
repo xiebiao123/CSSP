@@ -42,7 +42,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
 		return shoppingCartDao.findPageByCondition(pc);
 	}
 	
-	public Integer countByCondition(ShoppingCartCondition pc) {
+	public Long countByCondition(ShoppingCartCondition pc) {
 		return shoppingCartDao.countByCondition(pc);
 	}
 }

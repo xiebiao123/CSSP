@@ -40,7 +40,7 @@ public interface GoodsService {
 	/**
 	 * 统计查询数据的条数
 	 */
-	public Integer countByCondition(GoodsCondition pc);
+	public Long countByCondition(GoodsCondition pc);
 	
 	 /** 
 	  * 上传图片 

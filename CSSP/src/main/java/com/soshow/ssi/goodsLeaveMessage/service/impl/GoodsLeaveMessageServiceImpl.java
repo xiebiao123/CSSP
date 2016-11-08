@@ -42,7 +42,7 @@ public class GoodsLeaveMessageServiceImpl implements GoodsLeaveMessageService{
 		return goodsLeaveMessageDao.findPageByCondition(pc);
 	}
 	
-	public Integer countByCondition(GoodsLeaveMessageCondition pc) {
+	public Long countByCondition(GoodsLeaveMessageCondition pc) {
 		return goodsLeaveMessageDao.countByCondition(pc);
 	}
 }

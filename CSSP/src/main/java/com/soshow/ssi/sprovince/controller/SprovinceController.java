@@ -122,7 +122,7 @@ public class SprovinceController extends BaseController{
 			if(condition.getPageSize()>0){
 				condition.init();
 			}
-			int count =  sprovinceService.countByCondition(condition);
+			long count =  sprovinceService.countByCondition(condition);
 			if(count==0){
 				response.setStatusResponse(CommStatusEnum.NOFIND);
 				return response;

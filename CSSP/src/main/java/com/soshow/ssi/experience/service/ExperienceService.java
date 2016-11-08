@@ -38,6 +38,6 @@ public interface ExperienceService {
 	/**
 	 * 统计查询数据的条数
 	 */
-	public Integer countByCondition(ExperienceCondition pc);
+	public Long countByCondition(ExperienceCondition pc);
 	
 }

@@ -113,7 +113,7 @@
 			#startRow#,#endRow# 
 	</select>
 	
-	<select id="countByCondition" parameterClass="shoppingCartCondition" resultClass="java.lang.Integer">
+	<select id="countByCondition" parameterClass="shoppingCartCondition" resultClass="java.lang.Long">
 		select 
 			count(*) 
 		from 

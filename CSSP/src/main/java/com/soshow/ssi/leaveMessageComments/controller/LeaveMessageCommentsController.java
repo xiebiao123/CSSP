@@ -122,7 +122,7 @@ public class LeaveMessageCommentsController extends BaseController{
 			if(condition.getPageSize()>0){
 				condition.init();
 			}
-			int count =  leaveMessageCommentsService.countByCondition(condition);
+			long count =  leaveMessageCommentsService.countByCondition(condition);
 			if(count==0){
 				response.setStatusResponse(CommStatusEnum.NOFIND);
 				return response;

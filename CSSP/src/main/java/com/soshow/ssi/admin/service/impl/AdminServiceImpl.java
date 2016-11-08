@@ -42,7 +42,7 @@ public class AdminServiceImpl implements AdminService{
 		return adminDao.findPageByCondition(pc);
 	}
 	
-	public Integer countByCondition(AdminCondition pc) {
+	public Long countByCondition(AdminCondition pc) {
 		return adminDao.countByCondition(pc);
 	}
 }

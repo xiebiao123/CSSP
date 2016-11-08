@@ -42,7 +42,7 @@ public class SkillServiceImpl implements SkillService{
 		return skillDao.findPageByCondition(pc);
 	}
 	
-	public Integer countByCondition(SkillCondition pc) {
+	public Long countByCondition(SkillCondition pc) {
 		return skillDao.countByCondition(pc);
 	}
 }

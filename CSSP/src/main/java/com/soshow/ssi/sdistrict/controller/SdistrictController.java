@@ -122,7 +122,7 @@ public class SdistrictController extends BaseController{
 			if(condition.getPageSize()>0){
 				condition.init();
 			}
-			int count =  sdistrictService.countByCondition(condition);
+			long count =  sdistrictService.countByCondition(condition);
 			if(count==0){
 				response.setStatusResponse(CommStatusEnum.NOFIND);
 				return response;

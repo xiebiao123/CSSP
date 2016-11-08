@@ -42,7 +42,7 @@ public class DistributionServiceImpl implements DistributionService{
 		return distributionDao.findPageByCondition(pc);
 	}
 	
-	public Integer countByCondition(DistributionCondition pc) {
+	public Long countByCondition(DistributionCondition pc) {
 		return distributionDao.countByCondition(pc);
 	}
 }

@@ -38,6 +38,6 @@ public interface ClubActivityService {
 	/**
 	 * 统计查询数据的条数
 	 */
-	public Integer countByCondition(ClubActivityCondition pc);
+	public Long countByCondition(ClubActivityCondition pc);
 	
 }

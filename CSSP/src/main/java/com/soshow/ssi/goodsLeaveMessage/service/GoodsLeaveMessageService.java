@@ -38,6 +38,6 @@ public interface GoodsLeaveMessageService {
 	/**
 	 * 统计查询数据的条数
 	 */
-	public Integer countByCondition(GoodsLeaveMessageCondition pc);
+	public Long countByCondition(GoodsLeaveMessageCondition pc);
 	
 }

@@ -38,6 +38,6 @@ public interface ActivityService {
 	/**
 	 * 统计查询数据的条数
 	 */
-	public Integer countByCondition(ActivityCondition pc);
+	public Long countByCondition(ActivityCondition pc);
 	
 }

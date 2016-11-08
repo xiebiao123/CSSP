@@ -38,6 +38,6 @@ public interface SkillService {
 	/**
 	 * 统计查询数据的条数
 	 */
-	public Integer countByCondition(SkillCondition pc);
+	public Long countByCondition(SkillCondition pc);
 	
 }

@@ -122,7 +122,7 @@ public class SkillController extends BaseController{
 			if(condition.getPageSize()>0){
 				condition.init();
 			}
-			int count =  skillService.countByCondition(condition);
+			long count =  skillService.countByCondition(condition);
 			if(count==0){
 				response.setStatusResponse(CommStatusEnum.NOFIND);
 				return response;

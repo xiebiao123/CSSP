@@ -42,7 +42,7 @@ public class CompanyServiceImpl implements CompanyService{
 		return companyDao.findPageByCondition(pc);
 	}
 	
-	public Integer countByCondition(CompanyCondition pc) {
+	public Long countByCondition(CompanyCondition pc) {
 		return companyDao.countByCondition(pc);
 	}
 }

@@ -51,6 +51,6 @@ public interface CityService {
 	 * @param startIndex
 	 * @return
 	 */
-	public Integer countByCondition(CityCondition pc);
+	public Long countByCondition(CityCondition pc);
 	
 }

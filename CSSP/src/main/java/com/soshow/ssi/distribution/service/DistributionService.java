@@ -38,6 +38,6 @@ public interface DistributionService {
 	/**
 	 * 统计查询数据的条数
 	 */
-	public Integer countByCondition(DistributionCondition pc);
+	public Long countByCondition(DistributionCondition pc);
 	
 }

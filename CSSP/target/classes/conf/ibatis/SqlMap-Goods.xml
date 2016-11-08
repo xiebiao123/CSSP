@@ -329,7 +329,7 @@
 			#startRow#,#endRow# 
 	</select>
 	
-	<select id="countByCondition" parameterClass="goodsCondition" resultClass="java.lang.Integer">
+	<select id="countByCondition" parameterClass="goodsCondition" resultClass="java.lang.Long">
 		select 
 			count(*) 
 		from 

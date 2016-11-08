@@ -98,7 +98,7 @@
 			#startRow#,#endRow# 
 	</select>
 	
-	<select id="countByCondition" parameterClass="distributionCondition" resultClass="java.lang.Integer">
+	<select id="countByCondition" parameterClass="distributionCondition" resultClass="java.lang.Long">
 		select 
 			count(*) 
 		from 

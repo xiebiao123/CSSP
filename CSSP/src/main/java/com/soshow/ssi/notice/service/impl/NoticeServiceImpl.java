@@ -42,7 +42,7 @@ public class NoticeServiceImpl implements NoticeService{
 		return noticeDao.findPageByCondition(pc);
 	}
 	
-	public Integer countByCondition(NoticeCondition pc) {
+	public Long countByCondition(NoticeCondition pc) {
 		return noticeDao.countByCondition(pc);
 	}
 }

@@ -122,7 +122,7 @@ public class GoodsTypeController extends BaseController{
 			if(condition.getPageSize()>0){
 				condition.init();
 			}
-			int count =  goodsTypeService.countByCondition(condition);
+			long count =  goodsTypeService.countByCondition(condition);
 			if(count==0){
 				response.setStatusResponse(CommStatusEnum.NOFIND);
 				return response;

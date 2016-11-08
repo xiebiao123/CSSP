@@ -42,7 +42,7 @@ public class ScityServiceImpl implements ScityService{
 		return scityDao.findPageByCondition(pc);
 	}
 	
-	public Integer countByCondition(ScityCondition pc) {
+	public Long countByCondition(ScityCondition pc) {
 		return scityDao.countByCondition(pc);
 	}
 }

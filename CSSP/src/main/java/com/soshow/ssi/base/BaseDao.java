@@ -82,5 +82,5 @@ public interface BaseDao<T,K> {
 	 * @param startIndex
 	 * @return
 	 */
-	public abstract Integer countByCondition(K pc);
+	public abstract Long countByCondition(K pc);
 }

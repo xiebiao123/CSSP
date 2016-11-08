@@ -122,7 +122,7 @@ public class NoticeController extends BaseController{
 			if(condition.getPageSize()>0){
 				condition.init();
 			}
-			int count =  noticeService.countByCondition(condition);
+			long count =  noticeService.countByCondition(condition);
 			if(count==0){
 				response.setStatusResponse(CommStatusEnum.NOFIND);
 				return response;

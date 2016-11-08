@@ -122,7 +122,7 @@ public class ActivityController extends BaseController{
 			if(condition.getPageSize()>0){
 				condition.init();
 			}
-			int count =  activityService.countByCondition(condition);
+			long count =  activityService.countByCondition(condition);
 			if(count==0){
 				response.setStatusResponse(CommStatusEnum.NOFIND);
 				return response;
