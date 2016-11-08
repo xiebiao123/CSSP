@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.soshow.ssi.log.dao.ActLogDao;
 import com.soshow.ssi.log.dto.ActLog;
+import com.soshow.ssi.log.dto.ActLogCondition;
 import com.soshow.ssi.log.service.ActLogService;
 
 /**
@@ -29,8 +30,8 @@ public class ActLogServiceImpl implements ActLogService{
 		return actLogDao.save(po);
 	}
 	
-	public int delete(ActLog po) {
-		return actLogDao.remove(po);
+	public void delete(ActLog po) {
+		actLogDao.remove(po);
 	}
 	
 	public int update(ActLog actLog) {
@@ -44,7 +45,7 @@ public class ActLogServiceImpl implements ActLogService{
 		return actLogDao.findById(id);
 	}
 	
-	public List<ActLog> findPageByCondition(ActLog po) {
+	public List<ActLog> findPageByCondition(ActLogCondition po) {
 		int pageNo = po.getPageNo();
 		int pageSize =po.getPageSize();
 		Query query = new Query();
@@ -52,7 +53,7 @@ public class ActLogServiceImpl implements ActLogService{
 		return actLogDao.findPageByCondition(pageNo, pageSize, query);
 	}
 	
-	public long countByCondition(ActLog po) {
+	public long countByCondition(ActLogCondition po) {
 		Query query = new Query();
 		return actLogDao.count(query);
 	}

@@ -2,13 +2,15 @@ package com.soshow.ssi.log.dto;
 
 import java.sql.Timestamp;
 
+import com.soshow.ssi.util.common.Paging;
+
 /**
  * 操作日志记录表
  * @author xieb
  * @version 1.00
  * 2016/03/21
  */
-public class ActLog{
+public class ActLogCondition extends Paging{
 	
     private String id;
     private String name;

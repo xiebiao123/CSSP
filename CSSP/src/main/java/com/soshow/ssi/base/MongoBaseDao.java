@@ -34,7 +34,7 @@ public interface MongoBaseDao<T>{
      * @param t
      * @return
      */
-    public int remove(T t);    
+    public void remove(T t);    
     
     /**
      * 修改满足条件的第一条数据

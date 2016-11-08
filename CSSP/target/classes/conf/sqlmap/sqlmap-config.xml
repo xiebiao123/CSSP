@@ -3,7 +3,6 @@
     "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
 
 <sqlMapConfig>
-	<properties resource="conf/sqlmap/sqlmap.properties"></properties>
 	<settings cacheModelsEnabled="true" 
 		enhancementEnabled="true"
 		lazyLoadingEnabled="true"

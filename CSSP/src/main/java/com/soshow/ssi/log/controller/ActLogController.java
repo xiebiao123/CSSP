@@ -19,6 +19,7 @@ import com.soshow.ssi.util.common.MyResponse;
 import com.soshow.ssi.enums.CommStatusEnum;
 import com.soshow.ssi.log.service.ActLogService;
 import com.soshow.ssi.log.dto.ActLog;
+import com.soshow.ssi.log.dto.ActLogCondition;
 import com.soshow.ssi.enums.CommErrorEnum;
 
 /**
@@ -28,7 +29,7 @@ import com.soshow.ssi.enums.CommErrorEnum;
  * 2016/03/21
  */
 @Controller
-@RequestMapping(value = "ActLog")
+@RequestMapping(value = "actLog")
 public class ActLogController extends BaseController{
 
     private final Logger logger = Logger.getLogger(ActLogController.class);
@@ -83,8 +84,7 @@ public class ActLogController extends BaseController{
 		try {
 			ActLog actLog = new ActLog();
 			actLog.setId(id);
-			int count = actLogService.delete(actLog);
-			logger.info(count);
+			actLogService.delete(actLog);
 			response.setStatusResponse(CommStatusEnum.DELETE);
 		} catch (Throwable t) {
 			logger.error("系统错误", t);
@@ -116,7 +116,7 @@ public class ActLogController extends BaseController{
 	 */
 	@ResponseBody
 	@RequestMapping(method = RequestMethod.GET)
-	public MyResponse<List<ActLog>> findActLogPageByCondition(ActLog actLog) {
+	public MyResponse<List<ActLog>> findActLogPageByCondition(ActLogCondition actLog) {
 		MyResponse<List<ActLog>> response = new MyResponse<List<ActLog>>();
 		try {
 			/*初始化分页查询*/

@@ -3,6 +3,7 @@ package com.soshow.ssi.log.service;
 import java.util.List;
 
 import com.soshow.ssi.log.dto.ActLog;
+import com.soshow.ssi.log.dto.ActLogCondition;
 
 /**
  * 操作记录Service
@@ -25,7 +26,7 @@ public interface ActLogService {
 	 * @param po
 	 * @return
 	 */
-	public int delete(ActLog po);
+	public void delete(ActLog po);
 	
 	/**
 	 * 修改
@@ -49,12 +50,12 @@ public interface ActLogService {
 	 * @param query
 	 * @return
 	 */
-	public List<ActLog> findPageByCondition(ActLog po);
+	public List<ActLog> findPageByCondition(ActLogCondition po);
 	
 	/**
 	 * 统计条数
 	 * @param query
 	 * @return
 	 */
-	public long countByCondition(ActLog po);
+	public long countByCondition(ActLogCondition po);
 }

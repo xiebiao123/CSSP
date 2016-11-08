@@ -44,8 +44,8 @@ public abstract class MongoBaseDaoImpl<T> implements MongoBaseDao<T>{
      * @param t
      * @return
      */
-    public int remove(T t){
-        return this.mongoTemplate.remove(t, this.getCollectionName()).getN();
+    public void remove(T t){
+        this.mongoTemplate.remove(t, this.getCollectionName());
     }    
     
     /**
@@ -107,6 +107,6 @@ public abstract class MongoBaseDaoImpl<T> implements MongoBaseDao<T>{
      * @return
      */
     public long count(Query query){
-        return this.mongoTemplate.count(query, this.getEntityClass(),this.getCollectionName());
+        return this.mongoTemplate.count(query,this.getCollectionName());
     }    
 }
