@@ -14,7 +14,7 @@ import com.soshow.ssi.redis.dao.RedisDao;
 import com.soshow.ssi.redis.dao.RedisGeneratorDao;
 import com.soshow.ssi.redis.dto.RedisDto;
  
-@Repository(value="RedisDtoDao")
+@Repository
 public class RedisDaoImpl extends RedisGeneratorDao<String,RedisDto> implements RedisDao{
    
   /**
